@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-button type="primary">按钮使用</van-button>
+    <van-button type="primary">按钮使用说明</van-button>
   </div>
 </template>
 
