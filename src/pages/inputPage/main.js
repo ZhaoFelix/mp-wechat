@@ -10,3 +10,5 @@ import App from './index'
 
 const app = new Vue(App)
 app.$mount()
+
+wx.setNavigationBarTitle({title: '订单信息'})

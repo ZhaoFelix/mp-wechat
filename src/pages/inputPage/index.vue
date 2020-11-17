@@ -1,33 +1,28 @@
 <template>
     <div>
-        <van-cellgroup>
+        <div>
             <van-field
                 v-model='name'
                 label="联系人"
                 placeholder="姓名"
-                :border="boolen"
-                :href="onChange"
+                @change="onChange"
                 required
             />
-        </van-cellgroup>
-        <van-cellgroup>
+        </div>
+        <div>
             <van-field
                 type="tel"
                 :value="phoneNumber"
                 label="联系电话"
                 placeholder="手机号码"
-                :border="boolen"
                 maxlength="11"
-                bind:change
+                @change="onchange"
                 required
             />
-        </van-cellgroup>
-        <van-cellgroup>
-            <van-filed
-
-            />
-        </van-cellgroup>
-        <van-cellgroup>
+        </div>
+        <div>
+        </div>
+        <div>
             <van-field
                 :value="address"
                 label="地址"
@@ -35,8 +30,8 @@
                 required
                 readonly="true"
                 />
-        </van-cellgroup>
-        <van-cellgroup>
+        </div>
+        <div>
             <van-field
                 :value="detailedAddress"
                 label="详细地址"
@@ -44,51 +39,85 @@
                 placeholder="请输入具体地址 如：街道名称"
                 required
             />
-        </van-cellgroup>
-        <van-cellgroup>
+        </div>
+        <div>
             <van-field
                 :value="buildArea"
                 type="digit"
                 label="建筑面积"
                 placeholder="单位为平方米"
                 required
+                @change="onChange"
             />
-        </van-cellgroup>
-        <van-cellgroup>
+        </div>
+        <div>
+            <van-cell
+                title="是否首次装修" 
+                label="*是否首次装修详见计价方式说明"  
+            >
+            <van-button :plain="yesOrNo" round size="mini" type="info" @click="onClickButton">Yes</van-button>
+            </van-cell>
+        </div>
+        <div>
             <van-field
-                :value="thoseTime"
-                label="预约时间"
-                placeholder="日期 小时"
-                required
-                
-                />
-        </van-cellgroup>
-        <van-cellgroup>
+            :value="currentDate"
+            label="预约时间"
+            placeholder="日期 小时"
+            required
+            readonly
+            @click="showTimePicker"
+            />
+        </div>
+        <div>
             <van-field
-                v-model="message"
+                :model="message"
                 label="备注"
                 type="textarea"
                 placeholder="请输入留言"
                 autosize
                 required
             />
-        </van-cellgroup>
-        <!-- <van-cell>
-            <van-popup :show="show" position="bottom">
-                
+        </div>
+        <div>
+            <van-popup
+            :show="show"
+            position="bottom"
+            custom-style="height: 40%;"
+            @close="show = false"
+            >
+            <van-datetime-picker
+            type="year-month-time"
+            :value="currentDate"
+            :min-date="minDate"
+            @input="onInput"
+            @confirm="onConfirm"
+            @change="onChange"
+            />
             </van-popup>
-        </van-cell> -->
+        </div>
         <div>
             <van-cell title="垃圾数量：1~4张"/>
             <van-uploader :file-list="fileList" bind:after-read="afterRead" />
         </div>
         <div>
             <van-field
-                :value="cost"
+                :value="(cost + buildArea)"
                 label="清运费"
-                readonly="true"
+                readonly
                 input-class="costColor"
             />
+        </div>
+        <div>
+            <van-button type="primary" custom-class="van-button--size" @click="onClickShow">立即下单</van-button>
+        </div>
+        <div>
+            <van-overlay :show="overlayshow" @click="onClickHide">
+                <view class="wrapper">
+                    <view class="block">
+
+                    </view>
+                </view>
+            </van-overlay>
         </div>
     </div>
 </template>
@@ -96,7 +125,9 @@
 export default {
     data(){
         return{
-            show:"false",
+            overlayshow:false,
+            yesOrNo:false,
+            show:false,
             name:'',
             phoneNumber:'',
             address:'上海市',
@@ -105,12 +136,22 @@ export default {
             buildArea:'',
             thoseTime:'',
             fileList:[],
-            cost:'0'
+            cost:'300',
+            minHour: 0,
+            maxHour: 24,
+            minDate: new Date().getTime(),
+            currentDate: new Date().getTime()
         }
     },
     methods:{
-        onConfirm(v) {
-            this.show = false;
+        showTimePicker(){
+            this.show = true
+        },
+        onClose() {
+            this.show = false
+        },
+        onConfirm() {
+            this.show = false
         },
         afterRead(event) {
             const { file } = event.detail;
@@ -126,11 +167,42 @@ export default {
                 },
             });
         },
+        onInput(event) {
+            this.setData({
+                currentDate: event.detail,
+            });
+        },
+        //有关遮罩层
+        onClickShow() {
+            this.overlayshow = true
+        },
+        onClickHide() {
+            this.overlayshow = false
+            }
     }
 }
 </script>
+
 <style scoped>
 >>> .costColor {
     color: red;
+}
+
+>>> .van-button--size {
+    margin: 5% 35%;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.block {
+    z-index: 1;
+    width: 70%;
+    height: 50%;
+    background-color: #fff;
 }
 </style>

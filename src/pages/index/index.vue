@@ -42,8 +42,9 @@ export default {
       textOfBuild:"适用于：商店装修",
       textOfNormalTitle:"普通装修垃圾清运",
       textOfNormal:"适用于：普通住宅装修垃圾清运、毛胚住宅装修垃圾清运、新房住宅垃圾清运、老房住宅垃圾清运",
-      show:false,
-      showBorder:true
+      show:true,
+      showBorder:true,
+      count:"0"
     }
   },
   methods: {
@@ -85,17 +86,20 @@ export default {
   height: 40%;
   background-color: #fff;
 }
+
 .textSize {
   text-align: center;
   color:black;
   margin:20px;
 }
+
 >>> .van-cell--mid{
   background-color: blue;
   height: 70%;
   width: 80%;
   margin: 10% 10%;
 }
+
 >>> .van-button--user{
   background-color:rgb(255, 153, 0);
   border: white;
