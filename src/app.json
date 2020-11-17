@@ -3,10 +3,23 @@
   "pages": [
     "pages/index/main",
     "pages/logs/main",
-    "pages/counter/main"
+    "pages/counter/main",
+    "pages/inputPage/main",
+    "pages/inputPages/main",
+    "pages/checkPage/main"
   ],
   "usingComponents": {
-    "van-button": "vant-weapp/dist/button/index"
+    "van-button": "vant-weapp/dist/button/index",
+    "van-overlay": "vant-weapp/dist/overlay/index",
+    "van-row": "vant-weapp/dist/row/index",
+    "van-col": "vant-weapp/dist/col/index",
+    "van-field": "vant-weapp/dist/field/index",
+    "van-cell": "vant-weapp/dist/cell/index",
+    "van-cell-group": "vant-weapp/dist/cell-group/index",
+    "van-popup": "vant-weapp/dist/popup/index",
+    "van-picker": "vant-weapp/dist/picker/index",
+    "van-uploader": "vant-weapp/dist/uploader/index",
+    "van-datetime-picker": "vant-weapp/dist/datetime-picker/index"
   },
   "window": {
     "backgroundTextStyle": "light",
