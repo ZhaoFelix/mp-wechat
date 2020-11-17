@@ -84,7 +84,10 @@
         </div>
         <div>
             <van-field
-                v-model="cost"
+                :value="cost"
+                label="清运费"
+                readonly="true"
+                input-class="costColor"
             />
         </div>
     </div>
@@ -102,7 +105,7 @@ export default {
             buildArea:'',
             thoseTime:'',
             fileList:[],
-            cost:''
+            cost:'0'
         }
     },
     methods:{
@@ -127,4 +130,7 @@ export default {
 }
 </script>
 <style scoped>
+>>> .costColor {
+    color: red;
+}
 </style>

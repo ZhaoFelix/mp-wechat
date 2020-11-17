@@ -2,16 +2,16 @@
   <div>
     <van-row>
       <van-col offset="2" span="20">
-        <van-cellgroup :border="showBorder">
-          <div>
-            <van-cell :title="textOfBuildTitle" :label="textOfBuild" @click="changePageToUser" size="lagre" custom-class="van-cell--mid"></van-cell>
-          </div>
-        </van-cellgroup>
+        <div>
+          <van-cell :title="textOfBuildTitle" :label="textOfBuild" @click="changePageToUser" size="lagre" custom-class="van-cell--mid"></van-cell>
+        </div>
       </van-col>
     </van-row>
     <van-row>
       <van-col offset="2" span="20">
-        <van-cell :title="textOfNormalTitle" :label="textOfNormal" @click="changePageToProp" custom-class="van-cell--mid"></van-cell>
+        <div>
+          <van-cell :title="textOfNormalTitle" :label="textOfNormal" @click="changePageToProp" custom-class="van-cell--mid"></van-cell>
+        </div>
       </van-col>
     </van-row>
     <!-- 遮罩层 -->
@@ -42,7 +42,7 @@ export default {
       textOfBuild:"适用于：商店装修",
       textOfNormalTitle:"普通装修垃圾清运",
       textOfNormal:"适用于：普通住宅装修垃圾清运、毛胚住宅装修垃圾清运、新房住宅垃圾清运、老房住宅垃圾清运",
-      show:true,
+      show:false,
       showBorder:true
     }
   },
