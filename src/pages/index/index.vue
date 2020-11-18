@@ -3,7 +3,7 @@
     <van-row>
       <van-col offset="2" span="20">
         <div>
-          <van-cell open-type="getUserInfo" :title="textOfBuildTitle" :label="textOfBuild" @click="changePageToUser($event, 0)" size="lagre" custom-class="van-cell--mid"></van-cell>
+          <van-cell :title="textOfBuildTitle" :label="textOfBuild" @click="changePageToUser($event, 0)" size="lagre" custom-class="van-cell--mid"></van-cell>
         </div>
       </van-col>
     </van-row>
@@ -23,10 +23,10 @@
             <h2>请选择您的身份</h2>
           </div>
           <div>
-            <van-button type="primary" custom-class="van-button--user" @click="onClickHide">我是用户</van-button>
+            <button open-type="getUserInfo" type="primary" custom-class="van-button--user" @click="onClickHide">我是用户</button>
           </div>
           <div>
-            <van-button type="primary" custom-class="van-button--prop" @click="changePageToCheck">我是物业</van-button>
+            <button open-type="getUserInfo" type="primary" custom-class="van-button--prop" @click="changePageToCheck">我是物业</button>
           </div>
         </view>
       </view>
@@ -122,36 +122,68 @@ export default {
     changePageToCheck(){
       let url = "../checkPage/main"
       mpvue.navigateTo({ url })
+    },
+    getOpenId() {
+      var _this = this;
+      console.log("开始获取openID!")
+      // 登录获取openID
+      wx.login({
+        success(res) {
+          if (res.code) {
+            // console.log(res);
+            _this.$wxRequest
+              .post({
+                url: "/mobile/wxauth/wxauth",
+                data: {
+                  code: res.code,
+                },
+              })
+              .then((res) => {
+                if (res.data.code == 20000) {
+                  // console.log(res.data.data.openid);
+                  _this.$store.commit("setOpenID", {
+                    openID: res.data.data.openid,
+                  });
+                } else {
+                }
+              });
+
+            // 这里可以把code传给后台，后台用此获取openid及session_key
+          }
+        }
+      })
+    },
+    loginOk(res) {
     }
   },
   mounted() {
     var _this = this;
-    // 登录获取openID
-    wx.login({
-      success(res) {
-        if (res.code) {
-          // console.log(res);
-          _this.$wxRequest
-            .post({
-              url: "/mobile/wxauth",
-              data: {
-                code: res.code,
-              },
-            })
-            .then((res) => {
-              if (res.data.code == 20000) {
-                // console.log(res.data.data.openid);
-                _this.$store.commit("setOpenID", {
-                  openID: res.data.data.openid,
-                });
-              } else {
-              }
-            });
-
-          // 这里可以把code传给后台，后台用此获取openid及session_key
+    wx.getSetting({
+      success(res) {    	          	 
+        if (!res.authSetting['scope.userInfo']) {//未授权getUserInfo            	
+          wx.authorize({
+            scope: 'scope.userInfo',
+            success(res) {	                
+              // 用户已经同意小程序使用用户信息，后续调用 wx.userInfo 接口不会弹窗询问       
+              console.log(res)
+              _this.getOpenId()
+            },
+            fail(err){
+              console.log(err)
+            }
+          })
+        }else{//已授权
+          wx.getUserInfo({
+            success(res) {	
+              _this.getOpenId()
+            },
+            fail(err) {
+              console.log(err)
+            }
+          })
         }
-      },
-    });
+      }
+    })
   }
 }
 </script>
