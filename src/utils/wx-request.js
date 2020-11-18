@@ -1,4 +1,4 @@
-const host = "http://localhost:3000";
+const host = "http://localhost:3000/v1.0";
 
 function request(url, method, data, header = {}) {
   wx.showLoading({
