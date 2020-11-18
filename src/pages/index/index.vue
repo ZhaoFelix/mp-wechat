@@ -3,7 +3,7 @@
     <van-row>
       <van-col offset="2" span="20">
         <div>
-          <van-cell :title="textOfBuildTitle" :label="textOfBuild" @click="changePageToUser($event, 0)" size="lagre" custom-class="van-cell--mid"></van-cell>
+          <van-cell open-type="getUserInfo" :title="textOfBuildTitle" :label="textOfBuild" @click="changePageToUser($event, 0)" size="lagre" custom-class="van-cell--mid"></van-cell>
         </div>
       </van-col>
     </van-row>
@@ -45,7 +45,8 @@ export default {
       textOfNormal:"适用于：普通住宅装修垃圾清运、毛胚住宅装修垃圾清运、新房住宅垃圾清运、老房住宅垃圾清运",
       show:true,
       showBorder:true,
-      count:"0"
+      count:"0",
+      userInfo: {}
     }
   },
   methods: {
@@ -57,62 +58,6 @@ export default {
     },
     changePageToUser(e, id){
       let url = "../inputPage/main"
-
-      if (this.$store.state.isLogin) {
-        return;
-      }
-      if (e.mp.detail.userInfo) {
-        console.log("用户按了允许授权按钮");
-        let { encryptedData, userInfo, iv } = e.mp.detail;
-        // console.log(userInfo);
-        /*
-        {
-          avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/bibL1icICotFmhhqRxDeYWFj6bk58FjS35U4Pic7cVukYBKhTkMVKcHNOp4aK2euyBdTXbN45rVAw9Lvy74ibxNobA/132"
-          city: ""
-          country: "China"
-          gender: 1
-          language: "zh_CN"
-          nickName: "Felix"
-          province: "Shanghai"
-        }
-        */
-        // console.log(this.$store.state.openID.openID);
-        let data = {
-          openId: this.$store.state.openID.openID,
-          avatarUrl: userInfo.avatarUrl,
-          gender: userInfo.gender,
-          nickName: userInfo.nickName,
-          province: userInfo.province,
-          country: userInfo.country,
-        };
-        // console.log(data);
-        this.$wxRequest
-          .post({
-            url: "/v1.0/mobile/wechat",
-            data: data,
-          })
-          .then((res) => {
-            if (res.data.code == 20000) {
-              console.log(res.data.data[0]);
-              this.$store.commit("setUserID", {
-                openID: res.data.data[0].wechat_id,
-              });
-              this.$store.commit("changeLogin");
-              if (id == 0) {
-                const url = "../list/main";
-                mpvue.navigateTo({ url });
-              } else if (id == 1) {
-                const url = "../history/main";
-                mpvue.navigateTo({ url });
-              }
-            } else {
-            }
-          });
-          // mpvue.navigateTo({ url });
-      } else {
-        //用户按了拒绝按钮
-        console.log("用户按了拒绝按钮");
-      }
       mpvue.navigateTo({ url });
     },
     changePageToProp(){
@@ -140,13 +85,16 @@ export default {
               })
               .then((res) => {
                 if (res.data.code == 20000) {
+                  console.log("测试---------------")
+                  console.log(res.data)
                   // console.log(res.data.data.openid);
                   _this.$store.commit("setOpenID", {
                     openID: res.data.data.openid,
                   });
                 } else {
+                  console.log("获取openId失败")
                 }
-              });
+              })
 
             // 这里可以把code传给后台，后台用此获取openid及session_key
           }
@@ -154,6 +102,43 @@ export default {
       })
     },
     loginOk(res) {
+      console.log("loginOK")
+      let _this = this
+       _this.getOpenId()
+       console.log(_this.$store.state.openID.openID)
+      _this.userInfo = {
+        openId: _this.$store.state.openID.openID,
+        avatarUrl: res.userInfo.avatarUrl,
+        gender: res.userInfo.gender,
+        nickName: res.userInfo.nickName,
+        province: res.userInfo.province,
+        country: res.userInfo.country,
+      }
+      console.log(_this.userInfo)
+
+      _this.$wxRequest
+          .post({
+            url: "/mobile/wechat",
+            data: data,
+          })
+          .then((res) => {
+            console.log(res.data)
+            if (res.data.code == 20000) {
+              console.log(res.data.data[0]);
+              this.$store.commit("setUserID", {
+                openID: res.data.data[0].wechat_id,
+              });
+              this.$store.commit("changeLogin");
+              if (id == 0) {
+                const url = "../list/main";
+                mpvue.navigateTo({ url });
+              } else if (id == 1) {
+                const url = "../history/main";
+                mpvue.navigateTo({ url });
+              }
+            } else {
+            }
+          });
     }
   },
   mounted() {
@@ -166,7 +151,11 @@ export default {
             success(res) {	                
               // 用户已经同意小程序使用用户信息，后续调用 wx.userInfo 接口不会弹窗询问       
               console.log(res)
-              _this.getOpenId()
+              // wx.getUserInfo({
+              //   success(res) {
+              //     _this.getOpenId()
+              //   }
+              // })
             },
             fail(err){
               console.log(err)
@@ -175,7 +164,7 @@ export default {
         }else{//已授权
           wx.getUserInfo({
             success(res) {	
-              _this.getOpenId()
+              _this.loginOk(res)
             },
             fail(err) {
               console.log(err)
