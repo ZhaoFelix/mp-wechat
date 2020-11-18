@@ -3,14 +3,14 @@
     <van-row>
       <van-col offset="2" span="20">
         <div>
-          <van-cell :title="textOfBuildTitle" :label="textOfBuild" @click="changePageToUser" size="lagre" custom-class="van-cell--mid"></van-cell>
+          <van-cell open-type="getUserInfo" :title="textOfBuildTitle" :label="textOfBuild" @click="changePageToUser($event, 0)" size="lagre" custom-class="van-cell--mid"></van-cell>
         </div>
       </van-col>
     </van-row>
     <van-row>
       <van-col offset="2" span="20">
         <div>
-          <van-cell :title="textOfNormalTitle" :label="textOfNormal" @click="changePageToProp" custom-class="van-cell--mid"></van-cell>
+          <van-cell  :title="textOfNormalTitle" :label="textOfNormal" @click="changePageToProp" custom-class="van-cell--mid"></van-cell>
         </div>
       </van-col>
     </van-row>
@@ -38,6 +38,7 @@
 export default {
   data() {
     return {
+      openID: "",
       textOfBuildTitle:"商业装修垃圾清运",
       textOfBuild:"适用于：商店装修",
       textOfNormalTitle:"普通装修垃圾清运",
@@ -54,8 +55,64 @@ export default {
     onClickHide(){
       this.show = false
     },
-    changePageToUser(){
+    changePageToUser(e, id){
       let url = "../inputPage/main"
+
+      if (this.$store.state.isLogin) {
+        return;
+      }
+      if (e.mp.detail.userInfo) {
+        console.log("用户按了允许授权按钮");
+        let { encryptedData, userInfo, iv } = e.mp.detail;
+        // console.log(userInfo);
+        /*
+        {
+          avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/bibL1icICotFmhhqRxDeYWFj6bk58FjS35U4Pic7cVukYBKhTkMVKcHNOp4aK2euyBdTXbN45rVAw9Lvy74ibxNobA/132"
+          city: ""
+          country: "China"
+          gender: 1
+          language: "zh_CN"
+          nickName: "Felix"
+          province: "Shanghai"
+        }
+        */
+        // console.log(this.$store.state.openID.openID);
+        let data = {
+          openId: this.$store.state.openID.openID,
+          avatarUrl: userInfo.avatarUrl,
+          gender: userInfo.gender,
+          nickName: userInfo.nickName,
+          province: userInfo.province,
+          country: userInfo.country,
+        };
+        // console.log(data);
+        this.$wxRequest
+          .post({
+            url: "/v1.0/mobile/wechat",
+            data: data,
+          })
+          .then((res) => {
+            if (res.data.code == 20000) {
+              console.log(res.data.data[0]);
+              this.$store.commit("setUserID", {
+                openID: res.data.data[0].wechat_id,
+              });
+              this.$store.commit("changeLogin");
+              if (id == 0) {
+                const url = "../list/main";
+                mpvue.navigateTo({ url });
+              } else if (id == 1) {
+                const url = "../history/main";
+                mpvue.navigateTo({ url });
+              }
+            } else {
+            }
+          });
+          // mpvue.navigateTo({ url });
+      } else {
+        //用户按了拒绝按钮
+        console.log("用户按了拒绝按钮");
+      }
       mpvue.navigateTo({ url });
     },
     changePageToProp(){
@@ -66,8 +123,37 @@ export default {
       let url = "../checkPage/main"
       mpvue.navigateTo({ url })
     }
+  },
+  mounted() {
+    var _this = this;
+    // 登录获取openID
+    wx.login({
+      success(res) {
+        if (res.code) {
+          // console.log(res);
+          _this.$wxRequest
+            .post({
+              url: "/mobile/wxauth",
+              data: {
+                code: res.code,
+              },
+            })
+            .then((res) => {
+              if (res.data.code == 20000) {
+                // console.log(res.data.data.openid);
+                _this.$store.commit("setOpenID", {
+                  openID: res.data.data.openid,
+                });
+              } else {
+              }
+            });
+
+          // 这里可以把code传给后台，后台用此获取openid及session_key
+        }
+      },
+    });
   }
-};
+}
 </script>
 
 <style scoped>
@@ -93,14 +179,14 @@ export default {
   margin:20px;
 }
 
->>> .van-cell--mid{
+.van-cell--mid{
   background-color: blue;
   height: 70%;
   width: 80%;
   margin: 10% 10%;
 }
 
->>> .van-button--user{
+.van-button--user{
   background-color:rgb(255, 153, 0);
   border: white;
   width: 50%;
@@ -108,7 +194,7 @@ export default {
   margin: 5% 25%;
 }
 
->>> .van-button--prop {
+.van-button--prop {
   background-color:rgb(0, 119, 255);
   border: white;
   width: 50%;
