@@ -23,7 +23,7 @@
             <h2>请选择您的身份</h2>
           </div>
           <div>
-            <button open-type="getUserInfo" type="primary" custom-class="van-button--user" @click="onClickHide">我是用户</button>
+            <button open-type="getUserInfo" type="primary" custom-class="van-button--user" @click="onClickHide" @getuserinfo="bindGetUserInfo($event, 0)">我是用户</button>
           </div>
           <div>
             <button open-type="getUserInfo" type="primary" custom-class="van-button--prop" @click="changePageToCheck">我是物业</button>
@@ -100,29 +100,35 @@ export default {
           }
         }
       })
-    },
-    loginOk(res) {
-      console.log("loginOK")
-      let _this = this
-       _this.getOpenId()
-       console.log(_this.$store.state.openID.openID)
-      _this.userInfo = {
-        openId: _this.$store.state.openID.openID,
-        avatarUrl: res.userInfo.avatarUrl,
-        gender: res.userInfo.gender,
-        nickName: res.userInfo.nickName,
-        province: res.userInfo.province,
-        country: res.userInfo.country,
+    }, 
+    bindGetUserInfo(e, id) {
+      this.openID = this.$store.state.openID.openID
+      console.log(this.$store.state.openID.openID)
+      if (this.$store.state.isLogin) {
+        return;
       }
-      console.log(_this.userInfo)
+      // console.log(e)
+      console.log("-----------")
+      if (e.mp.detail.userInfo) {
+        console.log("用户按了允许授权按钮");
+        let { encryptedData, userInfo, iv } = e.mp.detail;
 
-      _this.$wxRequest
+        let data = {
+          openId: this.openID,
+          avatarUrl: userInfo.avatarUrl,
+          gender: userInfo.gender,
+          nickName: userInfo.nickName,
+          province: userInfo.province,
+          country: userInfo.country,
+        };
+        console.log(data)
+
+        this.$wxRequest
           .post({
-            url: "/mobile/wechat",
+            url: "/mobile/wxauth/wechat",
             data: data,
           })
           .then((res) => {
-            console.log(res.data)
             if (res.data.code == 20000) {
               console.log(res.data.data[0]);
               this.$store.commit("setUserID", {
@@ -139,6 +145,9 @@ export default {
             } else {
             }
           });
+      } else {
+        console.log("用户点击了拒绝按钮")
+      }
     }
   },
   mounted() {
@@ -164,7 +173,7 @@ export default {
         }else{//已授权
           wx.getUserInfo({
             success(res) {	
-              _this.loginOk(res)
+              _this.getOpenId()
             },
             fail(err) {
               console.log(err)
