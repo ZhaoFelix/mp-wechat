@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style scoped>
->>> .fieldSize {
+.fieldSize {
     margin: 20% 5% 20%;
 }
 </style>>

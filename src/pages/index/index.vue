@@ -26,7 +26,7 @@
             <button open-type="getUserInfo" type="primary" custom-class="van-button--user" @click="onClickHide" @getuserinfo="bindGetUserInfo($event, 0)">我是用户</button>
           </div>
           <div>
-            <button open-type="getUserInfo" type="primary" custom-class="van-button--prop" @click="changePageToCheck">我是物业</button>
+            <button open-type="getUserInfo" type="primary" custom-class="van-button--prop" @click="changePageToCheck" @getuserinfo="bindGetUserInfo($event, 1)">我是物业</button>
           </div>
         </view>
       </view>
@@ -45,8 +45,7 @@ export default {
       textOfNormal:"适用于：普通住宅装修垃圾清运、毛胚住宅装修垃圾清运、新房住宅垃圾清运、老房住宅垃圾清运",
       show:true,
       showBorder:true,
-      count:"0",
-      userInfo: {}
+      count:"0"
     }
   },
   methods: {
@@ -85,7 +84,7 @@ export default {
               })
               .then((res) => {
                 if (res.data.code == 20000) {
-                  console.log("测试---------------")
+                  // console.log("测试---------------")
                   console.log(res.data)
                   // console.log(res.data.data.openid);
                   _this.$store.commit("setOpenID", {
@@ -104,6 +103,7 @@ export default {
     bindGetUserInfo(e, id) {
       this.openID = this.$store.state.openID.openID
       console.log(this.$store.state.openID.openID)
+
       if (this.$store.state.isLogin) {
         return;
       }
@@ -114,6 +114,7 @@ export default {
         let { encryptedData, userInfo, iv } = e.mp.detail;
 
         let data = {
+          user_type: id,
           openId: this.openID,
           avatarUrl: userInfo.avatarUrl,
           gender: userInfo.gender,
@@ -129,20 +130,24 @@ export default {
             data: data,
           })
           .then((res) => {
+            console.log("bindGetUSerInfo--------------")
+            // console.log(res.data)
             if (res.data.code == 20000) {
               console.log(res.data.data[0]);
               this.$store.commit("setUserID", {
                 openID: res.data.data[0].wechat_id,
               });
               this.$store.commit("changeLogin");
+              // 
               if (id == 0) {
-                const url = "../list/main";
+                const url = "../inputPage/main"
                 mpvue.navigateTo({ url });
-              } else if (id == 1) {
-                const url = "../history/main";
+              } else {
+                const url = "../checkPage/main"
                 mpvue.navigateTo({ url });
               }
             } else {
+              console.log("获取失败")
             }
           });
       } else {
