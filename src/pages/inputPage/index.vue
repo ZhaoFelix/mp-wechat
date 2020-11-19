@@ -122,6 +122,7 @@
     </div>
 </template>
 <script>
+import getSTS from '../../utils/getSTS'
 export default {
     data(){
         return{
@@ -140,7 +141,10 @@ export default {
             minHour: 0,
             maxHour: 24,
             minDate: new Date().getTime(),
-            currentDate: new Date().getTime()
+            currentDate: new Date().getTime(),
+            OSSAccessKeyId: "",
+            policy: "",
+            signature: ""
         }
     },
     methods:{
@@ -179,16 +183,33 @@ export default {
         onClickHide() {
             this.overlayshow = false
             }
+    },
+    mounted() {
+        this.$wxRequest
+          .get({
+            url: "/public/getToken/osstoken"
+          })
+          .then((res) => {
+            console.log("getKey--------------")
+            // console.log(res.data)
+            if (res.data.code == 20000) {
+              console.log(res.data);
+              this.OSSAccessKeyId = res.data.OSSAccessKeyId
+              this.signature = res.data.signature
+              this.policy = res.data.policy
+            }
+          });
+          
     }
 }
 </script>
 
 <style scoped>
->>> .costColor {
+.costColor {
     color: red;
 }
 
->>> .van-button--size {
+.van-button--size {
     margin: 5% 35%;
 }
 
