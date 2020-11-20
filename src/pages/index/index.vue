@@ -53,9 +53,9 @@ export default {
     onClickShow(){
       this.show = true
     },
-    onClickHide(){
-      this.show = false
-    },
+    // onClickHide(){
+    //   this.show = false
+    // },
     changePageToUser(e, id){
       let url = "../inputPage/main"
       mpvue.navigateTo({ url });
@@ -64,10 +64,10 @@ export default {
       let url = "../inputPages/main"
       mpvue.navigateTo({ url })
     },
-    changePageToCheck(){
-      let url = "../checkPage/main"
-      mpvue.navigateTo({ url })
-    },
+    // changePageToCheck(){
+    //   let url = "../checkPage/main"
+    //   mpvue.navigateTo({ url })
+    // },
     bindGetUserInfo(e, id) {
       this.openID = this.$store.state.openID.openID
       console.log(this.$store.state.openID.openID)
@@ -108,12 +108,12 @@ export default {
               this.$store.commit("changeLogin");
               // 
               if (id == 0) {
-                const url = "../inputPage/main"
-                mpvue.navigateTo({ url });
+                this.show = false
               } else {
                 const url = "../checkPage/main"
                 mpvue.navigateTo({ url });
               }
+              
             } else {
               console.log("获取失败")
             }
@@ -150,6 +150,7 @@ export default {
                   console.log("获取openId失败")
                 }
               })
+
           }
         }
       })

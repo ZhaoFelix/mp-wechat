@@ -3,15 +3,15 @@
         <div class="fieldSize">
             <div>
                 <van-field
-                type="tel"
+                type="text"
                 :value="phoneNumber"
                 label="联系电话"
                 placeholder="手机号码"
                 maxlength="11"
-                @change="onchange"
+                @change="getValue"
                 required
                 >
-                    <van-button slot="button" size="small" type="primary">发送验证码</van-button>
+                    <van-button slot="button" size="small" type="primary" @click="getCode()">发送验证码</van-button>
                 </van-field>
             </div>
             <div>
@@ -20,14 +20,14 @@
                 :value="checkCode"
                 label="验证码"
                 placeholder="验证码"
-                @change="onchange"
+                @change="getCheckCode"
                 required
             />
             </div>
         </div>
         <div>
             <van-col offset="8" span="8">
-                <van-button type="primary" size="large" >完 成</van-button>
+                <van-button type="primary" size="large" @click="checkCode()">完 成</van-button>
             </van-col>
         </div>
     </div>
@@ -39,9 +39,55 @@ export default {
         return {
             phoneNumber:'',
             checkCode:''
+
         };
     },
     methods:{
+        getValue(event) {
+            this.phoneNumber = event.mp.detail
+        },
+        getCheckCode(event) {
+            this.checkCode = event.mp.detail
+        },
+        getCode() {
+            let phone = this.phoneNumber
+            // console.log(phone)
+            console.log('获取手机验证码')
+            this.$wxRequest
+            .get({
+                url: "/public/verify/verify?phone="+phone
+            })
+            .then((res) => {
+                console.log("开始获取手机验证码--------------")
+                // console.log(res.data)
+                if(res.data.Message == "OK") {
+                    console.log("获取验证码成功")
+                } else {
+                    console.log("获取验证码失败")
+                }
+            });
+        },
+        checkCode() {
+            let data = {
+                phone: this.phoneNumber,
+                checkCode: this.checkCode
+            }
+            console.log(data)
+            this.$wxRequest
+            .post({
+                url: "/public/verify/check",
+                data: data
+            })
+            .then((res) => {
+                console.log("开始获取手机验证码--------------")
+                // console.log(res.data)
+                if(res.data.Message == "OK") {
+                    console.log("获取验证码成功")
+                } else {
+                    console.log("获取验证码失败")
+                }
+            });
+        }
 
     }
 };
