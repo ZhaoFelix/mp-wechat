@@ -5,7 +5,8 @@
     "pages/logs/main",
     "pages/inputPage/main",
     "pages/inputPages/main",
-    "pages/checkPage/main"
+    "pages/checkPage/main",
+    "pages/propInformation/main"
   ],
   "usingComponents": {
     "van-button": "vant-weapp/dist/button/index",
