@@ -19,7 +19,9 @@
     "van-popup": "vant-weapp/dist/popup/index",
     "van-picker": "vant-weapp/dist/picker/index",
     "van-uploader": "vant-weapp/dist/uploader/index",
-    "van-datetime-picker": "vant-weapp/dist/datetime-picker/index"
+    "van-datetime-picker": "vant-weapp/dist/datetime-picker/index",
+    "van-tab": "vant-weapp/dist/tab/index",
+    "van-tabs": "vant-weapp/dist/tabs/index"
   },
   "window": {
     "backgroundTextStyle": "light",

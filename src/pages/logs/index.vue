@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <van-tabs :active="active" bind:change="onChange">
-  <van-tab title="全部">
+  <van-tab title="未完成">
     <div>
       <div class="course-list">
       <div v-for="i in 4" :key="i" class="course-card">
@@ -33,7 +33,7 @@
         <div class="course-content" @click="courseDetail">
               <van-row >
                 <span class="course-map">订单编号：20201113-15</span>
-                <span class="course-map">未完成</span>
+                <span class="course-map">已完成</span>
               </van-row>
               <van-row> 
                 <span class="course-name"> 订单地址：地区、街道 </span>

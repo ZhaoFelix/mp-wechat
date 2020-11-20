@@ -5,7 +5,7 @@
                 v-model='name'
                 label="联系人"
                 placeholder="姓名"
-                @change="onChange"
+                @change="onchangeName"
                 required
             />
         </div>
@@ -16,7 +16,7 @@
                 label="联系电话"
                 placeholder="手机号码"
                 maxlength="11"
-                @change="onchange"
+                @change="onchangePhoneNumber"
                 required
             />
         </div>
@@ -38,6 +38,7 @@
                 type="text"
                 placeholder="请输入具体地址 如：街道名称"
                 required
+                @change="onchangeAddress"
             />
         </div>
         <div>
@@ -47,7 +48,7 @@
                 label="建筑面积"
                 placeholder="单位为平方米"
                 required
-                @change="onChange"
+                @change="onchangeArea"
             />
         </div>
         <div>
@@ -91,13 +92,13 @@
             :min-date="minDate"
             @input="onInput"
             @confirm="onConfirm"
-            @change="onChange"
+            @change="onChangeTime"
             />
             </van-popup>
         </div>
         <div>
             <van-cell title="垃圾数量：1~4张"/>
-            <van-uploader :file-list="fileList" bind:after-read="afterRead" />
+            <van-uploader :file-list="fileList" max-count="4" :after-read="afterRead"/>
         </div>
         <div>
             <van-field
@@ -126,6 +127,7 @@ import getSTS from '../../utils/getSTS'
 export default {
     data(){
         return{
+            firs:0,
             overlayshow:false,
             yesOrNo:false,
             show:false,
@@ -137,7 +139,7 @@ export default {
             buildArea:'',
             thoseTime:'',
             fileList:[],
-            cost:'300',
+            cost:300,
             minHour: 0,
             maxHour: 24,
             minDate: new Date().getTime(),
@@ -156,6 +158,26 @@ export default {
         },
         onConfirm() {
             this.show = false
+        },
+        onClickButton() {
+            this.yesOrNo = false
+            this.firs = 1
+        },
+        onchangeName(event){
+            console.log(event.detail)
+            this.name = event.detail
+        },
+        onchangePhoneNumber(event){
+            this.phoneNumber = event.detail
+        },
+        onchangeAddress(event){
+            this.detailedAddress = event.detail
+        },
+        onchangeArea(event){
+            this.buildArea = event.detail
+        },
+        onChangeTime(event){
+            this.currentDate = event.detail
         },
         afterRead(event) {
             const { file } = event.detail;
@@ -186,20 +208,20 @@ export default {
     },
     mounted() {
         this.$wxRequest
-          .get({
+        .get({
             url: "/public/getToken/osstoken"
-          })
-          .then((res) => {
+        })
+        .then((res) => {
             console.log("getKey--------------")
             // console.log(res.data)
             if (res.data.code == 20000) {
-              console.log(res.data);
-              this.OSSAccessKeyId = res.data.OSSAccessKeyId
-              this.signature = res.data.signature
-              this.policy = res.data.policy
+            console.log(res.data);
+            this.OSSAccessKeyId = res.data.OSSAccessKeyId
+            this.signature = res.data.signature
+            this.policy = res.data.policy
             }
-          });
-          
+        });
+        
     }
 }
 </script>

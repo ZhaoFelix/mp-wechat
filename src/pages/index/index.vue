@@ -3,14 +3,15 @@
     <van-row>
       <van-col offset="2" span="20">
         <div>
-          <van-cell open-type="getUserInfo" :title="textOfBuildTitle" :label="textOfBuild" @click="changePageToUser($event, 0)" size="lagre" custom-class="van-cell--mid"></van-cell>
+          <van-cell open-type="getUserInfo" :title="textOfBuildTitle" :label="textOfBuild" @click="changePageToUser($event, 0)" size="lagre" custom-class="build">
+          </van-cell>
         </div>
       </van-col>
     </van-row>
     <van-row>
       <van-col offset="2" span="20">
         <div>
-          <van-cell  :title="textOfNormalTitle" :label="textOfNormal" @click="changePageToProp" custom-class="van-cell--mid"></van-cell>
+          <van-cell  :title="textOfNormalTitle" :label="textOfNormal" @click="changePageToProp" custom-class="build"></van-cell>
         </div>
       </van-col>
     </van-row>
@@ -20,13 +21,13 @@
       <view class="wrapper">
         <view class="block">
           <div class="textSize">
-            <h2>请选择您的身份</h2>
+            <h1>请选择您的身份</h1>
           </div>
           <div>
-            <button open-type="getUserInfo" type="primary" custom-class="van-button--user" @click="onClickHide" @getuserinfo="bindGetUserInfo($event, 0)">我是用户</button>
+            <button open-type="getUserInfo" type="primary" class="van-button--user" @click="onClickHide" @getuserinfo="bindGetUserInfo($event, 0)">我是用户</button>
           </div>
           <div>
-            <button open-type="getUserInfo" type="primary" custom-class="van-button--prop" @click="changePageToCheck" @getuserinfo="bindGetUserInfo($event, 1)">我是物业</button>
+            <button open-type="getUserInfo" type="primary" class="van-button--prop" @click="changePageToCheck" @getuserinfo="bindGetUserInfo($event, 1)">我是物业</button>
           </div>
         </view>
       </view>
@@ -53,21 +54,21 @@ export default {
     onClickShow(){
       this.show = true
     },
-    // onClickHide(){
-    //   this.show = false
-    // },
+    onClickHide(){
+      this.show = false
+    },
     changePageToUser(e, id){
       let url = "../inputPage/main"
       mpvue.navigateTo({ url });
     },
-    changePageToProp(){
+    changePageToProp(e, id){
       let url = "../inputPages/main"
       mpvue.navigateTo({ url })
     },
-    // changePageToCheck(){
-    //   let url = "../checkPage/main"
-    //   mpvue.navigateTo({ url })
-    // },
+    changePageToCheck(){
+      let url = "../checkPage/main"
+      mpvue.navigateTo({ url })
+    },
     bindGetUserInfo(e, id) {
       this.openID = this.$store.state.openID.openID
       console.log(this.$store.state.openID.openID)
@@ -178,11 +179,11 @@ export default {
 .textSize {
   text-align: center;
   color:black;
-  margin:20px;
+  margin:10%;
+  font-size: 20px;
 }
 
-.van-cell--mid{
-  background-color: blue;
+>>> .build{
   height: 70%;
   width: 80%;
   margin: 10% 10%;
@@ -193,7 +194,7 @@ export default {
   border: white;
   width: 50%;
   height: 40px;
-  margin: 5% 25%;
+  margin: 10% 25%;
 }
 
 .van-button--prop {
@@ -201,7 +202,7 @@ export default {
   border: white;
   width: 50%;
   height: 40px;
-  margin: 5% 25%;
+  margin: 10% 25%;
 }
 
 </style>

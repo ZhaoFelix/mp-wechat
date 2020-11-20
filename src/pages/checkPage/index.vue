@@ -27,7 +27,7 @@
         </div>
         <div>
             <van-col offset="8" span="8">
-                <van-button type="primary" size="large" @click="checkCode()">完 成</van-button>
+                <van-button type="primary" size="large" @click="changePage(),checkCode()">完 成</van-button>
             </van-col>
         </div>
     </div>
@@ -43,6 +43,10 @@ export default {
         };
     },
     methods:{
+        changePage() {
+            let url = "../propInformation/main"
+            mpvue.navigateTo({ url })
+        },
         getValue(event) {
             this.phoneNumber = event.mp.detail
         },
