@@ -68,39 +68,6 @@ export default {
       let url = "../checkPage/main"
       mpvue.navigateTo({ url })
     },
-    getOpenId() {
-      var _this = this;
-      console.log("开始获取openID!")
-      // 登录获取openID
-      wx.login({
-        success(res) {
-          if (res.code) {
-            // console.log(res);
-            _this.$wxRequest
-              .post({
-                url: "/mobile/wxauth/wxauth",
-                data: {
-                  code: res.code,
-                },
-              })
-              .then((res) => {
-                if (res.data.code == 20000) {
-                  // console.log("测试---------------")
-                  console.log(res.data)
-                  // console.log(res.data.data.openid);
-                  _this.$store.commit("setOpenID", {
-                    openID: res.data.data.openid,
-                  });
-                } else {
-                  console.log("获取openId失败")
-                }
-              })
-
-            // 这里可以把code传给后台，后台用此获取openid及session_key
-          }
-        }
-      })
-    }, 
     bindGetUserInfo(e, id) {
       this.openID = this.$store.state.openID.openID
       console.log(this.$store.state.openID.openID)
@@ -158,36 +125,34 @@ export default {
   },
   mounted() {
     var _this = this;
-    wx.getSetting({
-      success(res) {    	          	 
-        if (!res.authSetting['scope.userInfo']) {//未授权getUserInfo            	
-          wx.authorize({
-            scope: 'scope.userInfo',
-            success(res) {	                
-              // 用户已经同意小程序使用用户信息，后续调用 wx.userInfo 接口不会弹窗询问       
-              console.log(res)
-              // wx.getUserInfo({
-              //   success(res) {
-              //     _this.getOpenId()
-              //   }
-              // })
-            },
-            fail(err){
-              console.log(err)
-            }
-          })
-        }else{//已授权
-          wx.getUserInfo({
-            success(res) {	
-              _this.getOpenId()
-            },
-            fail(err) {
-              console.log(err)
-            }
-          })
+      console.log("开始获取openID!")
+      // 登录获取openID
+      wx.login({
+        success(res) {
+          if (res.code) {
+            // console.log(res);
+            _this.$wxRequest
+              .post({
+                url: "/mobile/wxauth/wxauth",
+                data: {
+                  code: res.code,
+                },
+              })
+              .then((res) => {
+                if (res.data.code == 20000) {
+                  // console.log("测试---------------")
+                  console.log(res.data)
+                  // console.log(res.data.data.openid);
+                  _this.$store.commit("setOpenID", {
+                    openID: res.data.data.openid,
+                  });
+                } else {
+                  console.log("获取openId失败")
+                }
+              })
+          }
         }
-      }
-    })
+      })
   }
 }
 </script>
