@@ -27,7 +27,7 @@
         </div>
         <div>
             <van-col offset="8" span="8">
-                <van-button type="primary" size="large" @click="changePage(),checkCode()">完 成</van-button>
+                <van-button type="primary" size="large" @click="checkCodeFun()">完 成</van-button>
             </van-col>
         </div>
     </div>
@@ -71,7 +71,7 @@ export default {
                 }
             });
         },
-        checkCode() {
+        checkCodeFun() {
             let data = {
                 phone: this.phoneNumber,
                 checkCode: this.checkCode
@@ -83,12 +83,12 @@ export default {
                 data: data
             })
             .then((res) => {
-                console.log("开始获取手机验证码--------------")
-                // console.log(res.data)
-                if(res.data.Message == "OK") {
-                    console.log("获取验证码成功")
+                console.log("开始核对手机验证码--------------")
+                console.log(res.data)
+                if(res.data.code == 20000) {
+                    this.changePage()
                 } else {
-                    console.log("获取验证码失败")
+                    console.log('验证码错误！')
                 }
             });
         }
