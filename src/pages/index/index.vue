@@ -6,6 +6,7 @@
         class="business-card"
         v-for="(item, index) in staticInfo"
         :key="index"
+        @click="toGenerateOrder(index)"
       >
         <div class="title">
           <span>{{ item.title }}</span>
@@ -83,12 +84,8 @@ export default {
     onClickHide() {
       this.show = false;
     },
-    changePageToUser(e, id) {
+    toGenerateOrder(type) {
       let url = "../inputPage/main";
-      mpvue.navigateTo({ url });
-    },
-    changePageToProp(e, id) {
-      let url = "../inputPages/main";
       mpvue.navigateTo({ url });
     },
     changePageToCheck() {
@@ -197,28 +194,34 @@ export default {
 .container {
   width: 100%;
   height: 100%;
-  position: absolute;
+  padding-top: 60px;
 }
 .business-card {
   background-color: lightgray;
-  height: 200px;
+  height: 160px;
   width: 90%;
   border-radius: 8px;
   margin-top: 40px;
+  margin-left: 5%;
   /* TODO:待添加网络图片或者base64格式的图片 */
   /* background-image: url("../../../static/images/0207.jpg"); */
 }
 
 .title {
   width: 100%;
+  height: 20px;
   text-align: center;
   margin-top: 50px;
+  position: absolute;
+  line-height: 100%;
 }
 .info {
-  width: 90%;
+  width: 80%;
   margin-left: 5%;
   font-size: 13px;
-  margin-top: 30px;
+  margin-top: 90px;
+  position: absolute;
+  line-height: 180%;
 }
 .wrapper {
   display: flex;

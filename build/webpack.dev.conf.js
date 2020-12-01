@@ -14,7 +14,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 // 引入js压缩插件，解决vendor.js文件过大的问题
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin') 
+// var UglifyJsPlugin = require('uglifyjs-webpack-plugin') 
 
 
 // add hot-reload related code to entry chunks
@@ -85,6 +85,6 @@ module.exports = merge(baseWebpackConfig, {
     //   inject: true
     // }),
     new FriendlyErrorsPlugin(),
-    new UglifyJsPlugin({sourceMap:true})
+    // new UglifyJsPlugin({sourceMap:true})
   ]
 })

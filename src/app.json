@@ -21,7 +21,9 @@
     "van-uploader": "vant-weapp/dist/uploader/index",
     "van-datetime-picker": "vant-weapp/dist/datetime-picker/index",
     "van-tab": "vant-weapp/dist/tab/index",
-    "van-tabs": "vant-weapp/dist/tabs/index"
+    "van-tabs": "vant-weapp/dist/tabs/index",
+    "van-radio":"vant-weapp/dist/radio/index",
+    "van-radio-group": "vant-weapp/dist/radio-group/index"
   },
   "window": {
     "backgroundTextStyle": "light",
