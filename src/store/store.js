@@ -7,6 +7,8 @@ export default new Vuex.Store({
     openID: "",
     isLogin: false,
     userID: 0,
+    userType:null,
+    
   },
   mutations: {
     setOpenID(state, v) {
@@ -18,5 +20,8 @@ export default new Vuex.Store({
     changeLogin(state) {
       state.isLogin = true;
     },
+    setUserType(state,v) {
+      state.userType = v
+    }
   },
 });
