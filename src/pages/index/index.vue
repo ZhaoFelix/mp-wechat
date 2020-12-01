@@ -1,7 +1,22 @@
 <template>
   <div>
-    <van-row> </van-row>
-
+    <!-- 选项卡部分 -->
+    <div class="container">
+      <div
+        class="business-card"
+        v-for="(item, index) in staticInfo"
+        :key="index"
+      >
+        <div class="title">
+          <span>{{ item.title }}</span>
+        </div>
+        <div class="info">
+          <p>
+            {{ item.info }}
+          </p>
+        </div>
+      </div>
+    </div>
     <!-- 遮罩层 -->
     <van-overlay :show="show">
       <div class="wrapper">
@@ -38,17 +53,19 @@
 </template>
 
 <script>
-const staticInfo = {
-  business: {
-    textOfBuildTitle: "商业装修垃圾清运",
-    textOfBuild: "适用于：商业门店装修",
+const staticInfo = [
+  {
+    type: "business",
+    title: "商业装修垃圾清运",
+    info: "适用于：商业门店装修",
   },
-  normal: {
-    textOfNormalTitle: "普通装修垃圾清运",
-    textOfNormal:
+  {
+    type: "normal",
+    title: "普通装修垃圾清运",
+    info:
       "适用于：普通住宅装修垃圾清运、毛胚住宅装修垃圾清运、新房住宅垃圾清运、老房住宅垃圾清运",
   },
-};
+];
 export default {
   data() {
     return {
@@ -177,13 +194,38 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.business-card {
+  background-color: lightgray;
+  height: 200px;
+  width: 90%;
+  border-radius: 8px;
+  margin-top: 40px;
+  /* TODO:待添加网络图片或者base64格式的图片 */
+  /* background-image: url("../../../static/images/0207.jpg"); */
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+}
+.info {
+  width: 90%;
+  margin-left: 5%;
+  font-size: 13px;
+  margin-top: 30px;
+}
 .wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
 }
-
 .block {
   align-items: center;
   justify-content: center;
@@ -197,12 +239,6 @@ export default {
   color: black;
   margin: 10%;
   font-size: 20px;
-}
-
->>> .build {
-  height: 70%;
-  width: 80%;
-  margin: 10% 10%;
 }
 
 .van-button--user {
