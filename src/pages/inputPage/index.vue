@@ -5,7 +5,7 @@
         v-model="orderInfo.name"
         label="联系人"
         placeholder="姓名"
-        @change="onchangeName"
+        @blur="onblurName"
       />
       <van-field
         type="tel"
@@ -13,7 +13,9 @@
         label="联系电话"
         placeholder="手机号码"
         maxlength="11"
+        @blur="onblurPhoneNumber"
         @change="onchangePhoneNumber"
+        :error-message="errorMessage.phoneMessage"
       />
       <van-field
         :value="orderInfo.address"
@@ -26,7 +28,7 @@
         label="详细地址"
         type="text"
         placeholder="请输入具体地址 如：街道名称"
-        @change="onchangeAddress"
+        @blur="onblurAddress" 
       />
     </div>
     <div class="order-info">
@@ -35,7 +37,9 @@
         type="number"
         label="建筑面积"
         placeholder="单位为平方米"
+        @blur="onblurArea"
         @change="onchangeArea"
+        :error-message="errorMessage.areaMessage"
       />
 
       <!-- TODO:是否是首次装修 -->
@@ -64,6 +68,7 @@
         label="备注"
         type="textarea"
         placeholder="请输入留言，选填"
+        maxlength="100"
         autosize
       />
     </div>
@@ -117,7 +122,7 @@
       <van-row>
         <van-col offset="1" span="10">
           <span> 清运费：</span>
-          <span style="color: red"> 130.00 </span>
+          <span style="color: red"> {{ finalPrice }} </span>
           <span>元</span>
         </van-col>
         <van-col offset="1" span="6">
@@ -149,7 +154,7 @@
       <div style="height: 5px"></div>
       <van-row>
         <van-col offset="6" span="12">
-          <button class="sub-btn">立即下单</button>
+          <button class="sub-btn" @click="submitOrder">立即下单</button>
         </van-col>
       </van-row>
       <div style="height: 20px"></div>
@@ -182,7 +187,7 @@ var orderInfo = {
   orderNote: "",
   orderPrice: "",
   userProtocl: "1",
-  currentDate:""
+  imagesList:[]
 };
 // 时间选择器相关配置
 var datePickerOptions = {
@@ -192,9 +197,15 @@ var datePickerOptions = {
   minDate: new Date().getTime() + 1*60*60*1000,
   //  最多可提前2天进行预约
   maxDate: new Date().setDate(new Date().getDate() + 2),
-  currentDate: new Date(),
+  currentDate: null,
   isChange:false,
 };
+
+var errorMessage = {
+  phoneMessage:"",
+  areaMessage:""
+}
+
 export default {
   data() {
     return {
@@ -203,7 +214,7 @@ export default {
       show: false,
       orderInfo,
       datePickerOptions,
-      fileList: [],
+      errorMessage,
       OSSAccessKeyId: "",
       policy: "",
       signature: "",
@@ -230,6 +241,26 @@ export default {
       },
     };
   },
+  computed:{
+        finalPrice:function(){ 
+          let finalPrice = 0
+          // 是否是首次装修
+          if (orderInfo.isFirst == "1") {
+              if ( Number(this.orderInfo.buildArea) >= 55 && Number(this.orderInfo.buildArea) <= 140) {
+                     finalPrice  = 300 + (Number(this.orderInfo.buildArea) - 55) * 5
+              } else if (Number(this.orderInfo.buildArea) > 140){
+                     finalPrice = 300 + (140 - 55) * 5 + (Number(this.orderInfo.buildArea) - 140) * 7
+              }
+          } else {
+                if ( Number(this.orderInfo.buildArea) >= 55 && Number(this.orderInfo.buildArea) <= 140) {
+                     finalPrice = 360 + (Number(this.orderInfo.buildArea) - 55) * 6
+              } else if (Number(this.orderInfo.buildArea) > 140){
+                     finalPrice = 360 + (140 - 55) * 6 + (Number(this.orderInfo.buildArea) - 140) * 8
+              }
+          }
+          return finalPrice.toFixed(2)
+        }
+  },
   methods: {
     showTimePicker() {
       this.show = true;
@@ -240,6 +271,7 @@ export default {
     // 选择器确认按钮事件
     onConfirm(event) {
       let time = timeUtil.formatDateStr(new Date(event.mp.detail)) 
+      // 判断选择器是否变化
       if (this.datePickerOptions.isChange) {
         this.orderInfo.selectTime = time
       }
@@ -249,18 +281,60 @@ export default {
       this.yesOrNo = false;
       this.firs = 1;
     },
-    onchangeName(event) {
-      this.name = event.detail;
+    // 姓名
+    onblurName(event) {
+     this.orderInfo.name = event.mp.detail.value
     },
-    onchangePhoneNumber(event) {
-      this.phoneNumber = event.detail;
+    // 手机号
+    onblurPhoneNumber(event) {
+      this.orderInfo.phoneNumber = event.mp.detail.value
     },
-    onchangeAddress(event) {
-      this.detailedAddress = event.detail;
+    onchangePhoneNumber(event){
+      const phone = event.mp.detail || event
+      // 失去光标后进行判断
+     if (event.mp.detail.value != undefined) {
+       return
+     }
+      if (phone) {
+        if (/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
+          this.errorMessage.phoneMessage = ''
+        
+        } else {
+          this.errorMessage.phoneMessage = '您输入的手机号码有误';
+       
+        }
+    } else {
+       this.errorMessage.phoneMessage = '输入的手机号不能为空'
+      }
+    },
+    // 地址
+    onblurAddress(event) {
+     this.orderInfo.subAddress = event.mp.detail.value
+    },
+    // 装修面积
+    onblurArea(event) {
+      this.orderInfo.buildArea = event.mp.detail.value
     },
     onchangeArea(event) {
-      this.buildArea = event.detail;
+      const area = event.mp.detail || event 
+      // TODO:升级判断方式
+      if (event.mp.detail.value != undefined) {
+         return
+      }
+      if (area) {
+         console.log(Number(area))
+          if (isNaN(Number(area))) {
+            this.errorMessage.areaMessage = "面积只能是数字"
+          }
+          else {
+            this.errorMessage.areaMessage = ""
+          }
+      } else {
+      this.errorMessage.areaMessage ="面积不能为空"
+      }
+     
     },
+
     // 时间选择器事件
     onChangeTime(event) {
       this.datePickerOptions.isChange = true
@@ -303,6 +377,10 @@ export default {
         this.orderInfo.isFirst = name;
       }
     },
+    submitOrder(){
+      console.log(this.orderInfo)
+
+    }
   },
   mounted() {
     this.$wxRequest
