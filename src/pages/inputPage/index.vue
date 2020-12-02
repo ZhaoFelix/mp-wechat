@@ -32,7 +32,7 @@
     <div class="order-info">
       <van-field
         :value="orderInfo.buildArea"
-        type="digit"
+        type="number"
         label="建筑面积"
         placeholder="单位为平方米"
         @change="onchangeArea"
@@ -40,27 +40,27 @@
 
       <!-- TODO:是否是首次装修 -->
 
-      <van-radio-group :value="isFirst" @change="onChange">
+      <van-radio-group :value="orderInfo.isFirst" @change="onChange">
         <van-cell
           center
-          title="单元格"
+          title="是否是首次装修"
           data-name="1"
-          label="描述信息"
+          label="*是否首次装修详见计价方式说明"
           @click="onFirstClick"
         >
           <van-radio slot="right-icon" name="1" checked-color="#07c160" />
         </van-cell>
       </van-radio-group>
       <van-field
-        :value="currentDate"
+        :value="orderInfo.selectTime"
         label="预约时间"
-        placeholder="日期 小时"
+        placeholder="2020-01-01 08:00"
         readonly
         @click="showTimePicker"
       />
 
       <van-field
-        :model="message"
+        :model="orderInfo.orderNote"
         label="备注"
         type="textarea"
         placeholder="请输入留言，选填"
@@ -82,6 +82,7 @@
         @input="onInput"
         @confirm="onConfirm"
         @change="onChangeTime"
+        :filter="filter"
       />
     </van-popup>
 
@@ -132,7 +133,10 @@
     <div class="submit-btn">
       <van-row>
         <van-col offset="9" span="6">
-          <van-radio-group :value="protocl" @change="protoclOnChange">
+          <van-radio-group
+            :value="orderInfo.userProtocl"
+            @change="protoclOnChange"
+          >
             <van-radio
               icon-size="12px"
               name="1"
@@ -143,6 +147,7 @@
           </van-radio-group>
         </van-col>
       </van-row>
+      <div style="height: 5px"></div>
       <van-row>
         <van-col offset="6" span="12">
           <button class="sub-btn">立即下单</button>
@@ -170,21 +175,22 @@ var orderInfo = {
   name: "",
   phoneNumber: "",
   address: "上海市",
-  columns: "",
-  detailedAddress: "",
+  subAddress: "",
   buildArea: "",
-  thoseTime: "",
+  isFirst: "1",
+  selectTime: "",
+  orderNote: "",
+  orderPrice: "",
+  userProtocl: "1",
 };
 export default {
   data() {
     return {
-      firs: 0,
       overlayshow: false,
       yesOrNo: false,
       show: false,
       orderInfo,
       fileList: [],
-      cost: 300,
       minHour: 0,
       maxHour: 24,
       minDate: new Date().getTime(),
@@ -192,8 +198,13 @@ export default {
       OSSAccessKeyId: "",
       policy: "",
       signature: "",
-      protocl: "1",
-      isFirst: "1",
+      filter(type, options) {
+        if (type === "minute") {
+          return options.filter((option) => option % 10 === 0);
+        }
+
+        return options;
+      },
     };
   },
   methods: {
@@ -248,19 +259,19 @@ export default {
       this.overlayshow = false;
     },
     protoclOnChange() {
-      if (this.protocl == "1") {
-        this.protocl = "0";
+      if (this.orderInfo.userProtocl == "1") {
+        this.orderInfo.userProtocl = "0";
       } else {
-        this.protocl = "1";
+        this.orderInfo.userProtocl = "1";
       }
     },
     // 点击首次装修
     onFirstClick(event) {
       let { name } = event.currentTarget.dataset;
-      if (this.isFirst == name) {
-        this.isFirst = "0";
+      if (this.orderInfo.isFirst == name) {
+        this.orderInfo.isFirst = "0";
       } else {
-        this.isFirst = name;
+        this.orderInfo.isFirst = name;
       }
     },
   },
