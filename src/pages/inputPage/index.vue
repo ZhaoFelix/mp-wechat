@@ -69,20 +69,19 @@
     </div>
 
     <!-- 时间选择器 -->
-    <van-popup
-      :show="show"
-      position="bottom"
-      custom-style="height: 40%;"
-      @close="show = false"
-    >
+    <van-popup :show="show" round position="bottom" @close="show = false">
       <van-datetime-picker
-        type="year-month-time"
-        :value="currentDate"
-        :min-date="minDate"
+        type="datetime"
+        :value="datePickerOptions.currentDate"
+        :min-date="datePickerOptions.minDate"
+        :max-date="datePickerOptions.maxDate"
+        :min-hour="datePickerOptions.minHour"
         @input="onInput"
         @confirm="onConfirm"
         @change="onChangeTime"
+        @cancel="onClose"
         :filter="filter"
+        :formatter="formatter"
       />
     </van-popup>
 
@@ -183,6 +182,15 @@ var orderInfo = {
   orderPrice: "",
   userProtocl: "1",
 };
+// 时间选择器相关配置
+var datePickerOptions = {
+  minHour: 8,
+  maxHour: 20,
+  minDate: new Date().getTime(),
+  //  最多可提前2天进行预约
+  maxDate: new Date().setDate(new Date().getDate() + 2),
+  currentDate: new Date(),
+};
 export default {
   data() {
     return {
@@ -190,20 +198,31 @@ export default {
       yesOrNo: false,
       show: false,
       orderInfo,
+      datePickerOptions,
       fileList: [],
-      minHour: 0,
-      maxHour: 24,
-      minDate: new Date().getTime(),
-      currentDate: new Date().getTime(),
       OSSAccessKeyId: "",
       policy: "",
       signature: "",
       filter(type, options) {
+        if (type === "hour") {
+          return options.filter((option) =>
+            option >= 8 && option <= 20 ? option : ""
+          );
+        }
         if (type === "minute") {
           return options.filter((option) => option % 10 === 0);
         }
-
         return options;
+      },
+      formatter(type, value) {
+        if (type === "year") {
+          return `${value}年`;
+        } else if (type === "month") {
+          return `${value}月`;
+        } else if (type === "day") {
+          return `${value}日`;
+        }
+        return value;
       },
     };
   },
@@ -212,9 +231,11 @@ export default {
       this.show = true;
     },
     onClose() {
+      console.log("取消");
       this.show = false;
     },
     onConfirm() {
+      console.log("确定");
       this.show = false;
     },
     onClickButton() {
