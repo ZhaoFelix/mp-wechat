@@ -81,7 +81,7 @@
         @change="onChangeTime"
         @cancel="onClose"
         :filter="filter"
-        :formatter="formatter"
+        :formatter="datePickerformatter"
       />
     </van-popup>
 
@@ -170,6 +170,7 @@
 </template>
 <script>
 import getSTS from "../../utils/getSTS";
+import timeUtil from "../../utils/index.js" 
 var orderInfo = {
   name: "",
   phoneNumber: "",
@@ -181,15 +182,18 @@ var orderInfo = {
   orderNote: "",
   orderPrice: "",
   userProtocl: "1",
+  currentDate:""
 };
 // 时间选择器相关配置
 var datePickerOptions = {
   minHour: 8,
   maxHour: 20,
-  minDate: new Date().getTime(),
+  // 最小时间必须提前一个小时
+  minDate: new Date().getTime() + 1*60*60*1000,
   //  最多可提前2天进行预约
   maxDate: new Date().setDate(new Date().getDate() + 2),
   currentDate: new Date(),
+  isChange:false,
 };
 export default {
   data() {
@@ -214,7 +218,7 @@ export default {
         }
         return options;
       },
-      formatter(type, value) {
+      datePickerformatter(type, value) {
         if (type === "year") {
           return `${value}年`;
         } else if (type === "month") {
@@ -231,11 +235,14 @@ export default {
       this.show = true;
     },
     onClose() {
-      console.log("取消");
       this.show = false;
     },
-    onConfirm() {
-      console.log("确定");
+    // 选择器确认按钮事件
+    onConfirm(event) {
+      let time = timeUtil.formatDateStr(new Date(event.mp.detail)) 
+      if (this.datePickerOptions.isChange) {
+        this.orderInfo.selectTime = time
+      }
       this.show = false;
     },
     onClickButton() {
@@ -254,8 +261,9 @@ export default {
     onchangeArea(event) {
       this.buildArea = event.detail;
     },
+    // 时间选择器事件
     onChangeTime(event) {
-      this.currentDate = event.detail;
+      this.datePickerOptions.isChange = true
     },
     afterRead(event) {
       const { file } = event.detail;
@@ -339,7 +347,6 @@ export default {
 .order-price {
   margin-top: 20px;
 }
-
 .submit-btn {
   margin-top: 10px;
 }
