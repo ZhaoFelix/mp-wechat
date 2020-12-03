@@ -177,6 +177,7 @@
 <script>
 import getSTS from "../../utils/getSTS";
 import timeUtil from "../../utils/index.js" 
+import {uploadUrl,downloadUrl,processImage} from "../../../config/options.js"
 var orderInfo = {
   name: "",
   phoneNumber: "",
@@ -340,12 +341,13 @@ export default {
       }
     },
     afterRead(event){  
-      console.log("测试")
+     console.log("测试")
       const { file } = event.mp.detail;
       let fileName = "ningjin_dev/"+new Date().getTime()+".png"
       var _this = this
+      console.log(uploadUrl)
       wx.uploadFile({
-        url: "https://ningjintest.oss-cn-beijing.aliyuncs.com", // 接口地址
+        url: uploadUrl, // 接口地址
         filePath: file.url,
         name: "file",
         formData: {
@@ -355,7 +357,7 @@ export default {
           signature:this.OSS.signature
          },
         success(res) {
-         _this.orderInfo.imagesList.push({url:"https://wechatimg.ningjin.qingmaoedu.com/" + fileName,name:""})
+         _this.orderInfo.imagesList.push({url:downloadUrl + fileName,name:"",thumb:downloadUrl + fileName + processImage})
         },
         fail(error){
           console.log(error)

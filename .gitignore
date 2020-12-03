@@ -7,6 +7,7 @@ yarn-error.log*
 project.swan.json
 package.swan.json
 project.config.json
+options.js
 # Editor directories and files
 .idea
 *.suo
