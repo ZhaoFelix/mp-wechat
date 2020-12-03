@@ -109,6 +109,7 @@
       <van-row>
         <van-col offset="1" span="22">
           <van-uploader
+            image-fit="cover"
             :file-list="orderInfo.imagesList"
             max-count="4"
             @afterRead="afterRead"
@@ -178,6 +179,7 @@
 import getSTS from "../../utils/getSTS";
 import timeUtil from "../../utils/index.js" 
 import {uploadUrl,downloadUrl,processImage} from "../../../config/options.js"
+import { thistle } from 'color-name';
 var orderInfo = {
   name: "",
   phoneNumber: "",
@@ -341,11 +343,9 @@ export default {
       }
     },
     afterRead(event){  
-     console.log("测试")
       const { file } = event.mp.detail;
       let fileName = "ningjin_dev/"+new Date().getTime()+".png"
       var _this = this
-      console.log(uploadUrl)
       wx.uploadFile({
         url: uploadUrl, // 接口地址
         filePath: file.url,
@@ -358,6 +358,7 @@ export default {
          },
         success(res) {
          _this.orderInfo.imagesList.push({url:downloadUrl + fileName,name:"",thumb:downloadUrl + fileName + processImage})
+         _this.orderInfo.imagesList = [..._this.orderInfo.imagesList]
         },
         fail(error){
           console.log(error)
