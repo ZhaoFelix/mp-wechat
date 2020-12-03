@@ -369,7 +369,7 @@ export default {
     deleteImage(event){
       console.log(event.mp.detail.index)
       this.orderInfo.imagesList.pop(this.orderInfo.imagesList[event.mp.detail.index])
-      console.log(this.orderInfo.imagesList)
+      this.orderInfo.imagesList = [...this.orderInfo.imagesList]
     },
     // 时间选择器事件
     onChangeTime(event) {
