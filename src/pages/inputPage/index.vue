@@ -97,7 +97,7 @@
         </van-col>
         <van-col offset="12" span="4">
           <div style="font-size: 16px; color: #646566; text-align: right">
-            1/4
+           {{ orderInfo.imagesList.length + "/4"  }}
           </div>
         </van-col>
       </van-row>
@@ -112,6 +112,7 @@
             :file-list="orderInfo.imagesList"
             max-count="4"
             @afterRead="afterRead"
+            @delete="deleteImage"
           />
         </van-col>
       </van-row>
@@ -341,28 +342,31 @@ export default {
     afterRead(event){  
       console.log("测试")
       const { file } = event.mp.detail;
-      console.log(file,this.OSS.signature)
+      let fileName = "ningjin_dev/"+new Date().getTime()+".png"
+      var _this = this
       wx.uploadFile({
         url: "https://ningjintest.oss-cn-beijing.aliyuncs.com", // 接口地址
         filePath: file.url,
         name: "file",
         formData: {
-          key:"/test/my.png",
+          key:fileName,
           policy: this.OSS.policy,
           OSSAccessKeyId: this.OSS.OSSAccessKeyId,
           signature:this.OSS.signature
          },
         success(res) {
-          console.log(res)
-          const { fileList = [] } = this.data;
-          fileList.push({ ...file, url: res.data });
-          this.setData({ fileList });
+         _this.orderInfo.imagesList.push({url:"https://wechatimg.ningjin.qingmaoedu.com/" + fileName,name:""})
         },
         fail(error){
           console.log(error)
         }
-
       });
+    },
+    // 删除图片
+    deleteImage(event){
+      console.log(event.mp.detail.index)
+      this.orderInfo.imagesList.pop(this.orderInfo.imagesList[event.mp.detail.index])
+      console.log(this.orderInfo.imagesList)
     },
     // 时间选择器事件
     onChangeTime(event) {
