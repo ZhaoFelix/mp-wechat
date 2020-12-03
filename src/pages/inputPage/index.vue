@@ -8,7 +8,7 @@
         @blur="onblurName"
       />
       <van-field
-        type="tel"
+        type="number"
         :value="orderInfo.phoneNumber"
         label="联系电话"
         placeholder="手机号码"
@@ -89,7 +89,7 @@
         :formatter="datePickerformatter"
       />
     </van-popup>
-
+<!-- 图片上传相关 -->
     <div class="trash-images">
       <van-row>
         <van-col offset="1" span="6">
@@ -106,13 +106,12 @@
           <div class="divider"></div>
         </van-col>
       </van-row>
-
       <van-row>
         <van-col offset="1" span="22">
           <van-uploader
-            :file-list="fileList"
+            :file-list="orderInfo.imagesList"
             max-count="4"
-            :after-read="afterRead"
+            @afterRead="afterRead"
           />
         </van-col>
       </van-row>
@@ -160,6 +159,7 @@
       <div style="height: 20px"></div>
       <van-row>
         <van-col offset="10" span="4">
+          <!-- TOOD：点击后弹出客服联系电话 -->
           <span style="color: blue; font-size: 13px">电话客服</span>
         </van-col>
       </van-row>
@@ -201,10 +201,14 @@ var datePickerOptions = {
   isChange:false,
 };
 
+// 错误信息对象
 var errorMessage = {
   phoneMessage:"",
   areaMessage:""
 }
+
+// oss对象信息
+var OSS = {}
 
 export default {
   data() {
@@ -214,6 +218,7 @@ export default {
       show: false,
       orderInfo,
       datePickerOptions,
+      OSS,
       errorMessage,
       OSSAccessKeyId: "",
       policy: "",
@@ -332,26 +337,36 @@ export default {
       } else {
       this.errorMessage.areaMessage ="面积不能为空"
       }
-     
     },
-
-    // 时间选择器事件
-    onChangeTime(event) {
-      this.datePickerOptions.isChange = true
-    },
-    afterRead(event) {
-      const { file } = event.detail;
+    afterRead(event){  
+      console.log("测试")
+      const { file } = event.mp.detail;
+      console.log(file,this.OSS.signature)
       wx.uploadFile({
-        url: "https://example.weixin.qq.com/upload", // 接口地址
-        filePath: file.path,
+        url: "https://ningjintest.oss-cn-beijing.aliyuncs.com", // 接口地址
+        filePath: file.url,
         name: "file",
-        formData: { user: "test" },
+        formData: {
+          key:"/test/my.png",
+          policy: this.OSS.policy,
+          OSSAccessKeyId: this.OSS.OSSAccessKeyId,
+          signature:this.OSS.signature
+         },
         success(res) {
+          console.log(res)
           const { fileList = [] } = this.data;
           fileList.push({ ...file, url: res.data });
           this.setData({ fileList });
         },
+        fail(error){
+          console.log(error)
+        }
+
       });
+    },
+    // 时间选择器事件
+    onChangeTime(event) {
+      this.datePickerOptions.isChange = true
     },
     onInput(event) {},
     //有关遮罩层
@@ -383,15 +398,14 @@ export default {
     }
   },
   mounted() {
+   
     this.$wxRequest
       .get({
-        url: "/public/getToken/osstoken",
+        url: "/public/ossToken/getOssToken",
       })
       .then((res) => {
         if (res.data.code == 20000) {
-          this.OSSAccessKeyId = res.data.OSSAccessKeyId;
-          this.signature = res.data.signature;
-          this.policy = res.data.policy;
+          this.OSS = res.data.data
         }
       });
   },

@@ -1,4 +1,5 @@
-const host = "http://localhost:3000/v1.0";
+
+const host = process.env.NODE_ENV == "development" ? "http://localhost:3000/v1.0" : "";
 
 function request(url, method, data, header = {}) {
   wx.showLoading({
