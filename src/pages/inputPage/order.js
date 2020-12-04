@@ -1,3 +1,4 @@
+import Toast from '@vant/weapp/dist/toast/toast';
 import timeUtil from "../../utils/index.js"
 import { uploadUrl, downloadUrl, processImage, previewImage } from "../../../config/options.js"
 var orderInfo = {
@@ -46,7 +47,7 @@ export default {
             OSSAccessKeyId: "",
             policy: "",
             signature: "",
-            dialogShow: true,
+            dialogShow: false,
             filter(type, options) {
                 if (type === "hour") {
                     return options.filter((option) =>
@@ -79,12 +80,16 @@ export default {
                     finalPrice = 300 + (Number(this.orderInfo.buildArea) - 55) * 5
                 } else if (Number(this.orderInfo.buildArea) > 140) {
                     finalPrice = 300 + (140 - 55) * 5 + (Number(this.orderInfo.buildArea) - 140) * 7
+                } else {
+                    finalPrice = 300
                 }
             } else {
                 if (Number(this.orderInfo.buildArea) >= 55 && Number(this.orderInfo.buildArea) <= 140) {
                     finalPrice = 360 + (Number(this.orderInfo.buildArea) - 55) * 6
                 } else if (Number(this.orderInfo.buildArea) > 140) {
                     finalPrice = 360 + (140 - 55) * 6 + (Number(this.orderInfo.buildArea) - 140) * 8
+                } else {
+                    finalPrice = 360
                 }
             }
             return finalPrice.toFixed(2)
@@ -220,7 +225,17 @@ export default {
             }
         },
         submitOrder() {
-            console.log(this.orderInfo)
+            if (this.orderInfo.name == "" || this.orderInfo.phoneNumber == "" ||
+                this.orderInfo.subAddress == "" || this.orderInfo.buildArea == "" ||
+                this.orderInfo.selectTime == "" || this.orderInfo.imagesList.length == 0
+            ) {
+                Toast.fail('信息不完整');
+                return
+            } else if (this.orderInfo.userProtocl == 0) {
+                Toast.fail('请勾选用户协议');
+                return
+            }
+            this.dialogShow = true
 
         }
     },

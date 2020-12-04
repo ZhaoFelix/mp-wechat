@@ -180,6 +180,7 @@
     :show="dialogShow"
     show-cancel-button
     confirm-button-text="支付"
+     @close="dialogShow = false"
   >
         <van-cell-group title="请确保下列信息无误" :border="false">
         <van-cell
@@ -227,11 +228,13 @@
         />
       </van-cell-group>
 </van-dialog>
+<!-- 提示节点 -->
+<van-toast id="van-toast" />
   </div>
  
 </template>
 <script>
-import index from './index.js'
+import index from './order.js'
 export default index
 </script>
 

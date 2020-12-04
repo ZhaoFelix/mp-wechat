@@ -23,7 +23,8 @@
     "van-tabs": "vant-weapp/dist/tabs/index",
     "van-radio": "vant-weapp/dist/radio/index",
     "van-radio-group": "vant-weapp/dist/radio-group/index",
-    "van-dialog": "vant-weapp/dist/dialog/index"
+    "van-dialog": "vant-weapp/dist/dialog/index",
+    "van-toast": "vant-weapp/dist/toast/index"
   },
   "window": {
     "backgroundTextStyle": "light",
