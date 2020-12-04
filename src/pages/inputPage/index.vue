@@ -173,285 +173,82 @@
         </view>
       </van-overlay>
     </div>
+     <!-- 订单确认弹框内容 -->
+    <van-dialog
+    use-slot
+    title="订单信息确认"
+    :show="dialogShow"
+    show-cancel-button
+    confirm-button-text="支付"
+  >
+        <van-cell-group title="请确保下列信息无误" :border="false">
+        <van-cell
+          center
+          title="姓名："
+          title-width="70px"
+          :value="orderInfo.name"
+          value-class="info"
+          :border="false"
+        />
+        <van-cell
+          title="手机号："
+          title-width="70px"
+          :value="orderInfo.phoneNumber"
+          value-class="info"
+          :border="false"
+        />
+        <van-cell
+          title="地址："
+          title-width="70px"
+          :value="orderInfo.address + orderInfo.subAddress"
+          value-class="info"
+          :border="false"
+        />
+        <van-cell
+          title="装修面积："
+          title-width="70px"
+          :value="orderInfo.buildArea"
+          value-class="info"
+          :border="false"
+        />
+         <van-cell
+          title="预约时间："
+          title-width="70px"
+          :value="orderInfo.selectTime"
+          value-class="info"
+          :border="false"
+        />
+         <van-cell
+          title="是否首次："
+          title-width="70px"
+          :value="orderInfo.isFirst==1 ? '首次装修' : '非首次装修'"
+          value-class="info"
+          :border="false"
+        />
+      </van-cell-group>
+</van-dialog>
   </div>
+ 
 </template>
 <script>
-import getSTS from "../../utils/getSTS";
-import timeUtil from "../../utils/index.js" 
-import {uploadUrl,downloadUrl,processImage} from "../../../config/options.js"
-import { thistle } from 'color-name';
-var orderInfo = {
-  name: "",
-  phoneNumber: "",
-  address: "上海市",
-  subAddress: "",
-  buildArea: "",
-  isFirst: "1",
-  selectTime: "",
-  orderNote: "",
-  orderPrice: "",
-  userProtocl: "1",
-  imagesList:[]
-};
-// 时间选择器相关配置
-var datePickerOptions = {
-  minHour: 8,
-  maxHour: 20,
-  // 最小时间必须提前一个小时
-  minDate: new Date().getTime() + 1*60*60*1000,
-  //  最多可提前2天进行预约
-  maxDate: new Date().setDate(new Date().getDate() + 2),
-  currentDate: null,
-  isChange:false,
-};
-
-// 错误信息对象
-var errorMessage = {
-  phoneMessage:"",
-  areaMessage:""
-}
-
-// oss对象信息
-var OSS = {}
-
-export default {
-  data() {
-    return {
-      overlayshow: false,
-      yesOrNo: false,
-      show: false,
-      orderInfo,
-      datePickerOptions,
-      OSS,
-      errorMessage,
-      OSSAccessKeyId: "",
-      policy: "",
-      signature: "",
-      filter(type, options) {
-        if (type === "hour") {
-          return options.filter((option) =>
-            option >= 8 && option <= 20 ? option : ""
-          );
-        }
-        if (type === "minute") {
-          return options.filter((option) => option % 10 === 0);
-        }
-        return options;
-      },
-      datePickerformatter(type, value) {
-        if (type === "year") {
-          return `${value}年`;
-        } else if (type === "month") {
-          return `${value}月`;
-        } else if (type === "day") {
-          return `${value}日`;
-        }
-        return value;
-      },
-    };
-  },
-  computed:{
-        finalPrice:function(){ 
-          let finalPrice = 0
-          // 是否是首次装修
-          if (orderInfo.isFirst == "1") {
-              if ( Number(this.orderInfo.buildArea) >= 55 && Number(this.orderInfo.buildArea) <= 140) {
-                     finalPrice  = 300 + (Number(this.orderInfo.buildArea) - 55) * 5
-              } else if (Number(this.orderInfo.buildArea) > 140){
-                     finalPrice = 300 + (140 - 55) * 5 + (Number(this.orderInfo.buildArea) - 140) * 7
-              }
-          } else {
-                if ( Number(this.orderInfo.buildArea) >= 55 && Number(this.orderInfo.buildArea) <= 140) {
-                     finalPrice = 360 + (Number(this.orderInfo.buildArea) - 55) * 6
-              } else if (Number(this.orderInfo.buildArea) > 140){
-                     finalPrice = 360 + (140 - 55) * 6 + (Number(this.orderInfo.buildArea) - 140) * 8
-              }
-          }
-          return finalPrice.toFixed(2)
-        }
-  },
-  methods: {
-    showTimePicker() {
-      this.show = true;
-    },
-    onClose() {
-      this.show = false;
-    },
-    // 选择器确认按钮事件
-    onConfirm(event) {
-      let time = timeUtil.formatDateStr(new Date(event.mp.detail)) 
-      // 判断选择器是否变化
-      if (this.datePickerOptions.isChange) {
-        this.orderInfo.selectTime = time
-      }
-      this.show = false;
-    },
-    onClickButton() {
-      this.yesOrNo = false;
-      this.firs = 1;
-    },
-    // 姓名
-    onblurName(event) {
-     this.orderInfo.name = event.mp.detail.value
-    },
-    // 手机号
-    onblurPhoneNumber(event) {
-      this.orderInfo.phoneNumber = event.mp.detail.value
-    },
-    onchangePhoneNumber(event){
-      const phone = event.mp.detail || event
-      // 失去光标后进行判断
-     if (event.mp.detail.value != undefined) {
-       return
-     }
-      if (phone) {
-        if (/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
-          this.errorMessage.phoneMessage = ''
-        
-        } else {
-          this.errorMessage.phoneMessage = '您输入的手机号码有误';
-       
-        }
-    } else {
-       this.errorMessage.phoneMessage = '输入的手机号不能为空'
-      }
-    },
-    // 地址
-    onblurAddress(event) {
-     this.orderInfo.subAddress = event.mp.detail.value
-    },
-    // 装修面积
-    onblurArea(event) {
-      this.orderInfo.buildArea = event.mp.detail.value
-    },
-    onchangeArea(event) {
-      const area = event.mp.detail || event 
-      // TODO:升级判断方式
-      if (event.mp.detail.value != undefined) {
-         return
-      }
-      if (area) {
-         console.log(Number(area))
-          if (isNaN(Number(area))) {
-            this.errorMessage.areaMessage = "面积只能是数字"
-          }
-          else {
-            this.errorMessage.areaMessage = ""
-          }
-      } else {
-      this.errorMessage.areaMessage ="面积不能为空"
-      }
-    },
-    afterRead(event){  
-      const { file } = event.mp.detail;
-      let fileName = "ningjin_dev/"+new Date().getTime()+".png"
-      var _this = this
-      wx.uploadFile({
-        url: uploadUrl, // 接口地址
-        filePath: file.url,
-        name: "file",
-        formData: {
-          key:fileName,
-          policy: this.OSS.policy,
-          OSSAccessKeyId: this.OSS.OSSAccessKeyId,
-          signature:this.OSS.signature
-         },
-        success(res) {
-         _this.orderInfo.imagesList.push({url:downloadUrl + fileName,name:"",thumb:downloadUrl + fileName + processImage})
-         _this.orderInfo.imagesList = [..._this.orderInfo.imagesList]
-        },
-        fail(error){
-          console.log(error)
-        }
-      });
-    },
-    // 删除图片
-    deleteImage(event){
-      console.log(event.mp.detail.index)
-      this.orderInfo.imagesList.pop(this.orderInfo.imagesList[event.mp.detail.index])
-      this.orderInfo.imagesList = [...this.orderInfo.imagesList]
-    },
-    // 时间选择器事件
-    onChangeTime(event) {
-      this.datePickerOptions.isChange = true
-    },
-    onInput(event) {},
-    //有关遮罩层
-    onClickShow() {
-      this.overlayshow = true;
-    },
-    onClickHide() {
-      this.overlayshow = false;
-    },
-    protoclOnChange() {
-      if (this.orderInfo.userProtocl == "1") {
-        this.orderInfo.userProtocl = "0";
-      } else {
-        this.orderInfo.userProtocl = "1";
-      }
-    },
-    // 点击首次装修
-    onFirstClick(event) {
-      let { name } = event.currentTarget.dataset;
-      if (this.orderInfo.isFirst == name) {
-        this.orderInfo.isFirst = "0";
-      } else {
-        this.orderInfo.isFirst = name;
-      }
-    },
-    submitOrder(){
-      console.log(this.orderInfo)
-
-    }
-  },
-  mounted() {
-   
-    this.$wxRequest
-      .get({
-        url: "/public/ossToken/getOssToken",
-      })
-      .then((res) => {
-        if (res.data.code == 20000) {
-          this.OSS = res.data.data
-        }
-      });
-  },
-};
+import index from './index.js'
+export default index
 </script>
 
 <style scoped>
-.container {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.05);
-  position: absolute;
-}
-
-.basic-info {
-  margin-top: 8px;
-}
-.order-info {
-  margin-top: 8px;
-}
-.trash-images {
-  margin-top: 12px;
-  background-color: white;
-  padding: 5px 0 0 0;
-}
-.divider {
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.05);
-  margin: 5px 0;
-}
-.order-price {
-  margin-top: 20px;
-}
-.submit-btn {
-  margin-top: 10px;
-}
-.sub-btn {
-  color: white;
-  background-color:#07c160;
-  border: none;
-}
+@import './index.css';
+/* TODO:无法拆分 */
+ van-cell >>> .info {
+    padding-right: 20px;
+    text-align: left;
+  }
+  
+  van-cell >>> .title-style {
+    font-size: 12px;
+    color: rgba(1, 1, 1, 0.5);
+  }
+  van-cell >>> .title-style1 {
+    font-size: 18px;
+    color: rgba(1, 1, 1, 0.75);
+  }
 </style>
