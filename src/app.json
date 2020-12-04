@@ -1,8 +1,7 @@
 {
-
   "pages": [
     "pages/index/main",
-    "pages/logs/main",
+    "pages/mine/main",
     "pages/inputPage/main",
     "pages/inputPages/main",
     "pages/checkPage/main",
@@ -22,7 +21,7 @@
     "van-datetime-picker": "vant-weapp/dist/datetime-picker/index",
     "van-tab": "vant-weapp/dist/tab/index",
     "van-tabs": "vant-weapp/dist/tabs/index",
-    "van-radio":"vant-weapp/dist/radio/index",
+    "van-radio": "vant-weapp/dist/radio/index",
     "van-radio-group": "vant-weapp/dist/radio-group/index"
   },
   "window": {
@@ -34,32 +33,36 @@
   "tabBar": {
     "color": "#999",
     "backgroundColor": "#fafafa",
-    "selectedColor": "#333",
+    "selectedColor": "#3675FF",
     "borderStyle": "white",
-
-    "list": [{
-      "text": "立即下单",
-      "pagePath": "pages/index/main",
-      "iconPath": "static/tabs/home.png",
-      "selectedIconPath": "static/tabs/home-active.png"
-    }, {
-      "text": "我的订单",
-      "pagePath": "pages/logs/main",
-      "iconPath": "static/tabs/orders.png",
-      "selectedIconPath": "static/tabs/orders-active.png"
-    }],
-
-    "items": [{
-      "name": "立即下单",
-      "pagePath": "pages/index/main",
-      "icon": "static/tabs/home.png",
-      "activeIcon": "static/tabs/home-active.png"
-    }, {
-      "name": "我的订单",
-      "pagePath": "pages/logs/main",
-      "icon": "static/tabs/orders.png",
-      "activeIcon": "static/tabs/orders-active.png"
-    }],
+    "list": [
+      {
+        "text": "立即下单",
+        "pagePath": "pages/index/main",
+        "iconPath": "static/tabs/order.png",
+        "selectedIconPath": "static/tabs/order.png"
+      },
+      {
+        "text": "我的订单",
+        "pagePath": "pages/mine/main",
+        "iconPath": "static/tabs/mine.png",
+        "selectedIconPath": "static/tabs/mine.png"
+      }
+    ],
+    "items": [
+      {
+        "name": "立即下单",
+        "pagePath": "pages/index/main",
+        "icon": "static/tabs/home.png",
+        "activeIcon": "static/tabs/home-active.png"
+      },
+      {
+        "name": "我的订单",
+        "pagePath": "pages/mine/main",
+        "icon": "static/tabs/orders.png",
+        "activeIcon": "static/tabs/orders-active.png"
+      }
+    ],
     "position": "bottom"
   }
 }

@@ -109,7 +109,7 @@
       <van-row>
         <van-col offset="1" span="22">
           <van-uploader
-            image-fit="cover"
+            image-fit="contain"
             :file-list="orderInfo.imagesList"
             max-count="4"
             @afterRead="afterRead"
@@ -128,7 +128,7 @@
         </van-col>
         <van-col offset="1" span="6">
           <span
-            style="font-size: 12px; color: blue; text-decoration: underline"
+            style="font-size: 12px; color: #4A90E2; text-decoration: underline"
           >
             计价方式说明
           </span>
@@ -162,7 +162,7 @@
       <van-row>
         <van-col offset="10" span="4">
           <!-- TOOD：点击后弹出客服联系电话 -->
-          <span style="color: blue; font-size: 13px">电话客服</span>
+          <span style="color: #4A90E2; font-size: 13px">电话客服</span>
         </van-col>
       </van-row>
     </div>
@@ -451,7 +451,7 @@ export default {
 }
 .sub-btn {
   color: white;
-  background-color: green;
+  background-color:#07c160;
   border: none;
 }
 </style>

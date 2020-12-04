@@ -7,9 +7,10 @@
         v-for="(item, index) in staticInfo"
         :key="index"
         @click="toGenerateOrder(index)"
+        :class="[index === 0 ? 'business-card-bg1' : 'business-card-bg2']"
       >
         <div class="title">
-          <span>{{ item.title }}</span>
+          <span>{{ item.title}}</span>
         </div>
         <div class="info">
           <p>
@@ -197,16 +198,22 @@ export default {
   padding-top: 60px;
 }
 .business-card {
-  background-color: lightgray;
-  height: 160px;
+  /* background-color: lightgray; */
+  height: 180px;
   width: 90%;
   border-radius: 8px;
   margin-top: 40px;
   margin-left: 5%;
-  /* TODO:待添加网络图片或者base64格式的图片 */
-  /* background-image: url("../../../static/images/0207.jpg"); */
+  background-position: center;
+  background-size: cover;
+  
 }
-
+.business-card-bg1 {
+  background-image: url("https://wechatimg.ningjin.qingmaoedu.com/mp/01.png?x-oss-process=image/resize,h_170");
+}
+.business-card-bg2 {
+  background-image: url("https://wechatimg.ningjin.qingmaoedu.com/mp/02.png?x-oss-process=image/resize,h_170");
+}
 .title {
   width: 100%;
   height: 20px;
@@ -214,6 +221,8 @@ export default {
   margin-top: 50px;
   position: absolute;
   line-height: 100%;
+  font-weight: 400;
+  font-size: 20px;
 }
 .info {
   width: 80%;
@@ -222,6 +231,7 @@ export default {
   margin-top: 90px;
   position: absolute;
   line-height: 180%;
+color: rgba(1, 1, 1, 0.7)
 }
 .wrapper {
   display: flex;
