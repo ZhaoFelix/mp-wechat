@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-07 13:45:28
+ * @LastEditTime: 2020-12-07 14:18:00
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -47,8 +47,7 @@
             <button
               open-type="getUserInfo"
               class="van-button--prop"
-              @click="changePageToCheck"
-              @getuserinfo="bindGetUserInfo($event, 1)"
+              @getuserinfo="bindGetUserInfo($event)"
             >
               我是物业
             </button>

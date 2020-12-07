@@ -1,104 +1,104 @@
 <template>
-    <div>
-        <div class="fieldSize">
-            <div>
-                <van-field
-                type="text"
-                :value="phoneNumber"
-                label="联系电话"
-                placeholder="手机号码"
-                maxlength="11"
-                @change="getValue"
-                required
-                >
-                    <van-button slot="button" size="small" type="primary" @click="getCode()">发送验证码</van-button>
-                </van-field>
-            </div>
-            <div>
-                <van-field
-                type="text"
-                :value="checkCode"
-                label="验证码"
-                placeholder="验证码"
-                @change="getCheckCode"
-                required
-            />
-            </div>
-        </div>
-        <div>
-            <van-col offset="8" span="8">
-                <van-button type="primary" size="large" @click="checkCodeFun()">完 成</van-button>
-            </van-col>
-        </div>
+  <div>
+    <div class="fieldSize">
+      <div>
+        <van-field
+          type="number"
+          :value="phoneNumber"
+          label="联系电话"
+          placeholder="输入您的手机号"
+          maxlength="11"
+          :error-message="phoneMessage"
+          @change="onchangePhoneNumber"
+          @blur="getValue"
+          required
+        >
+          <!-- <van-button
+            slot="button"
+            size="small"
+            type="primary"
+            @click="getCode()"
+            >发送验证码</van-button -->
+          >
+        </van-field>
+        <span class="tip">* 手机号将用于进行物业身份的认证</span>
+      </div>
+      <!-- <div>
+        <van-field
+          type="text"
+          :value="checkCode"
+          label="验证码"
+          placeholder="验证码"
+          @change="getCheckCode"
+          required
+        />
+      </div> -->
     </div>
+    <div>
+      <van-col offset="8" span="8">
+        <van-button type="primary" size="large" @click="estateVerify"
+          >认 证</van-button
+        >
+      </van-col>
+    </div>
+  </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-    data() {
-        return {
-            phoneNumber:'',
-            checkCode:''
-
-        };
+  data() {
+    return {
+      phoneNumber: "",
+      checkCode: "",
+      phoneMessage: "",
+    };
+  },
+  computed: {
+    ...mapState(["openID", "userID"]),
+  },
+  methods: {
+    changePage() {
+      let url = "../propInformation/main";
+      mpvue.navigateTo({ url });
     },
-    methods:{
-        changePage() {
-            let url = "../propInformation/main"
-            mpvue.navigateTo({ url })
-        },
-        getValue(event) {
-            this.phoneNumber = event.mp.detail
-        },
-        getCheckCode(event) {
-            this.checkCode = event.mp.detail
-        },
-        getCode() {
-            let phone = this.phoneNumber
-            // console.log(phone)
-            console.log('获取手机验证码')
-            this.$wxRequest
-            .get({
-                url: "/public/verify/verify?phone="+phone
-            })
-            .then((res) => {
-                console.log("开始获取手机验证码--------------")
-                // console.log(res.data)
-                if(res.data.Message == "OK") {
-                    console.log("获取验证码成功")
-                } else {
-                    console.log("获取验证码失败")
-                }
-            });
-        },
-        checkCodeFun() {
-            let data = {
-                phone: this.phoneNumber,
-                checkCode: this.checkCode
-            }
-            console.log(data)
-            this.$wxRequest
-            .post({
-                url: "/public/verify/check",
-                data: data
-            })
-            .then((res) => {
-                console.log("开始核对手机验证码--------------")
-                console.log(res.data)
-                if(res.data.code == 20000) {
-                    this.changePage()
-                } else {
-                    console.log('验证码错误！')
-                }
-            });
+    getValue(event) {
+      this.phoneNumber = event.mp.detail.value;
+    },
+    getCheckCode(event) {
+      this.checkCode = event.mp.detail;
+    },
+    onchangePhoneNumber(event) {
+      const phone = event.mp.detail || event;
+      // 失去光标后进行判断
+      if (event.mp.detail.value != undefined) {
+        return;
+      }
+      if (phone) {
+        if (/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
+          this.phoneMessage = "";
+        } else {
+          this.phoneMessage = "您输入的手机号码有误";
         }
-
-    }
+      } else {
+        this.phoneMessage = "输入的手机号不能为空";
+      }
+    },
+    // 根据手机号进行身份认证
+    estateVerify() {},
+  },
 };
 </script>
 
 <style scoped>
 .fieldSize {
-    margin: 20% 5% 20%;
+  margin: 20% 5% 20%;
 }
-</style>>
+.tip {
+  color: red;
+  font-size: 12px;
+  padding: 8px;
+}
+</style>
+>
