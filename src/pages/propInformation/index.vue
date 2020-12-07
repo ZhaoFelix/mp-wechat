@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-07 21:14:22
+ * @LastEditTime: 2020-12-07 21:33:42
  * @FilePath: /mp-wechat/src/pages/propInformation/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -15,7 +15,7 @@
         <van-cell title="所属物业" :value="item.estate_company" />
         <van-cell title="物业负责人" :value="item.estate_name" />
         <van-cell title="身份证号" :value="item.estate_card_id" />
-        <van-cell title="性别" :value="iteem.estate_gener == 2 ? '男' : '女'" />
+        <van-cell title="性别" :value="item.estate_gener == 2 ? '男' : '女'" />
       </van-cell-group>
     </div>
     <button class="changeButton" @click="changePages">确认</button>
@@ -29,10 +29,12 @@ export default {
       list: [],
     };
   },
-  method: {
+  methods: {
     changePages() {
+      console.log("跳转");
+      //  返回首页
       let url = "../index/main";
-      mpvue.navigateTo({ url });
+      mpvue.switchTab({ url });
     },
   },
   mounted() {
