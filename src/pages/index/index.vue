@@ -2,13 +2,12 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-07 10:44:44
+ * @LastEditTime: 2020-12-07 13:45:28
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
 <template>
   <div>
-    <!-- 选项卡部分 -->
     <div class="container">
       <div
         class="business-card"
@@ -37,7 +36,6 @@
           <div>
             <button
               open-type="getUserInfo"
-              type="primary"
               class="van-button--user"
               @click="onClickHide"
               @getuserinfo="bindGetUserInfo($event, 0)"
@@ -48,7 +46,6 @@
           <div>
             <button
               open-type="getUserInfo"
-              type="primary"
               class="van-button--prop"
               @click="changePageToCheck"
               @getuserinfo="bindGetUserInfo($event, 1)"
