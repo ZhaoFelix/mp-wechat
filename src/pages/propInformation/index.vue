@@ -2,41 +2,21 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-07 14:18:53
+ * @LastEditTime: 2020-12-07 21:14:22
  * @FilePath: /mp-wechat/src/pages/propInformation/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
 <template>
   <div>
-    <div class="card">
-      <van-row>
-        <span class="titleSize">小区</span><br />
-        <span class="textSize">{{ adress }}</span>
-      </van-row>
-      <van-row>
-        <span class="titleSize">所属居委</span>
-        <span class="textSize">{{ org }}</span>
-      </van-row>
-      <van-row>
-        <span class="titleSize">所属物业</span>
-        <span class="textSize">{{ wuye }}</span>
-      </van-row>
-      <van-row>
-        <span class="titleSize">物业负责人</span>
-        <span class="textSize">{{ name }}</span>
-      </van-row>
-      <van-row>
-        <span class="titleSize">性别</span>
-        <span class="textSize">{{ gender }}</span>
-      </van-row>
-      <van-row>
-        <span class="titleSize">手机号</span>
-        <span class="textSize">{{ phoneNumber }}</span>
-      </van-row>
-      <van-row>
-        <span class="titleSize">身份证号</span>
-        <span class="textSize">{{ id }}</span>
-      </van-row>
+    <div class="card" v-for="(item, index) in list" :key="index">
+      <van-cell-group title="详细信息">
+        <van-cell title="小区" :value="item.estate_plot" />
+        <van-cell title="所属居委" :value="item.estate_region" />
+        <van-cell title="所属物业" :value="item.estate_company" />
+        <van-cell title="物业负责人" :value="item.estate_name" />
+        <van-cell title="身份证号" :value="item.estate_card_id" />
+        <van-cell title="性别" :value="iteem.estate_gener == 2 ? '男' : '女'" />
+      </van-cell-group>
     </div>
     <button class="changeButton" @click="changePages">确认</button>
   </div>
@@ -45,13 +25,8 @@
 export default {
   data() {
     return {
-      adress: "",
-      org: "",
-      wuye: "",
-      name: "",
-      gender: "",
-      phoneNumber: "",
-      id: 1000000000,
+      phone: "",
+      list: [],
     };
   },
   method: {
@@ -59,6 +34,18 @@ export default {
       let url = "../index/main";
       mpvue.navigateTo({ url });
     },
+  },
+  mounted() {
+    let params = this.$root.$mp.query;
+    this.phone = params.phone;
+    this.$wxRequest
+      .get({
+        url: "/public/verify/estate?phone=" + this.phone,
+      })
+      .then((res) => {
+        console.log(res);
+        this.list = res.data.data;
+      });
   },
 };
 </script>
@@ -70,14 +57,7 @@ rip
   background-color: rgba(255, 255, 255, 0.883);
   border-radius: 15px;
 }
-.titleSize {
-  font-weight: bold;
-  font-size: 20px;
-}
-.textSize {
-  text-align: right;
-  font-size: 15px;
-}
+
 .changeButton {
   background-color: dodgerblue;
   color: white;
