@@ -13,26 +13,9 @@
           @blur="getValue"
           required
         >
-          <!-- <van-button
-            slot="button"
-            size="small"
-            type="primary"
-            @click="getCode()"
-            >发送验证码</van-button -->
-          >
         </van-field>
         <span class="tip">* 手机号将用于进行物业身份的认证</span>
       </div>
-      <!-- <div>
-        <van-field
-          type="text"
-          :value="checkCode"
-          label="验证码"
-          placeholder="验证码"
-          @change="getCheckCode"
-          required
-        />
-      </div> -->
     </div>
     <div>
       <van-col offset="8" span="8">
@@ -41,12 +24,13 @@
         >
       </van-col>
     </div>
+    <van-toast id="van-toast" />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-
+import Toast from "@vant/weapp/dist/toast/toast";
 export default {
   data() {
     return {
@@ -86,7 +70,29 @@ export default {
       }
     },
     // 根据手机号进行身份认证
-    estateVerify() {},
+    estateVerify() {
+      if ((this.phoneNumber = "")) {
+        Toast.fail("请输入手机号");
+        return;
+      }
+      this.$wxRequest
+        .post({
+          url: "/public/verify/checked",
+          data: {
+            phone: this.phoneNumber,
+            userId: this.userId == undefined ? "6" : this.userId,
+          },
+        })
+        .then((res) => {
+          if (res.data.code == "20001") {
+            Toast.fail(res.data.message);
+          } else if (res.data.code == "20000") {
+            Toast.success(res.data.message);
+            let url = "../propInformation/main?phone=" + this.phoneNumber;
+            mpvue.navigateTo({ url });
+          }
+        });
+    },
   },
 };
 </script>
