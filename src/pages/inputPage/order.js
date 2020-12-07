@@ -25,13 +25,11 @@ var datePickerOptions = {
     currentDate: null,
     isChange: false,
 };
-
 // 错误信息对象
 var errorMessage = {
     phoneMessage: "",
     areaMessage: ""
 }
-
 // oss对象信息
 var OSS = {}
 export default {
@@ -48,6 +46,10 @@ export default {
             policy: "",
             signature: "",
             dialogShow: false,
+            text: "继续支付(5)s",
+            totalTime: 5,
+            color: "red",
+            clock:null,
             filter(type, options) {
                 if (type === "hour") {
                     return options.filter((option) =>
@@ -92,8 +94,11 @@ export default {
                     finalPrice = 360
                 }
             }
+            this.orderInfo.orderPrice = finalPrice
             return finalPrice.toFixed(2)
+            
         }
+        
     },
     methods: {
         showTimePicker() {
@@ -101,6 +106,13 @@ export default {
         },
         onClose() {
             this.show = false;
+        },
+        onDialogClose(){
+            clearInterval(this.clock)
+            this.dialogShow = false
+            this.totalTime = 5
+            this.color = "red"
+            this.text = "继续支付(5)s"
         },
         // 选择器确认按钮事件
         onConfirm(event) {
@@ -224,6 +236,7 @@ export default {
                 this.orderInfo.isFirst = name;
             }
         },
+        // 提交订单
         submitOrder() {
             if (this.orderInfo.name == "" || this.orderInfo.phoneNumber == "" ||
                 this.orderInfo.subAddress == "" || this.orderInfo.buildArea == "" ||
@@ -236,7 +249,34 @@ export default {
                 return
             }
             this.dialogShow = true
-
+            // 倒计时5秒
+            this.clock = setInterval(() => {
+                this.totalTime--;
+                this.text = "继续支付("+this.totalTime + ")s";
+                if (this.totalTime < 0){
+                    clearInterval(this.clock)
+                    this.text = "继续支付"
+                    this.color = "#1989fa"
+                }
+            }, 1000);
+        },
+        // 调用微信支付
+        wechatPay() {
+            if (this.totalTime <= 0){
+                this.orderInfo.openId=this.$store.state.openID,
+                this.onClose()
+                this.$wxRequest
+                .post({
+                    url:'/public/order/wxpay',
+                    data:this.orderInfo,
+                })
+                .then((res) => {
+                    console.log(res)
+                })
+            } else {
+                this.dialogShow = true
+                this.onDialogClose()
+            }
         }
     },
     mounted() {
