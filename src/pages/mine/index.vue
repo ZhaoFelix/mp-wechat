@@ -2,18 +2,20 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-08 14:57:02
+ * @LastEditTime: 2020-12-08 16:25:51
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
 <template>
   <div class="main-container">
-    <van-tabs :active="active" swipeable sticky bind:change="onChangeTab">
+    <van-tabs :active="active" swipeable sticky animated @change="onChangeTab">
       <van-tab name="0" title="全部">
         <van-row>
-          <div class="custom-style">
+          <div class="custom-style" v-for="i in 5" :key="i">
+            <div class="top-divider"></div>
             <!-- 顶部 -->
             <van-row>
+              <div style="height: 8px"></div>
               <van-col span="1" offset="1">
                 <div class="v-line">
                   <span></span>
@@ -61,11 +63,13 @@
                 <div class="driver-info">车牌号：沪G3DE4 周师傅</div>
               </van-col>
               <van-col offset="1" span="10">
-                <div class="btn-grounps">
+                <div class="btn-groups">
                   <van-row>
-                    <van-col span="11"><button>主要按钮</button> </van-col>
+                    <van-col span="11"
+                      ><button class="driver-btn">联系司机</button>
+                    </van-col>
                     <van-col offset="2" span="11">
-                      <button>主要按钮</button>
+                      <button class="service-btn">联系客服</button>
                     </van-col>
                   </van-row>
                 </div>
@@ -80,101 +84,10 @@
   </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      active: 0,
-    };
-  },
-  methods: {
-    onChangeTab() {},
-  },
-};
+import index from "./mine.js";
+export default index;
 </script>
 
 <style scoped>
-.main-container {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.05);
-  position: absolute;
-}
-.custom-style {
-  background-color: white;
-}
-.v-line {
-  height: 20px;
-  text-align: left;
-}
-
-.v-line span {
-  width: 4px;
-  height: 15px;
-  background-color: #3675ff;
-  position: absolute;
-  line-height: 15px;
-  text-align: center;
-  margin-top: 2.5px;
-  border-radius: 2px;
-}
-.common {
-  height: 20px;
-  color: rgba(1, 1, 1, 0.6);
-  font-size: 14px;
-  line-height: 20px;
-}
-.order-status {
-  text-align: right;
-}
-.divider {
-  height: 1px;
-  background-color: rgba(1, 1, 1, 0.1);
-  margin: 10px 0;
-}
-.address-title {
-  font-weight: bold;
-}
-.price-title,
-.price,
-.price-end {
-  font-size: 12px;
-  font-weight: bold;
-  color: rgba(1, 1, 1, 0.8);
-}
-.time-title {
-  margin-top: 8px;
-  font-size: 15px;
-  font-weight: bold;
-  color: rgba(1, 1, 1, 0.8);
-}
-.time {
-  font-size: 14px;
-  color: rgba(1, 1, 1, 0.6);
-}
-.price {
-  color: red;
-}
-
-.driver-info {
-  font-size: 12px;
-  background-color: #4a90e2;
-  color: white;
-  text-align: center;
-  margin: 10px 0;
-  opacity: 0.75;
-  border-radius: 2px;
-  height: 18px;
-  line-height: 18px;
-}
-
-.btn-grounps {
-  text-align: center;
-  margin: 10px 0;
-}
-
-.btn-grounps button {
-  height: 18px;
-  font-size: 12px;
-  line-height: 18px;
-}
+@import "./index.css";
 </style>
