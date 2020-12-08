@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-07 21:33:42
+ * @LastEditTime: 2020-12-08 08:48:49
  * @FilePath: /mp-wechat/src/pages/propInformation/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -10,12 +10,42 @@
   <div>
     <div class="card" v-for="(item, index) in list" :key="index">
       <van-cell-group title="详细信息">
-        <van-cell title="小区" :value="item.estate_plot" />
-        <van-cell title="所属居委" :value="item.estate_region" />
-        <van-cell title="所属物业" :value="item.estate_company" />
-        <van-cell title="物业负责人" :value="item.estate_name" />
-        <van-cell title="身份证号" :value="item.estate_card_id" />
-        <van-cell title="性别" :value="item.estate_gener == 2 ? '男' : '女'" />
+        <van-cell
+          value-class="info"
+          title-width="90px"
+          title="小区"
+          :value="item.estate_plot"
+        />
+        <van-cell
+          value-class="info"
+          title-width="90px"
+          title="所属居委"
+          :value="item.estate_region"
+        />
+        <van-cell
+          value-class="info"
+          title-width="90px"
+          title="所属物业"
+          :value="item.estate_company"
+        />
+        <van-cell
+          value-class="info"
+          title-width="90px"
+          title="物业负责人"
+          :value="item.estate_name"
+        />
+        <van-cell
+          value-class="info"
+          title="身份证号"
+          title-width="90px"
+          :value="item.estate_card_id"
+        />
+        <van-cell
+          title="性别"
+          value-class="info"
+          title-width="90px"
+          :value="item.estate_gender === 2 ? '男' : '女'"
+        />
       </van-cell-group>
     </div>
     <button class="changeButton" @click="changePages">确认</button>
@@ -61,9 +91,14 @@ rip
 }
 
 .changeButton {
-  background-color: dodgerblue;
+  background-color: #07c160;
   color: white;
   align-content: center;
   margin: 10% 20%;
+}
+
+van-cell >>> .info {
+  padding-right: 20px;
+  text-align: left;
 }
 </style>
