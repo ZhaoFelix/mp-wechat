@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-08 08:48:49
+ * @LastEditTime: 2020-12-08 09:16:53
  * @FilePath: /mp-wechat/src/pages/propInformation/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -52,6 +52,8 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+import Toast from "@vant/weapp/dist/toast/toast";
 export default {
   data() {
     return {
@@ -59,12 +61,29 @@ export default {
       list: [],
     };
   },
+  computed: {
+    ...mapState(["openID", "userID"]),
+  },
   methods: {
     changePages() {
-      console.log("跳转");
-      //  返回首页
-      let url = "../index/main";
-      mpvue.switchTab({ url });
+      this.$wxRequest
+        .post({
+          url: "/public/verify/auth",
+          data: {
+            phone: this.phone,
+            userId: this.userId,
+          },
+        })
+        .then((res) => {
+          if (res.data.code == "20000") {
+            Toast.success("认证成功");
+            //  认证成功，返回首页
+            let url = "../index/main";
+            mpvue.switchTab({ url });
+          } else {
+            Toast.fail(res.data.messgae);
+          }
+        });
     },
   },
   mounted() {
@@ -81,7 +100,6 @@ export default {
   },
 };
 </script>
-rip
 <style scoped>
 .card {
   box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.05);
