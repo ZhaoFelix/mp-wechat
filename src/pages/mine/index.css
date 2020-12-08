@@ -99,3 +99,8 @@
   color: #ff936c;
   border: #ff936c solid 1px;
 }
+
+/* 去除小程序原生自带边框 */
+button::after {
+  border: none;
+}
