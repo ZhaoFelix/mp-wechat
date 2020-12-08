@@ -48,6 +48,7 @@ export default {
       mpvue.navigateTo({ url });
     },
     getValue(event) {
+      console.log("失去光标");
       this.phoneNumber = event.mp.detail.value;
     },
     getCheckCode(event) {
@@ -62,6 +63,7 @@ export default {
       if (phone) {
         if (/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
           this.phoneMessage = "";
+          this.phoneNumber = phone;
         } else {
           this.phoneMessage = "您输入的手机号码有误";
         }
@@ -71,16 +73,18 @@ export default {
     },
     // 根据手机号进行身份认证
     estateVerify() {
-      if ((this.phoneNumber = "")) {
+      if (this.phoneNumber == "") {
         Toast.fail("请输入手机号");
         return;
       }
+      let _this = this;
+      console.log(this.phoneNumber);
       this.$wxRequest
         .post({
           url: "/public/verify/checked",
           data: {
-            phone: this.phoneNumber,
-            userId: this.userId == undefined ? "6" : this.userId,
+            phone: _this.phoneNumber,
+            userId: this.userID == undefined ? "6" : this.userID,
           },
         })
         .then((res) => {

@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-08 09:16:53
+ * @LastEditTime: 2020-12-08 09:47:48
  * @FilePath: /mp-wechat/src/pages/propInformation/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -71,7 +71,7 @@ export default {
           url: "/public/verify/auth",
           data: {
             phone: this.phone,
-            userId: this.userId,
+            userId: this.userID,
           },
         })
         .then((res) => {
@@ -94,7 +94,6 @@ export default {
         url: "/public/verify/estate?phone=" + this.phone,
       })
       .then((res) => {
-        console.log(res);
         this.list = res.data.data;
       });
   },
