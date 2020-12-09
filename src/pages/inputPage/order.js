@@ -1,4 +1,5 @@
 import Toast from '@vant/weapp/dist/toast/toast';
+import Dialog from '@vant/weapp/dist/dialog/dialog';
 import timeUtil from "../../utils/index.js"
 import { uploadUrl, downloadUrl, processImage, previewImage } from "../../../config/options.js"
 import {mapState} from 'vuex';
