@@ -294,7 +294,7 @@ export default {
                                 const url = "../mine/main";
                                 mpvue.switchTab({ url });
                                 // 支付成功后重置表单数据
-                                this.orderInfo = {
+                                _this.orderInfo = {
                                     name: "",
                                     phoneNumber: "",
                                     address: "上海市",
@@ -317,7 +317,7 @@ export default {
                                 icon: "none",
                             });
                                 // 支付取消后重置表单数据
-                                this.orderInfo = {
+                                _this.orderInfo = {
                                     name: "",
                                     phoneNumber: "",
                                     address: "上海市",
