@@ -147,10 +147,8 @@ export default {
             if (phone) {
                 if (/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
                     this.errorMessage.phoneMessage = ''
-
                 } else {
                     this.errorMessage.phoneMessage = '您输入的手机号码有误';
-
                 }
             } else {
                 this.errorMessage.phoneMessage = '输入的手机号不能为空'
@@ -295,6 +293,20 @@ export default {
                                 // on close
                                 const url = "../mine/main";
                                 mpvue.switchTab({ url });
+                                // 支付成功后重置表单数据
+                                this.orderInfo = {
+                                    name: "",
+                                    phoneNumber: "",
+                                    address: "上海市",
+                                    subAddress: "",
+                                    buildArea: "",
+                                    isFirst: "1",
+                                    selectTime: "",
+                                    orderNote: "",
+                                    orderPrice: "",
+                                    userProtocl: "1",
+                                    imagesList: []
+                                };
                             });
                             }
                         },
@@ -304,6 +316,20 @@ export default {
                                 title: "支付取消",
                                 icon: "none",
                             });
+                                // 支付取消后重置表单数据
+                                this.orderInfo = {
+                                    name: "",
+                                    phoneNumber: "",
+                                    address: "上海市",
+                                    subAddress: "",
+                                    buildArea: "",
+                                    isFirst: "1",
+                                    selectTime: "",
+                                    orderNote: "",
+                                    orderPrice: "",
+                                    userProtocl: "1",
+                                    imagesList: []
+                                };
                             } else {
                             wx.showToast({
                                 title: res.errmsg,
