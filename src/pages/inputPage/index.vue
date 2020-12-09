@@ -232,6 +232,7 @@
     </van-dialog>
     <!-- 提示节点 -->
     <van-toast id="van-toast" />
+    <van-dialog id="van-dialog" />
   </div>
 </template>
 <script>
