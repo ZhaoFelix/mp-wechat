@@ -1,6 +1,7 @@
 import Toast from '@vant/weapp/dist/toast/toast';
 import timeUtil from "../../utils/index.js"
 import { uploadUrl, downloadUrl, processImage, previewImage } from "../../../config/options.js"
+import {mapState} from 'vuex';
 var orderInfo = {
     name: "",
     phoneNumber: "",
@@ -74,6 +75,7 @@ export default {
         };
     },
     computed: {
+        ...mapState(["userID","userType","openID"]),
         finalPrice: function () {
             let finalPrice = 0
             // 是否是首次装修
@@ -263,7 +265,9 @@ export default {
         // 调用微信支付
         wechatPay() {
             if (this.totalTime <= 0){
-                this.orderInfo.openId=this.$store.state.openID,
+                this.orderInfo.openId = this.openID
+                this.orderInfo.userId = this.userID
+                this.orderInfo.userType = this.userType
                 this.onClose()
                 this.$wxRequest
                 .post({

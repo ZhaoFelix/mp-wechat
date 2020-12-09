@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2020-12-07 14:17:47
+ * @LastEditTime: 2020-12-09 09:09:33
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -46,7 +46,7 @@ const staticInfo = [
         mpvue.navigateTo({ url });
       },
       bindGetUserInfo(e, id) {
-        this.openID = this.$store.state.openID.openID;
+        this.openID = this.$store.state.openID;
         console.log(this.$store.state.openID.openID);
         if (this.$store.state.isLogin) {
           return;
@@ -88,7 +88,7 @@ const staticInfo = [
         }
       },
       getUserInfo() {
-        this.openID = this.$store.state.openID.openID;
+        this.openID = this.$store.state.openID;
         this.$wxRequest
           .post({
             url: "/mobile/wxauth/getUserInfo",
@@ -137,9 +137,9 @@ const staticInfo = [
               })
               .then((res) => {
                 if (res.data.code == 20000) {
-                  _this.$store.commit("setOpenID", {
-                    openID: res.data.data.openid,
-                  });
+                  _this.$store.commit("setOpenID", 
+                   res.data.data.openid,
+                  );
                   //根据openID判断用户是否是首次使用小程序
                   _this.getUserInfo();
                 } else {
