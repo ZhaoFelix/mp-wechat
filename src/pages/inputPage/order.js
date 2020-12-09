@@ -275,7 +275,45 @@ export default {
                     data:this.orderInfo,
                 })
                 .then((res) => {
-                    console.log(res)
+                    if (res.data.code == 20000) {
+                        let re = res.data.data;
+                        var _this = this;
+                        wx.requestPayment({
+                        timeStamp: re.timeStamp,
+                        nonceStr: re.nonceStr,
+                        package: re.package,
+                        signType: re.signType,
+                        paySign: re.paySign,
+                        tradeNo: re.trade_no,
+                        success: function (res) {
+                            if (res.errMsg == "requestPayment:ok") {
+                            Dialog.alert({
+                                message:"下单成功",
+                                confirmButtonText: "查看订单",
+                            }).then(() => {
+                                // on close
+                                const url = "../mine/main";
+                                mpvue.switchTab({ url });
+                            });
+                            }
+                        },
+                        fail: function (res) {
+                            if (res.errMsg == "requestPayment:fail cancel") {
+                            wx.showToast({
+                                title: "支付取消",
+                                icon: "none",
+                            });
+                            } else {
+                            wx.showToast({
+                                title: res.errmsg,
+                                icon: "none",
+                            });
+                            }
+                        },
+                        });
+                    } else if (res.data.code == 20001) {
+                        console.log(res.data.data);
+                    }
                 })
             } else {
                 this.dialogShow = true
@@ -284,6 +322,9 @@ export default {
         }
     },
     mounted() {
+        let params = this.$root.$mp.query;
+        this.orderInfo.orderType = params.orderType
+        // FIX: 获取对象存储的Token,
         this.$wxRequest
             .get({
                 url: "/public/ossToken/getOssToken",

@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2020-12-09 09:09:33
+ * @LastEditTime: 2020-12-09 09:42:19
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -34,11 +34,10 @@ const staticInfo = [
         this.show = true;
       },
       onClickHide() {
-        console.log("普通用户")
         this.show = false;
       },
       toGenerateOrder(type) {
-        let url = "../inputPage/main";
+        let url = "../inputPage/main?orderType="+type;
         mpvue.navigateTo({ url });
       },
       changePageToCheck() {
@@ -102,13 +101,13 @@ const staticInfo = [
                 this.show = true
               }
                 // 判断是否已选择过角色
-               else  if (dataArr[0].user_type === null) {
+              else  if (dataArr[0].user_type === null) {
                     this.show = true;
                 } else {
                     //  存储用户ID和用户类型
-                   this.$store.commit("setUserID",dataArr[0].user_id)
-                   this.$store.commit("setUserType",dataArr[0].user_type)
-                   console.log("已选择过角色") 
+                  this.$store.commit("setUserID",dataArr[0].user_id)
+                  this.$store.commit("setUserType",dataArr[0].user_type)
+                  console.log("已选择过角色") 
                 }
             } else {
               console.log("查询失败", res.data.data);
@@ -138,7 +137,7 @@ const staticInfo = [
               .then((res) => {
                 if (res.data.code == 20000) {
                   _this.$store.commit("setOpenID", 
-                   res.data.data.openid,
+                  res.data.data.openid,
                   );
                   //根据openID判断用户是否是首次使用小程序
                   _this.getUserInfo();
