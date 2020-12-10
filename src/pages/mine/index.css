@@ -12,9 +12,9 @@
   text-align: left;
 }
 
-.v-line span {
+.v-line-span {
   width: 4px;
-  height: 15px;
+  height: 13px;
   background-color: #3675ff;
   position: absolute;
   line-height: 15px;
@@ -25,7 +25,7 @@
 .common {
   height: 20px;
   color: rgba(1, 1, 1, 0.6);
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
 }
 .order-status {
