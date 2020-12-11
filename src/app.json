@@ -35,20 +35,20 @@
   "tabBar": {
     "color": "#999",
     "backgroundColor": "#ffffff",
-    "selectedColor": "#3675FF",
+    "selectedColor": "#4A90E2",
     "borderStyle": "white",
     "list": [
       {
         "text": "立即下单",
         "pagePath": "pages/index/main",
         "iconPath": "static/tabs/order.png",
-        "selectedIconPath": "static/tabs/order.png"
+        "selectedIconPath": "static/tabs/order_selected.png"
       },
       {
         "text": "我的订单",
         "pagePath": "pages/mine/main",
         "iconPath": "static/tabs/mine.png",
-        "selectedIconPath": "static/tabs/mine.png"
+        "selectedIconPath": "static/tabs/mine_selected.png"
       }
     ],
     "items": [
