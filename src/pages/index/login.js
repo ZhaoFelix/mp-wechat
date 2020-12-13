@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2020-12-09 09:42:19
+ * @LastEditTime: 2020-12-13 19:34:53
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -46,7 +46,6 @@ const staticInfo = [
       },
       bindGetUserInfo(e, id) {
         this.openID = this.$store.state.openID;
-        console.log(this.$store.state.openID.openID);
         if (this.$store.state.isLogin) {
           return;
         }
