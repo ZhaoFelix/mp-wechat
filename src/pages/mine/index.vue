@@ -2,10 +2,11 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-10 10:15:02
+ * @LastEditTime: 2020-12-15 09:00:14
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
+
 <template>
   <div class="main-container">
     <!-- <van-tabs :active="active" swipeable sticky animated @change="onChangeTab">

@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-07 14:18:00
+ * @LastEditTime: 2020-12-16 09:59:12
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -14,7 +14,7 @@
         v-for="(item, index) in staticInfo"
         :key="index"
         @click="toGenerateOrder(index)"
-        :class="[index === 0 ? 'business-card-bg1' : 'business-card-bg2']"
+        :class="[index === 0 ? 'business-card-bg2' : 'business-card-bg1']"
       >
         <div class="title">
           <span>{{ item.title }}</span>

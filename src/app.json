@@ -2,10 +2,10 @@
   "pages": [
     "pages/index/main",
     "pages/mine/main",
-    "pages/inputPage/main",
-    "pages/inputPages/main",
-    "pages/checkPage/main",
-    "pages/propInformation/main"
+    "pages/usual/main",
+    "pages/business/main",
+    "pages/verify/main",
+    "pages/propInfo/main"
   ],
   "usingComponents": {
     "van-button": "vant-weapp/dist/button/index",

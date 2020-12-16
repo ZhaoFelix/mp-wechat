@@ -2,12 +2,11 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-08 15:55:12
- * @LastEditTime: 2020-12-10 10:21:48
+ * @LastEditTime: 2020-12-15 09:01:24
  * @FilePath: /mp-wechat/src/pages/mine/mine.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
 import {mapState} from 'vuex';
-
 export default {
     data() {
       return {

@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     changePage() {
-      let url = "../propInformation/main";
+      let url = "../propInfo/main";
       mpvue.navigateTo({ url });
     },
     getValue(event) {
@@ -92,7 +92,7 @@ export default {
             Toast.fail(res.data.message);
           } else if (res.data.code == "20000") {
             Toast.success(res.data.message);
-            let url = "../propInformation/main?phone=" + this.phoneNumber;
+            let url = "../propInfo/main?phone=" + this.phoneNumber;
             mpvue.navigateTo({ url });
           }
         });

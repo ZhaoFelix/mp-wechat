@@ -2,22 +2,22 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2020-12-13 19:34:53
+ * @LastEditTime: 2020-12-16 10:00:54
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
 const staticInfo = [
-    {
-      type: "business",
-      title: "商业装修垃圾清运",
-      info: "适用于：商业门店装修",
-    },
     {
       type: "normal",
       title: "普通装修垃圾清运",
       info:
         "适用于：普通住宅装修垃圾清运、毛胚住宅装修垃圾清运、新房住宅垃圾清运、老房住宅垃圾清运",
     },
+    {
+      type: "business",
+      title: "商业装修垃圾清运",
+      info: "适用于：商业门店装修",
+    }
   ];
   export default {
     data() {
@@ -37,11 +37,17 @@ const staticInfo = [
         this.show = false;
       },
       toGenerateOrder(type) {
-        let url = "../inputPage/main?orderType="+type;
-        mpvue.navigateTo({ url });
+        if (type == 0 ){
+          let url = "../usual/main?orderType="+type;
+          mpvue.navigateTo({ url });
+        } else if (type == 1){
+          let url = "../business/main?orderType="+type;
+          mpvue.navigateTo({ url });
+        }
+      
       },
       changePageToCheck() {
-        let url = "../checkPage/main";
+        let url = "../verify/main";
         mpvue.navigateTo({ url });
       },
       bindGetUserInfo(e, id) {
