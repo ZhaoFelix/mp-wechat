@@ -42,9 +42,7 @@
         :error-message="errorMessage.areaMessage"
       />
 
-      <!-- TODO:是否是首次装修 -->
-
-      <van-radio-group :value="orderInfo.isFirst" @change="onChange">
+      <!-- <van-radio-group :value="orderInfo.isFirst" @change="onChange">
         <van-cell
           center
           title="是否是首次装修"
@@ -54,7 +52,7 @@
         >
           <van-radio slot="right-icon" name="1" checked-color="#07c160" />
         </van-cell>
-      </van-radio-group>
+      </van-radio-group> -->
       <van-field
         :value="orderInfo.selectTime"
         label="预约时间"
@@ -121,18 +119,20 @@
     <!-- TODO:订单价格 -->
     <div class="order-price">
       <van-row>
-        <van-col offset="1" span="10">
+        <van-col offset="1" span="16">
           <span> 清运费：</span>
-          <span style="color: red"> {{ finalPrice }} </span>
-          <span>元</span>
+          <span style="color: red; font-size: 13px">
+            订单提交后，由客服确定
+          </span>
+          <!-- <span>元</span> -->
         </van-col>
-        <van-col offset="1" span="6">
+        <!-- <van-col offset="1" span="6">
           <span
             style="font-size: 12px; color: #4a90e2; text-decoration: underline"
           >
             计价方式说明
           </span>
-        </van-col>
+        </van-col> -->
       </van-row>
     </div>
     <div class="submit-btn">
@@ -179,7 +179,7 @@
       title="订单信息确认"
       :show="dialogShow"
       show-cancel-button
-      :confirmButtonText="text"
+      confirmButtonText="下单"
       :confirm-button-color="color"
       @confirm="wechatPay"
       @close="dialogShow = false"
@@ -218,13 +218,6 @@
           title="预约时间："
           title-width="70px"
           :value="orderInfo.selectTime"
-          value-class="info"
-          :border="false"
-        />
-        <van-cell
-          title="是否首次："
-          title-width="70px"
-          :value="orderInfo.isFirst == 1 ? '首次装修' : '非首次装修'"
           value-class="info"
           :border="false"
         />
