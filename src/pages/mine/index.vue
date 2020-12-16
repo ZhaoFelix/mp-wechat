@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-16 11:18:54
+ * @LastEditTime: 2020-12-16 13:08:12
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -53,6 +53,15 @@
             <van-col offset="4" span="7" v-if="item.order_status != 0">
               <span class="price-title">实付款：</span>
               <span class="price">{{ item.order_final_price }}</span>
+              <span class="price-end"> 元</span>
+            </van-col>
+            <van-col
+              offset="4"
+              span="7"
+              v-if="item.order_status == 0 && item.order_price != null"
+            >
+              <span class="price-title">待付款：</span>
+              <span class="price">{{ item.order_price }}</span>
               <span class="price-end"> 元</span>
             </van-col>
           </van-row>
