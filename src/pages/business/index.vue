@@ -41,18 +41,6 @@
         @change="onchangeArea"
         :error-message="errorMessage.areaMessage"
       />
-
-      <!-- <van-radio-group :value="orderInfo.isFirst" @change="onChange">
-        <van-cell
-          center
-          title="是否是首次装修"
-          data-name="1"
-          label="*是否首次装修详见计价方式说明"
-          @click="onFirstClick"
-        >
-          <van-radio slot="right-icon" name="1" checked-color="#07c160" />
-        </van-cell>
-      </van-radio-group> -->
       <van-field
         :value="orderInfo.selectTime"
         label="预约时间"
@@ -124,15 +112,7 @@
           <span style="color: red; font-size: 13px">
             订单提交后，由客服确定
           </span>
-          <!-- <span>元</span> -->
         </van-col>
-        <!-- <van-col offset="1" span="6">
-          <span
-            style="font-size: 12px; color: #4a90e2; text-decoration: underline"
-          >
-            计价方式说明
-          </span>
-        </van-col> -->
       </van-row>
     </div>
     <div class="submit-btn">
@@ -180,7 +160,6 @@
       :show="dialogShow"
       show-cancel-button
       confirmButtonText="下单"
-      :confirm-button-color="color"
       @confirm="wechatPay"
       @close="dialogShow = false"
     >
