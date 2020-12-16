@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-16 16:03:43
+ * @LastEditTime: 2020-12-16 16:52:16
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -109,7 +109,7 @@
                   </button>
                 </van-col>
                 <van-col
-                  v-if="item.order_type == 0 && item.order_status == 7"
+                  v-if="item.order_type == 0"
                   :offset="item.order_status == 7 ? 2 : 13"
                   span="11"
                 >
