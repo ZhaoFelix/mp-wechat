@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-16 13:08:12
+ * @LastEditTime: 2020-12-16 16:03:43
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -97,13 +97,20 @@
                 <van-col
                   span="11"
                   v-if="item.order_status == 0 && item.order_type == 1"
-                  ><button class="driver-btn" @click="contactDriver(item.Info)">
+                  ><button class="driver-btn" @click="payPrice(item, 0)">
                     立即支付
                   </button>
                 </van-col>
                 <van-col
-                  v-if="item.order_type == 0"
-                  :offset="item.order_status == 3 ? 2 : 13"
+                  span="11"
+                  v-if="item.order_status == 7 && item.order_type == 0"
+                  ><button class="driver-btn" @click="payPrice(item, 1)">
+                    支付差价
+                  </button>
+                </van-col>
+                <van-col
+                  v-if="item.order_type == 0 && item.order_status == 7"
+                  :offset="item.order_status == 7 ? 2 : 13"
                   span="11"
                 >
                   <button class="service-btn" @click="contactService">
