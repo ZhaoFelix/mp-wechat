@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-15 09:00:14
+ * @LastEditTime: 2020-12-16 11:18:54
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -28,11 +28,14 @@
             </div>
           </van-col>
           <van-col offset="1" span="4">
-            <div v-if="item.order_status == '1'" class="order-status common">
+            <div v-if="item.order_status == 1" class="order-status common">
               待指派司机
             </div>
-            <div v-if="item.order_status == '3'" class="order-status common">
+            <div v-if="item.order_status == 3" class="order-status common">
               已指派司机
+            </div>
+            <div v-if="item.order_status == 0" class="order-status common">
+              未支付
             </div>
           </van-col>
         </van-row>
@@ -74,16 +77,33 @@
               }}
             </div>
           </van-col>
-          <van-col :offset="item.order_status == '3' ? '1' : '13'" span="10">
+          <van-col :offset="item.order_status == 3 ? 1 : '13'" span="10">
             <div class="btn-groups">
               <van-row>
-                <van-col span="11" v-if="item.order_status == '3'"
+                <van-col span="11" v-if="item.order_status == 3"
                   ><button class="driver-btn" @click="contactDriver(item.Info)">
                     联系司机
                   </button>
                 </van-col>
                 <van-col
-                  :offset="item.order_status == '3' ? '2' : '13'"
+                  span="11"
+                  v-if="item.order_status == 0 && item.order_type == 1"
+                  ><button class="driver-btn" @click="contactDriver(item.Info)">
+                    立即支付
+                  </button>
+                </van-col>
+                <van-col
+                  v-if="item.order_type == 0"
+                  :offset="item.order_status == 3 ? 2 : 13"
+                  span="11"
+                >
+                  <button class="service-btn" @click="contactService">
+                    联系客服
+                  </button>
+                </van-col>
+                <van-col
+                  v-else-if="item.order_type == 1"
+                  :offset="item.order_status == 0 ? 2 : 13"
                   span="11"
                 >
                   <button class="service-btn" @click="contactService">
@@ -96,10 +116,6 @@
         </van-row>
       </div>
     </van-row>
-    <!-- </van-tab>
-      <van-tab name="1" title="已完成"> </van-tab>
-      <van-tab name="2" title="待支付"> </van-tab>
-    </van-tabs> -->
   </div>
 </template>
 <script>
