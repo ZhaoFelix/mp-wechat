@@ -40,7 +40,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["openID", "userID"]),
+    ...mapState(["openID", "userID", "show"]),
   },
   methods: {
     changePage() {
@@ -91,6 +91,7 @@ export default {
           if (res.data.code == "20001") {
             Toast.fail(res.data.message);
           } else if (res.data.code == "20000") {
+            this.$store.commit("setShow", false);
             Toast.success(res.data.message);
             let url = "../propInfo/main?phone=" + this.phoneNumber;
             mpvue.navigateTo({ url });

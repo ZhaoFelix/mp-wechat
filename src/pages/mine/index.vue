@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-16 16:52:16
+ * @LastEditTime: 2020-12-16 16:55:26
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -37,6 +37,9 @@
             <div v-if="item.order_status == 0" class="order-status common">
               未支付
             </div>
+            <div v-if="item.order_status == 7" class="order-status common">
+              待补差价
+            </div>
           </van-col>
         </van-row>
         <van-row>
@@ -52,7 +55,9 @@
             </van-col>
             <van-col offset="4" span="7" v-if="item.order_status != 0">
               <span class="price-title">实付款：</span>
-              <span class="price">{{ item.order_final_price }}</span>
+              <span class="price">{{
+                item.order_final_price + item.second_pay_price
+              }}</span>
               <span class="price-end"> 元</span>
             </van-col>
             <van-col
