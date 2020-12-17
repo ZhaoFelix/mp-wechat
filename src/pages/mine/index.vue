@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-16 16:55:26
+ * @LastEditTime: 2020-12-17 15:48:22
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -40,6 +40,9 @@
             <div v-if="item.order_status == 7" class="order-status common">
               待补差价
             </div>
+            <div v-if="item.order_status == 6" class="order-status common">
+              已完成
+            </div>
           </van-col>
         </van-row>
         <van-row>
@@ -53,11 +56,24 @@
             <van-col offset="1" span="10">
               <span class="address-title">订单地区、街道</span>
             </van-col>
-            <van-col offset="4" span="7" v-if="item.order_status != 0">
+            <van-col
+              offset="4"
+              span="7"
+              v-if="item.order_status != 0 && item.order_status != 7"
+            >
               <span class="price-title">实付款：</span>
               <span class="price">{{
                 item.order_final_price + item.second_pay_price
               }}</span>
+              <span class="price-end"> 元</span>
+            </van-col>
+            <van-col
+              offset="4"
+              span="7"
+              v-if="item.order_status == 7 && item.order_type == 0"
+            >
+              <span class="price-title">待付差价：</span>
+              <span class="price">{{ item.order_gap_price }}</span>
               <span class="price-end"> 元</span>
             </van-col>
             <van-col
@@ -83,57 +99,74 @@
           </van-col>
         </van-row>
         <!-- 底部 -->
-        <van-row>
-          <van-col offset="1" span="11">
+        <van-row v-if="item.order_status >= 3">
+          <van-col offset="1">
             <div class="driver-info" v-if="item.order_status == '3'">
               {{
-                "车牌号：" + item.Info.car_number + " " + item.Info.driver_name
+                "&nbsp;&nbsp;车牌号：" +
+                item.Info.car_number +
+                "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;司机姓名： " +
+                item.Info.driver_name +
+                "&nbsp;&nbsp;"
               }}
             </div>
           </van-col>
-          <van-col :offset="item.order_status == 3 ? 1 : '13'" span="10">
-            <div class="btn-groups">
-              <van-row>
-                <van-col span="11" v-if="item.order_status == 3"
-                  ><button class="driver-btn" @click="contactDriver(item.Info)">
+        </van-row>
+        <!-- 按钮组 -->
+        <van-row>
+          <div class="btn-groups">
+            <van-row>
+              <!-- 1.联系司机+客服 -->
+              <van-row v-if="item.order_status == 3">
+                <van-col offset="12" span="5">
+                  <button class="driver-btn" @click="contactDriver(item.Info)">
                     联系司机
                   </button>
                 </van-col>
-                <van-col
-                  span="11"
-                  v-if="item.order_status == 0 && item.order_type == 1"
-                  ><button class="driver-btn" @click="payPrice(item, 0)">
-                    立即支付
-                  </button>
-                </van-col>
-                <van-col
-                  span="11"
-                  v-if="item.order_status == 7 && item.order_type == 0"
-                  ><button class="driver-btn" @click="payPrice(item, 1)">
-                    支付差价
-                  </button>
-                </van-col>
-                <van-col
-                  v-if="item.order_type == 0"
-                  :offset="item.order_status == 7 ? 2 : 13"
-                  span="11"
-                >
-                  <button class="service-btn" @click="contactService">
-                    联系客服
-                  </button>
-                </van-col>
-                <van-col
-                  v-else-if="item.order_type == 1"
-                  :offset="item.order_status == 0 ? 2 : 13"
-                  span="11"
-                >
+                <van-col offset="1" span="5">
                   <button class="service-btn" @click="contactService">
                     联系客服
                   </button>
                 </van-col>
               </van-row>
-            </div>
-          </van-col>
+              <!-- 2.立即支付+客服 -->
+              <van-row
+                v-else-if="item.order_status == 0 && item.order_type == 1"
+              >
+                <van-col v-if="item.order_price != null" offset="12" span="5"
+                  ><button class="driver-btn" @click="payPrice(item, 0)">
+                    立即支付
+                  </button>
+                </van-col>
+                <van-col offset="1" span="5">
+                  <button class="service-btn" @click="contactService">
+                    联系客服
+                  </button>
+                </van-col>
+              </van-row>
+              <!-- 3.支付差价 + 客服 -->
+              <van-row
+                v-else-if="item.order_status == 7 && item.order_type == 0"
+              >
+                <van-col offset="12" span="5"
+                  ><button class="driver-btn" @click="payPrice(item, 1)">
+                    支付差价
+                  </button>
+                </van-col>
+                <van-col offset="1" span="5">
+                  <button class="service-btn" @click="contactService">
+                    联系客服
+                  </button>
+                </van-col>
+              </van-row>
+              <!-- 4. 联系客服 -->
+              <van-col v-else offset="18" span="5">
+                <button class="service-btn" @click="contactService">
+                  联系客服
+                </button>
+              </van-col>
+            </van-row>
+          </div>
         </van-row>
       </div>
     </van-row>
