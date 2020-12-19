@@ -2,8 +2,8 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-08 09:47:48
- * @FilePath: /mp-wechat/src/pages/propInformation/index.vue
+ * @LastEditTime: 2020-12-19 17:27:25
+ * @FilePath: /mp-wechat/src/pages/propInfo/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
 <template>
@@ -76,12 +76,19 @@ export default {
         })
         .then((res) => {
           if (res.data.code == "20000") {
-            Toast.success("认证成功");
+            wx.showToast({
+              title: "认证成功",
+              icon: "none",
+            });
+
             //  认证成功，返回首页
             let url = "../index/main";
             mpvue.switchTab({ url });
           } else {
-            Toast.fail(res.data.messgae);
+            wx.showToast({
+              title: res.data.message,
+              icon: "none",
+            });
           }
         });
     },
