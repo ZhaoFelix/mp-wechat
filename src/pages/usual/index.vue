@@ -42,7 +42,7 @@
         :error-message="errorMessage.areaMessage"
       />
 
-      <!-- TODO:是否是首次装修 -->
+      <!-- 是否是首次装修 -->
 
       <van-radio-group :value="orderInfo.isFirst" @change="onChange">
         <van-cell
@@ -129,6 +129,7 @@
         <van-col offset="1" span="6">
           <span
             style="font-size: 12px; color: #4a90e2; text-decoration: underline"
+            @click="toProtocol"
           >
             计价方式说明
           </span>

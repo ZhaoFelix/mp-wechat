@@ -367,6 +367,10 @@ export default {
         this.onDialogClose();
       }
     },
+    toProtocol() {
+      const url = "../protocol/main";
+      mpvue.navigateTo({ url });
+    },
   },
   mounted() {
     let params = this.$root.$mp.query;

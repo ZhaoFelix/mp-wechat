@@ -5,7 +5,8 @@
     "pages/usual/main",
     "pages/business/main",
     "pages/verify/main",
-    "pages/propInfo/main"
+    "pages/propInfo/main",
+    "pages/protocol/main"
   ],
   "usingComponents": {
     "van-button": "vant-weapp/dist/button/index",
