@@ -367,8 +367,8 @@ export default {
         this.onDialogClose();
       }
     },
-    toProtocol() {
-      const url = "../protocol/main";
+    toPrice() {
+      const url = "../price/main";
       mpvue.navigateTo({ url });
     },
   },

@@ -6,7 +6,7 @@
     "pages/business/main",
     "pages/verify/main",
     "pages/propInfo/main",
-    "pages/protocol/main"
+    "pages/price/main"
   ],
   "usingComponents": {
     "van-button": "vant-weapp/dist/button/index",

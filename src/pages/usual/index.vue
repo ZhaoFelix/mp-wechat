@@ -129,7 +129,7 @@
         <van-col offset="1" span="6">
           <span
             style="font-size: 12px; color: #4a90e2; text-decoration: underline"
-            @click="toProtocol"
+            @click="toPrice"
           >
             计价方式说明
           </span>
