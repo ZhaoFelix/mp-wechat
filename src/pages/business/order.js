@@ -212,13 +212,15 @@ export default {
         this.orderInfo.phoneNumber == "" ||
         this.orderInfo.subAddress == "" ||
         this.orderInfo.buildArea == "" ||
-        this.orderInfo.selectTime == "" ||
-        this.orderInfo.imagesList.length == 0
+        this.orderInfo.selectTime == ""
       ) {
         Toast.fail("信息不完整");
         return;
       } else if (this.orderInfo.userProtocl == 0) {
         Toast.fail("请勾选用户协议");
+        return;
+      } else if (this.orderInfo.imagesList.length != 4) {
+        Toast.fail("至少上传四张照片");
         return;
       }
       this.dialogShow = true;
