@@ -53,8 +53,8 @@ export default {
       policy: "",
       signature: "",
       dialogShow: false,
-      text: "继续支付(5)s",
-      totalTime: 5,
+      text: "继续支付(3)s",
+      totalTime: 3,
       color: "red",
       clock: null,
       filter(type, options) {
@@ -124,9 +124,9 @@ export default {
     onDialogClose() {
       clearInterval(this.clock);
       this.dialogShow = false;
-      this.totalTime = 5;
+      this.totalTime = 3;
       this.color = "red";
-      this.text = "继续支付(5)s";
+      this.text = "继续支付(3)s";
     },
     // 选择器确认按钮事件
     onConfirm(event) {
@@ -260,13 +260,15 @@ export default {
         this.orderInfo.phoneNumber == "" ||
         this.orderInfo.subAddress == "" ||
         this.orderInfo.buildArea == "" ||
-        this.orderInfo.selectTime == "" ||
-        this.orderInfo.imagesList.length == 0
+        this.orderInfo.selectTime == ""
       ) {
-        Toast.fail("");
+        Toast.fail("请填写基本信息");
         return;
       } else if (this.orderInfo.userProtocl == 0) {
         Toast.fail("请勾选用户协议");
+        return;
+      } else if (this.orderInfo.imagesList.length != 4) {
+        Toast.fail("必须上传四张照片");
         return;
       }
       this.dialogShow = true;

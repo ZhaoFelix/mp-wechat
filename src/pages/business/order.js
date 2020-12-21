@@ -53,7 +53,7 @@ export default {
       signature: "",
       dialogShow: false,
       //   text: "继续支付(5)s",
-      totalTime: 5,
+      totalTime: 3,
       //   color: "red",
       clock: null,
       filter(type, options) {
