@@ -13,7 +13,8 @@
   margin-top: 40px;
   margin-left: 5%;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .business-card-bg1 {
   background-image: url("https://wechatimg.ningjin.qingmaoedu.com/mp/01.png?x-oss-process=image/resize,h_170");

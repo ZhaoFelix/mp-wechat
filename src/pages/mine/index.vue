@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-17 15:48:22
+ * @LastEditTime: 2020-12-21 10:49:34
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -160,11 +160,13 @@
                 </van-col>
               </van-row>
               <!-- 4. 联系客服 -->
-              <van-col v-else offset="18" span="5">
-                <button class="service-btn" @click="contactService">
-                  联系客服
-                </button>
-              </van-col>
+              <van-row v-else>
+                <van-col offset="18" span="5">
+                  <button class="service-btn" @click="contactService">
+                    联系客服
+                  </button>
+                </van-col>
+              </van-row>
             </van-row>
           </div>
         </van-row>
