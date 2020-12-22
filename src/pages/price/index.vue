@@ -2,18 +2,15 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-20 15:48:31
- * @LastEditTime: 2020-12-20 19:36:08
- * @FilePath: /mp-wechat/src/pages/protocol/index.vue
+ * @LastEditTime: 2020-12-22 10:32:12
+ * @FilePath: /mp-wechat/src/pages/price/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
 <template>
   <div class="container">
     <div class="content-table">
       <h2>上海市清运费最高收费标准及计价方式</h2>
-      <img
-        src="https://wechatimg.ningjin.qingmaoedu.com/mp/3.png"
-        style="width: 100%; background-size: contain"
-      />
+      <div class="table-img"></div>
       <div class="right">
         <p>
           上海市物价局
@@ -66,5 +63,13 @@ p {
   padding: 0 8px;
   font-size: 14px;
   line-height: 25px;
+}
+
+.table-img {
+  width: 100%;
+  height: 174px;
+  background-size: contain;
+  background-image: url("https://wechatimg.ningjin.qingmaoedu.com/mp/3.png");
+  background-repeat: no-repeat;
 }
 </style>

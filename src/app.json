@@ -11,6 +11,7 @@
   ],
   "usingComponents": {
     "van-button": "vant-weapp/dist/button/index",
+    "van-image": "vant-weapp/dist/image/index",
     "van-overlay": "vant-weapp/dist/overlay/index",
     "van-row": "vant-weapp/dist/row/index",
     "van-col": "vant-weapp/dist/col/index",

@@ -163,7 +163,9 @@
       <van-row>
         <van-col offset="10" span="4">
           <!-- TOOD：点击后弹出客服联系电话 -->
-          <span style="color: #4a90e2; font-size: 13px">电话客服</span>
+          <span style="color: #4a90e2; font-size: 13px" @click="contactService"
+            >电话客服</span
+          >
         </van-col>
       </van-row>
     </div>

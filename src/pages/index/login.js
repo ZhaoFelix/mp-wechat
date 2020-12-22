@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2020-12-21 13:15:01
+ * @LastEditTime: 2020-12-21 16:00:21
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -77,15 +77,16 @@ export default {
           })
           .then((res) => {
             if (res.data.code == 20000) {
-              console.log(res.data.data[0]);
               this.$store.commit("setUserID", res.data.data[0].user_id);
               this.$store.commit("changeLogin");
               //
               if (id == 0) {
                 this.show = false;
+                this.getUserInfo();
               } else {
                 const url = "../verify/main";
                 mpvue.navigateTo({ url });
+                this.getUserInfo();
               }
             } else {
               console.log("获取失败");
@@ -97,6 +98,7 @@ export default {
     },
     getUserInfo() {
       this.openID = this.$store.state.openID;
+      console.log(this.openID);
       this.$wxRequest
         .post({
           url: "/mobile/wxauth/getUserInfo",

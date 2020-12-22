@@ -1,6 +1,6 @@
 import Toast from "@vant/weapp/dist/toast/toast";
-import Dialog from "@vant/weapp/dist/dialog/dialog";
 import timeUtil from "../../utils/index.js";
+import { servicePhone } from "../../../config/options";
 import {
   uploadUrl,
   downloadUrl,
@@ -251,6 +251,11 @@ export default {
             });
           }
         });
+    },
+    contactService() {
+      wx.makePhoneCall({
+        phoneNumber: servicePhone,
+      });
     },
   },
   mounted() {
