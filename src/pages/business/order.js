@@ -243,6 +243,19 @@ export default {
               title: re.message,
               icon: "none",
             });
+            // 重置表单信息
+            this.orderInfo = {
+              name: "",
+              phoneNumber: "",
+              address: "上海市",
+              subAddress: "",
+              buildArea: "",
+              isFirst: "1",
+              selectTime: "",
+              orderNote: "",
+              userProtocl: "1",
+              imagesList: [],
+            };
           } else if (res.data.code == 20001) {
             console.log(res.data.data);
             wx.showToast({
