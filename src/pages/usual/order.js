@@ -150,6 +150,10 @@ export default {
     onblurPhoneNumber(event) {
       this.orderInfo.phoneNumber = event.mp.detail.value;
     },
+    // 用户备注
+    onblurPhoneNumber(event) {
+      this.orderInfo.orderNote = event.mp.detail.value;
+    },
     onchangePhoneNumber(event) {
       const phone = event.mp.detail || event;
       // 失去光标后进行判断

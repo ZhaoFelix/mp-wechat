@@ -70,6 +70,7 @@
         placeholder="请输入留言，选填"
         maxlength="100"
         autosize
+        @blur="onblurNote"
       />
     </div>
 
