@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-21 10:49:34
+ * @LastEditTime: 2020-12-22 13:06:45
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -33,6 +33,12 @@
             </div>
             <div v-if="item.order_status == 3" class="order-status common">
               已指派司机
+            </div>
+            <div
+              v-if="item.order_status == 4 || item.order_status == 5"
+              class="order-status common"
+            >
+              司机运输中
             </div>
             <div v-if="item.order_status == 0" class="order-status common">
               未支付
@@ -101,7 +107,7 @@
         <!-- 底部 -->
         <van-row v-if="item.order_status >= 3">
           <van-col offset="1">
-            <div class="driver-info" v-if="item.order_status == '3'">
+            <div class="driver-info" v-if="item.order_status >= 3">
               {{
                 "&nbsp;&nbsp;车牌号：" +
                 item.Info.car_number +
