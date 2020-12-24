@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-08 15:55:12
- * @LastEditTime: 2020-12-22 10:55:52
+ * @LastEditTime: 2020-12-24 09:34:02
  * @FilePath: /mp-wechat/src/pages/mine/mine.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -19,6 +19,11 @@ export default {
     ...mapState(["userID", "openID"]),
   },
   methods: {
+    // 计算剩余支付时长
+    leftPayTime(startTime) {
+      console.log("函数调用");
+      return "剩余支付时长：" + startTime + "分0秒";
+    },
     contactDriver(info) {
       console.log(info.driver_phone);
       wx.makePhoneCall({

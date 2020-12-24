@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-22 13:06:45
+ * @LastEditTime: 2020-12-24 09:38:43
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -118,6 +118,13 @@
             </div>
           </van-col>
         </van-row>
+        <van-row v-else-if="item.order_status == 0 && item.order_type == 0">
+          <van-col offset="1">
+            <div class="driver-info">
+              {{ leftPayTime("21") + "测试" }}
+            </div>
+          </van-col>
+        </van-row>
         <!-- 按钮组 -->
         <van-row>
           <div class="btn-groups">
@@ -150,7 +157,22 @@
                   </button>
                 </van-col>
               </van-row>
-              <!-- 3.支付差价 + 客服 -->
+              <!-- 3.限时支付 -->
+              <van-row
+                v-else-if="item.order_status == 0 && item.order_type == 0"
+              >
+                <van-col v-if="item.order_price != null" offset="12" span="5"
+                  ><button class="driver-btn" @click="payPrice(item, 0)">
+                    立即支付
+                  </button>
+                </van-col>
+                <van-col offset="1" span="5">
+                  <button class="service-btn" @click="contactService">
+                    联系客服
+                  </button>
+                </van-col>
+              </van-row>
+              <!-- 4.支付差价 + 客服 -->
               <van-row
                 v-else-if="item.order_status == 7 && item.order_type == 0"
               >
@@ -165,7 +187,7 @@
                   </button>
                 </van-col>
               </van-row>
-              <!-- 4. 联系客服 -->
+              <!-- 5. 联系客服 -->
               <van-row v-else>
                 <van-col offset="18" span="5">
                   <button class="service-btn" @click="contactService">
