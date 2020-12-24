@@ -1,13 +1,14 @@
 {
   "pages": [
     "pages/index/main",
-    "pages/mine/main",
+    "pages/order/main",
     "pages/usual/main",
     "pages/business/main",
     "pages/verify/main",
     "pages/propInfo/main",
     "pages/price/main",
-    "pages/protocol/main"
+    "pages/protocol/main",
+    "pages/mine/main"
   ],
   "usingComponents": {
     "van-button": "vant-weapp/dist/button/index",
@@ -42,30 +43,22 @@
     "borderStyle": "white",
     "list": [
       {
-        "text": "立即下单",
+        "text": "首页",
         "pagePath": "pages/index/main",
+        "iconPath": "static/tabs/index.png",
+        "selectedIconPath": "static/tabs/index_selected.png"
+      },
+      {
+        "text": "订单",
+        "pagePath": "pages/order/main",
         "iconPath": "static/tabs/order.png",
         "selectedIconPath": "static/tabs/order_selected.png"
       },
       {
-        "text": "我的订单",
+        "text": "我的",
         "pagePath": "pages/mine/main",
         "iconPath": "static/tabs/mine.png",
         "selectedIconPath": "static/tabs/mine_selected.png"
-      }
-    ],
-    "items": [
-      {
-        "name": "立即下单",
-        "pagePath": "pages/index/main",
-        "icon": "static/tabs/home.png",
-        "activeIcon": "static/tabs/home-active.png"
-      },
-      {
-        "name": "我的订单",
-        "pagePath": "pages/mine/main",
-        "icon": "static/tabs/orders.png",
-        "activeIcon": "static/tabs/orders-active.png"
       }
     ],
     "position": "bottom"
