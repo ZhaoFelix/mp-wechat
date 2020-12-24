@@ -274,6 +274,10 @@ export default {
         phoneNumber: servicePhone,
       });
     },
+    toProtocol() {
+      const url = "../protocol/main";
+      mpvue.navigateTo({ url });
+    },
   },
   mounted() {
     let params = this.$root.$mp.query;

@@ -378,6 +378,10 @@ export default {
       const url = "../price/main";
       mpvue.navigateTo({ url });
     },
+    toProtocol() {
+      const url = "../protocol/main";
+      mpvue.navigateTo({ url });
+    },
     contactService() {
       wx.makePhoneCall({
         phoneNumber: servicePhone,

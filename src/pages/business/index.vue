@@ -118,8 +118,8 @@
       </van-row>
     </div>
     <div class="submit-btn">
-      <van-row>
-        <van-col offset="9" span="6">
+      <van-row style="line-height: 12px">
+        <van-col offset="9" span="1">
           <van-radio-group
             :value="orderInfo.userProtocl"
             @change="protoclOnChange"
@@ -129,9 +129,11 @@
               name="1"
               checked-color="#07c160"
               style="font-size: 12px"
-              >服务协议</van-radio
-            >
+            ></van-radio>
           </van-radio-group>
+        </van-col>
+        <van-col>
+          <span class="protocol" @click="toProtocol"> 服务协议 </span>
         </van-col>
       </van-row>
       <div style="height: 5px"></div>
