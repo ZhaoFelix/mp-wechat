@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-15 14:07:29
- * @LastEditTime: 2020-12-24 14:43:32
+ * @LastEditTime: 2020-12-24 14:59:59
  * @FilePath: /mp-wechat/src/pages/mine/mine.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -11,20 +11,6 @@ import { servicePhone } from "../../../config/options";
 export default {
   data() {
     return {
-      tableList: [
-        {
-          title: "服务协议",
-          url: "/pages/protocol/main",
-        },
-        {
-          title: "意见反馈",
-          url: "",
-        },
-        {
-          title: "联系客服",
-          url: "",
-        },
-      ],
       isFeedback: false,
       feedback: null,
     };
@@ -79,5 +65,7 @@ export default {
       }
     },
   },
-  mounted() {},
+  mounted() {
+    console.log("对象挂载");
+  },
 };

@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2020-12-21 16:00:21
+ * @LastEditTime: 2020-12-24 15:03:30
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -79,6 +79,8 @@ export default {
             if (res.data.code == 20000) {
               this.$store.commit("setUserID", res.data.data[0].user_id);
               this.$store.commit("changeLogin");
+              this.$store.commit("setNickname", dataArr[0].wechat_nickname);
+              this.$store.commit("setAvatar", dataArr[0].wechat_avatar);
               //
               if (id == 0) {
                 this.show = false;
@@ -118,6 +120,8 @@ export default {
               //  存储用户ID和用户类型
               this.$store.commit("setUserID", dataArr[0].user_id);
               this.$store.commit("setUserType", dataArr[0].user_type);
+              this.$store.commit("setNickname", dataArr[0].wechat_nickname);
+              this.$store.commit("setAvatar", dataArr[0].wechat_avatar);
               console.log("已选择过角色");
             }
           } else {

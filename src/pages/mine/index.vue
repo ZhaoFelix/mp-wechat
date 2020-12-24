@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:57:47
- * @LastEditTime: 2020-12-24 14:46:19
+ * @LastEditTime: 2020-12-24 15:04:19
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -21,19 +21,28 @@
           />
         </van-col>
         <van-col span="16">
-          <div class="user-nickname">{{ isLogin ? nickname : "未登录" }}</div>
+          <div class="user-nickname">{{ nickname }}</div>
         </van-col>
       </van-row>
     </div>
     <div class="info-table">
       <van-cell
         is-link
-        v-for="(item, index) in tableList"
-        :key="index"
-        :title="item.title"
+        title="服务协议"
         link-type="navigateTo"
-        :url="item.url"
-        @click="onClick(index)"
+        @click="onClick(0)"
+      />
+      <van-cell
+        is-link
+        title="意见反馈"
+        link-type="navigateTo"
+        @click="onClick(1)"
+      />
+      <van-cell
+        is-link
+        title="联系客服"
+        link-type="navigateTo"
+        @click="onClick(2)"
       />
     </div>
     <div class="version-info">v 1.0.0</div>

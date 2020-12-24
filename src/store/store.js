@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-17 08:59:30
+ * @LastEditTime: 2020-12-24 15:01:31
  * @FilePath: /mp-wechat/src/store/store.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -17,6 +17,8 @@ export default new Vuex.Store({
     userID: 0,
     userType: null,
     show: false,
+    avatar: "",
+    nickname: "",
   },
   mutations: {
     setOpenID(state, v) {
@@ -33,6 +35,12 @@ export default new Vuex.Store({
     },
     setShow(state, v) {
       state.show = v;
+    },
+    setAvatar(state, v) {
+      state.avatar = v;
+    },
+    setNickname(state, v) {
+      state.nickname = v;
     },
   },
 });
