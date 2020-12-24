@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-05-07 21:53:03
- * @LastEditTime: 2020-12-24 16:24:36
+ * @LastEditTime: 2020-12-24 17:04:11
  * @FilePath: /mp-wechat/src/pages/protocol/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -196,10 +196,6 @@
         通告上海群欣市政发展有限公司停止该用户的服务。结束用户服务后，用户使用群欣环卫服务的权利马上中止。从那时起，上海群欣市政发展有限公司不再对用户承担任何义务。
       </li>
     </ul>
-    <h5>15、法律</h5>
-    <p>
-      本服务协议要与该国的国家法律解析一致，包括法律条款中有争议抵触的内容。用户和上海群欣市政发展有限公司一致同意服从法院的管辖。若有任何服务条款与法律相抵触，那这些条款将按尽可能接近的方法重新解析，而其它条款则保持对用户产生法律效力和影响，因用户解释本服务协议或通过群欣环卫预订任何产品而导致的争议，将同意接受上海市长宁区人民法院的管辖。
-    </p>
   </div>
 </template>
 
