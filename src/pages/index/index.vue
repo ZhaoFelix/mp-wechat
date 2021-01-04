@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-16 09:59:12
+ * @LastEditTime: 2021-01-04 14:39:47
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -31,9 +31,9 @@
       <div class="wrapper">
         <div class="block">
           <div class="textSize">
-            <h2>请选择您的身份</h2>
+            <h3>提示</h3>
           </div>
-          <div>
+          <!-- <div>
             <button
               open-type="getUserInfo"
               class="van-button--user"
@@ -42,7 +42,7 @@
             >
               我是用户
             </button>
-          </div>
+          </div> -->
           <div>
             <button
               open-type="getUserInfo"
@@ -51,6 +51,9 @@
             >
               我是物业
             </button>
+          </div>
+          <div class="tip">
+            服务仅对指定人群开放，若您是物业人员请使用手机号进行认证。
           </div>
         </div>
       </div>

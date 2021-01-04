@@ -51,14 +51,14 @@
   align-items: center;
   justify-content: center;
   width: 80%;
-  height: 35%;
+  height: 25%;
   background-color: #fff;
 }
 
 .textSize {
   text-align: center;
   color: black;
-  margin: 10%;
+  margin: 5%;
   font-size: 20px;
 }
 
@@ -78,6 +78,12 @@
   color: #fff;
   width: 60%;
   height: 40px;
-  margin: 10% 20%;
+  margin: 5% 20%;
   line-height: 40px;
+}
+
+.tip {
+  color: rgba(1, 1, 1, 0.7); 
+  font-size: 13px;
+  padding: 8px;
 }
