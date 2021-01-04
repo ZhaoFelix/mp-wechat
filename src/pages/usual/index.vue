@@ -43,14 +43,24 @@
       />
 
       <!-- 是否是首次装修 -->
-
       <van-radio-group :value="orderInfo.isFirst" @change="onChange">
         <van-cell
           center
           title="是否是首次装修"
           data-name="1"
-          label="*是否首次装修详见计价方式说明"
+          label="* 是否首次装修详见计价方式说明"
           @click="onFirstClick"
+        >
+          <van-radio slot="right-icon" name="1" checked-color="#07c160" />
+        </van-cell>
+      </van-radio-group>
+      <van-radio-group :value="orderInfo.isAssign" @change="onChange">
+        <van-cell
+          center
+          title="是否是指定垃圾清运点"
+          data-name="1"
+          label="* 非指定垃圾清运点将无法进行清运"
+          @click="onAssignClick"
         >
           <van-radio slot="right-icon" name="1" checked-color="#07c160" />
         </van-cell>

@@ -16,6 +16,7 @@ var orderInfo = {
   subAddress: "",
   buildArea: "",
   isFirst: "1",
+  isAssign: "0",
   selectTime: "",
   orderNote: "",
   orderPrice: "",
@@ -256,6 +257,14 @@ export default {
         this.orderInfo.isFirst = "0";
       } else {
         this.orderInfo.isFirst = name;
+      }
+    },
+    onAssignClick(event) {
+      let { name } = event.currentTarget.dataset;
+      if (this.orderInfo.isAssign == name) {
+        this.orderInfo.isAssign = "0";
+      } else {
+        this.orderInfo.isAssign = name;
       }
     },
     // 提交订单
