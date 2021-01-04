@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-01-04 14:39:47
+ * @LastEditTime: 2021-01-04 15:17:59
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -53,6 +53,7 @@
             </button>
           </div>
           <div class="tip">
+            <span style="color: red">*</span>
             服务仅对指定人群开放，若您是物业人员请使用手机号进行认证。
           </div>
         </div>

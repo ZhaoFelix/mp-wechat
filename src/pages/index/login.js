@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2020-12-24 15:03:30
+ * @LastEditTime: 2021-01-04 15:01:35
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -55,6 +55,7 @@ export default {
       mpvue.navigateTo({ url });
     },
     bindGetUserInfo(e, id) {
+      console.log(this.$store.state.isLogin);
       this.openID = this.$store.state.openID;
       if (this.$store.state.isLogin) {
         return;
@@ -79,9 +80,12 @@ export default {
             if (res.data.code == 20000) {
               this.$store.commit("setUserID", res.data.data[0].user_id);
               this.$store.commit("changeLogin");
-              this.$store.commit("setNickname", dataArr[0].wechat_nickname);
-              this.$store.commit("setAvatar", dataArr[0].wechat_avatar);
-              //
+              this.$store.commit(
+                "setNickname",
+                res.data.data[0].wechat_nickname
+              );
+              this.$store.commit("setAvatar", res.data.data[0].wechat_avatar);
+
               if (id == 0) {
                 this.show = false;
                 this.getUserInfo();
