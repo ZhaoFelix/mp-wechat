@@ -281,8 +281,8 @@ export default {
       } else if (this.orderInfo.userProtocl == 0) {
         Toast.fail("请勾选用户协议");
         return;
-      } else if (this.orderInfo.imagesList.length != 4) {
-        Toast.fail("必须上传四张照片");
+      } else if (this.orderInfo.imagesList.length < 2) {
+        Toast.fail("至少上传两张照片");
         return;
       }
       this.dialogShow = true;

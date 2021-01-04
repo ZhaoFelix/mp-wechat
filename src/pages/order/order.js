@@ -2,8 +2,8 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-08 15:55:12
- * @LastEditTime: 2020-12-24 10:18:57
- * @FilePath: /mp-wechat/src/pages/mine/mine.js
+ * @LastEditTime: 2021-01-04 17:34:03
+ * @FilePath: /mp-wechat/src/pages/order/order.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
 import { mapState } from "vuex";
@@ -19,10 +19,9 @@ export default {
     ...mapState(["userID", "openID"]),
   },
   methods: {
-    contactDriver(info) {
-      console.log(info.driver_phone);
+    contactDriver(phone) {
       wx.makePhoneCall({
-        phoneNumber: info.driver_phone,
+        phoneNumber: phone,
       });
     },
     contactService() {
@@ -92,27 +91,8 @@ export default {
           url: "/mobile/order/query?userId=" + this.userID,
         })
         .then((res) => {
-          if (res.data.code == "20000") {
+          if (res.data.code == 20000) {
             this.list = res.data.data;
-            for (let i = 0; i < this.list.length; i++) {
-              let obj = this.list[i];
-              if (obj.car_id != null && obj.driver_id != null) {
-                _this.$wxRequest
-                  .get({
-                    url:
-                      "/mobile/order/query/info?carId=" +
-                      obj.car_id +
-                      "&driverId=" +
-                      obj.driver_id,
-                  })
-                  .then((res) => {
-                    if (res.data.code == "20000") {
-                      obj.Info = res.data.data[0];
-                      _this.list = [..._this.list];
-                    }
-                  });
-              }
-            }
           } else {
             wx.showToast({
               title: "数据获取失败",

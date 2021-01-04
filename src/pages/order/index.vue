@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-24 14:42:31
+ * @LastEditTime: 2021-01-04 17:34:39
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -120,9 +120,9 @@
             <div class="driver-info" v-if="item.order_status >= 3">
               {{
                 "&nbsp;&nbsp;车牌号：" +
-                item.Info.car_number +
+                item.car_number +
                 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;司机姓名： " +
-                item.Info.driver_name +
+                item.driver_name +
                 "&nbsp;&nbsp;"
               }}
             </div>
@@ -151,7 +151,10 @@
               <!-- 1.联系司机+客服 -->
               <van-row v-if="item.order_status == 3">
                 <van-col offset="12" span="5">
-                  <button class="driver-btn" @click="contactDriver(item.Info)">
+                  <button
+                    class="driver-btn"
+                    @click="contactDriver(item.driver_phone)"
+                  >
                     联系司机
                   </button>
                 </van-col>
