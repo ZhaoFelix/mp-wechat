@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-01-04 15:17:59
+ * @LastEditTime: 2021-01-05 09:27:24
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -24,6 +24,10 @@
             {{ item.info }}
           </p>
         </div>
+      </div>
+      <div class="note-tip">
+        <span style="color: red"> 注意: </span>
+        下单时，请先明确处理的垃圾为建筑垃圾。若非建筑垃圾，将无法进行清运。
       </div>
     </div>
     <!-- 遮罩层 -->
