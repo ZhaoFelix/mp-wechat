@@ -327,7 +327,7 @@ export default {
                       confirmButtonText: "查看订单",
                     }).then(() => {
                       // on close
-                      const url = "../mine/main";
+                      const url = "../order/main";
                       mpvue.switchTab({ url });
                       // 支付成功后重置表单数据
                       _this.orderInfo = {
