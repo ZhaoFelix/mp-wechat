@@ -312,6 +312,7 @@ export default {
     submitOrder() {
       if (
         this.orderInfo.name == "" ||
+        this.orderInfo.estate_id == "" ||
         this.orderInfo.phoneNumber == "" ||
         this.orderInfo.subAddress == "" ||
         this.orderInfo.buildArea == "" ||

@@ -44,6 +44,8 @@ export default {
       overlayshow: false,
       yesOrNo: false,
       show: false,
+      plotPicker: false,
+      columns: [],
       orderInfo,
       datePickerOptions,
       OSS,
@@ -79,6 +81,29 @@ export default {
       },
     };
   },
+  watch: {
+    plotPicker: function (newVal, oldVal) {
+      if (newVal) {
+        this.$wxRequest
+          .get({
+            url: "/mobile/order/query/plot?wechat_id=" + this.userID,
+          })
+          .then((res) => {
+            let other = {
+              text: "其他",
+              id: 0,
+            };
+            let temArr = res.data.data;
+            this.columns = [temArr[0], other];
+            this.columns = [...this.columns];
+            console.log(this.columns);
+          })
+          .catch((error) => {
+            console.log("获取物业列表失败" + error);
+          });
+      }
+    },
+  },
   computed: {
     ...mapState(["userID", "userType", "openID"]),
   },
@@ -98,6 +123,15 @@ export default {
       }
       this.show = false;
     },
+    onCancelPlotPicker() {
+      this.plotPicker = false;
+    },
+    onConfirmPlotPicker(event) {
+      console.log(event.mp.detail.value.text);
+      this.orderInfo.estate_id = event.mp.detail.value.id;
+      this.orderInfo.estate_plot = event.mp.detail.value.text;
+      this.plotPicker = false;
+    },
     onClickButton() {
       this.yesOrNo = false;
       this.firs = 1;
@@ -113,6 +147,9 @@ export default {
     // 姓名
     onblurNote(event) {
       this.orderInfo.orderNote = event.mp.detail.value;
+    },
+    onfocusPlotPicker() {
+      this.plotPicker = true;
     },
     onchangePhoneNumber(event) {
       const phone = event.mp.detail || event;
