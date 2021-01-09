@@ -18,6 +18,14 @@
         :error-message="errorMessage.phoneMessage"
       />
       <van-field
+        :value="orderInfo.estate_plot"
+        label="物业小区"
+        placeholder="请选择小区"
+        @focus="onfocusPlotPicker"
+        @change="onchangePlotPicker"
+        :error-message="errorMessage.plotPickerMessage"
+      />
+      <van-field
         :value="orderInfo.address"
         label="地址"
         placeholder="省 市 区"
@@ -98,6 +106,16 @@
         @cancel="onClose"
         :filter="filter"
         :formatter="datePickerformatter"
+      />
+    </van-popup>
+    <!-- 小区选择 -->
+    <van-popup :show="plotPicker" round position="bottom" @close="show = false">
+      <van-picker
+        show-toolbar
+        title="选择小区"
+        :columns="columns"
+        @cancel="onCancelPlotPicker"
+        @confirm="onConfirmPlotPicker"
       />
     </van-popup>
     <!-- 图片上传相关 -->

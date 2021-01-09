@@ -22,6 +22,8 @@ var orderInfo = {
   orderPrice: "",
   userProtocl: "1",
   imagesList: [],
+  estate_id: "0",
+  estate_plot: "",
 };
 // 时间选择器相关配置
 var datePickerOptions = {
@@ -38,6 +40,7 @@ var datePickerOptions = {
 var errorMessage = {
   phoneMessage: "",
   areaMessage: "",
+  plotPickerMessage: "",
 };
 // oss对象信息
 var OSS = {};
@@ -47,6 +50,8 @@ export default {
       overlayshow: false,
       yesOrNo: false,
       show: false,
+      plotPicker: false,
+      columns: [],
       orderInfo,
       datePickerOptions,
       OSS,
@@ -81,6 +86,29 @@ export default {
         return value;
       },
     };
+  },
+  watch: {
+    plotPicker: function (newVal, oldVal) {
+      if (newVal) {
+        this.$wxRequest
+          .get({
+            url: "/mobile/order/query/plot?wechat_id=" + this.userID,
+          })
+          .then((res) => {
+            let other = {
+              text: "其他",
+              id: 0,
+            };
+            let temArr = res.data.data;
+            this.columns = [temArr[0], other];
+            this.columns = [...this.columns];
+            console.log(this.columns);
+          })
+          .catch((error) => {
+            console.log("获取物业列表失败" + error);
+          });
+      }
+    },
   },
   computed: {
     ...mapState(["userID", "userType", "openID"]),
@@ -133,11 +161,21 @@ export default {
     // 选择器确认按钮事件
     onConfirm(event) {
       let time = timeUtil.formatDateStr(new Date(event.mp.detail));
+      console.log(time);
       // 判断选择器是否变化
       if (this.datePickerOptions.isChange) {
         this.orderInfo.selectTime = time;
       }
       this.show = false;
+    },
+    onCancelPlotPicker() {
+      this.plotPicker = false;
+    },
+    onConfirmPlotPicker(event) {
+      console.log(event.mp.detail.value.text);
+      this.orderInfo.estate_id = event.mp.detail.value.id;
+      this.orderInfo.estate_plot = event.mp.detail.value.text;
+      this.plotPicker = false;
     },
     onClickButton() {
       this.yesOrNo = false;
@@ -150,6 +188,9 @@ export default {
     // 手机号
     onblurPhoneNumber(event) {
       this.orderInfo.phoneNumber = event.mp.detail.value;
+    },
+    onfocusPlotPicker() {
+      this.plotPicker = true;
     },
     // 用户备注
     onblurNote(event) {

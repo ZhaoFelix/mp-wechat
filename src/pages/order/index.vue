@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-01-04 17:34:39
+ * @LastEditTime: 2021-01-06 10:30:22
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -149,7 +149,7 @@
           <div class="btn-groups">
             <van-row>
               <!-- 1.联系司机+客服 -->
-              <van-row v-if="item.order_status == 3">
+              <van-row v-if="item.order_status == 3 || item.order_status == 4">
                 <van-col offset="12" span="5">
                   <button
                     class="driver-btn"
