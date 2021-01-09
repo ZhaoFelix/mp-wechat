@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-01-06 10:30:22
+ * @LastEditTime: 2021-01-10 01:21:51
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -173,7 +173,7 @@
                     立即支付
                   </button>
                 </van-col>
-                <van-col offset="1" span="5">
+                <van-col :offset="item.order_price != null ? 1 : 18" span="5">
                   <button class="service-btn" @click="contactService">
                     联系客服
                   </button>
