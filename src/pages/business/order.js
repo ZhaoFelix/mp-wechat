@@ -6,6 +6,7 @@ import {
   downloadUrl,
   processImage,
   previewImage,
+  bucket,
 } from "../../../config/options.js";
 import { mapState } from "vuex";
 var orderInfo = {
@@ -194,7 +195,7 @@ export default {
     },
     afterRead(event) {
       const { file } = event.mp.detail;
-      let fileName = "ningjin_dev/" + new Date().getTime() + ".png";
+      let fileName = bucket + new Date().getTime() + ".png";
       var _this = this;
       wx.uploadFile({
         url: uploadUrl, // 接口地址
