@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-01-10 01:21:51
+ * @LastEditTime: 2021-01-11 08:45:39
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -30,6 +30,9 @@
           <van-col offset="1" span="4">
             <div v-if="item.order_status == 1" class="order-status common">
               待指派司机
+            </div>
+            <div v-if="item.order_status == 2" class="order-status common">
+              已取消
             </div>
             <div v-if="item.order_status == 3" class="order-status common">
               已指派司机
