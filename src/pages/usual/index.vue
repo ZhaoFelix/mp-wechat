@@ -21,8 +21,8 @@
         :value="orderInfo.estate_plot"
         label="物业小区"
         placeholder="请选择小区"
-        @focus="onfocusPlotPicker"
-        @change="onchangePlotPicker"
+        @click="onfocusPlotPicker"
+        readonly
         :error-message="errorMessage.plotPickerMessage"
       />
       <van-field
@@ -109,7 +109,12 @@
       />
     </van-popup>
     <!-- 小区选择 -->
-    <van-popup :show="plotPicker" round position="bottom" @close="show = false">
+    <van-popup
+      :show="plotPicker"
+      round
+      position="bottom"
+      @close="plotPicker = false"
+    >
       <van-picker
         show-toolbar
         title="选择小区"
