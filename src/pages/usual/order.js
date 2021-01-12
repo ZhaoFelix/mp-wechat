@@ -385,6 +385,8 @@ export default {
                         orderPrice: "",
                         userProtocl: "1",
                         imagesList: [],
+                        estate_id: "0",
+                        estate_plot: "",
                       };
                     });
                   }
@@ -408,6 +410,8 @@ export default {
                       orderPrice: "",
                       userProtocl: "1",
                       imagesList: [],
+                      estate_id: "0",
+                      estate_plot: "",
                     };
                   } else {
                     wx.showToast({

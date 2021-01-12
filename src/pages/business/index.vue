@@ -20,9 +20,9 @@
       <van-field
         :value="orderInfo.estate_plot"
         label="物业小区"
+        readonly
         placeholder="请选择小区"
-        @focus="onfocusPlotPicker"
-        @change="onchangePlotPicker"
+        @click="onfocusPlotPicker"
         :error-message="errorMessage.plotPickerMessage"
       />
       <van-field

@@ -20,6 +20,8 @@ var orderInfo = {
   orderNote: "",
   userProtocl: "1",
   imagesList: [],
+  estate_id: "0",
+  estate_plot: "",
 };
 // 时间选择器相关配置
 var datePickerOptions = {
@@ -297,6 +299,8 @@ export default {
               orderNote: "",
               userProtocl: "1",
               imagesList: [],
+              estate_id: "0",
+              estate_plot: "",
             };
           } else if (res.data.code == 20001) {
             console.log(res.data.data);
