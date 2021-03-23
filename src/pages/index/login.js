@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2021-01-11 10:16:46
+ * @LastEditTime: 2021-03-23 09:02:16
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -12,13 +12,13 @@ import { mapState } from "vuex";
 const staticInfo = [
   {
     type: "normal",
-    title: "普通装修渣土清运",
+    title: "普通装修垃圾清运",
     info:
-      "适用于：普通住宅装修渣土清运、毛胚住宅装修渣土清运、新房住宅渣土清运、老房住宅渣土清运",
+      "适用于：普通住宅装修垃圾清运、毛胚住宅装修垃圾清运、新房住宅垃圾清运、老房住宅垃圾清运",
   },
   {
     type: "business",
-    title: "商业装修渣土清运",
+    title: "商业装修垃圾清运",
     info: "适用于：商业门店装修",
   },
 ];
