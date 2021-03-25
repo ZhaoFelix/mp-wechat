@@ -2,17 +2,18 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-15 14:07:29
- * @LastEditTime: 2020-12-24 14:59:59
+ * @LastEditTime: 2021-03-25 14:40:51
  * @FilePath: /mp-wechat/src/pages/mine/mine.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
 import { mapState } from "vuex";
-import { servicePhone } from "../../../config/options";
+import { servicePhone, VERSION } from "../../../config/options";
 export default {
   data() {
     return {
       isFeedback: false,
       feedback: null,
+      VERSION,
     };
   },
   computed: {
