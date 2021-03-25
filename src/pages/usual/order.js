@@ -31,9 +31,9 @@ var datePickerOptions = {
   minHour: 8,
   maxHour: 20,
   // 最小时间必须提前一个小时
-  minDate: new Date().getTime() + 1 * 60 * 60 * 1000,
+  minDate: new Date().getTime() + 12 * 60 * 60 * 1000,
   //  最多可提前2天进行预约
-  maxDate: new Date().setDate(new Date().getDate() + 2),
+  maxDate: new Date().setDate(new Date().getDate() + 3),
   currentDate: null,
   isChange: false,
 };
@@ -67,12 +67,13 @@ export default {
       clock: null,
       filter(type, options) {
         if (type === "hour") {
+          // 可预约的时间设置为8:00~16:00
           return options.filter((option) =>
-            option >= 8 && option <= 20 ? option : ""
+            option >= 8 && option < 16 ? option : ""
           );
         }
         if (type === "minute") {
-          return options.filter((option) => option % 10 === 0);
+          return options.filter((option) => option % 30 === 0);
         }
         return options;
       },
