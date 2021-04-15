@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2021-03-23 09:02:16
+ * @LastEditTime: 2021-04-15 14:21:17
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -21,6 +21,11 @@ const staticInfo = [
     title: "商业装修垃圾清运",
     info: "适用于：商业门店装修",
   },
+  {
+    type: "box",
+    title: "建筑垃圾箱清运",
+    info: "适用于：垃圾箱清运。",
+  },
 ];
 export default {
   data() {
@@ -29,6 +34,7 @@ export default {
       staticInfo,
       showBorder: true,
       count: "0",
+      userType: "",
     };
   },
   computed: {
@@ -123,6 +129,7 @@ export default {
               this.$store.commit("setUserType", dataArr[0].user_type);
               this.$store.commit("setNickname", dataArr[0].wechat_nickname);
               this.$store.commit("setAvatar", dataArr[0].wechat_avatar);
+              this.userType = this.$store.state.userType;
               console.log("已选择过角色");
             }
           } else {

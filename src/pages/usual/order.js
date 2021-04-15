@@ -16,7 +16,7 @@ var orderInfo = {
   address: "上海市",
   subAddress: "",
   buildArea: "",
-  isFirst: "1",
+  isFirst: "0",
   isAssign: "0",
   selectTime: "",
   orderNote: "",
@@ -69,7 +69,7 @@ export default {
         if (type === "hour") {
           // 可预约的时间设置为8:00~16:00
           return options.filter((option) =>
-            option >= 8 && option < 16 ? option : ""
+            option == 8 || option == 12 ? option : ""
           );
         }
         if (type === "minute") {
@@ -84,8 +84,11 @@ export default {
           return `${value}月`;
         } else if (type === "day") {
           return `${value}日`;
+        } else if (type === "hour") {
+          return value == 8 ? "上午" : "下午";
+        } else {
+          return "";
         }
-        return value;
       },
     };
   },
@@ -166,7 +169,9 @@ export default {
       console.log(time);
       // 判断选择器是否变化
       if (this.datePickerOptions.isChange) {
-        this.orderInfo.selectTime = time;
+        let newStr = time.split(" ");
+        this.orderInfo.selectTime =
+          newStr[0] + (newStr[1] == "8:00" ? " 上午" : " 下午");
       }
       this.show = false;
     },

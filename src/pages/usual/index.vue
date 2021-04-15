@@ -51,7 +51,7 @@
       />
 
       <!-- 是否是首次装修 -->
-      <van-radio-group :value="orderInfo.isFirst" @change="onChange">
+      <!-- <van-radio-group :value="orderInfo.isFirst" @change="onChange">
         <van-cell
           center
           title="是否是首次装修"
@@ -61,7 +61,7 @@
         >
           <van-radio slot="right-icon" name="1" checked-color="#07c160" />
         </van-cell>
-      </van-radio-group>
+      </van-radio-group> -->
       <van-radio-group :value="orderInfo.isAssign" @change="onChange">
         <van-cell
           center
@@ -76,7 +76,7 @@
       <van-field
         :value="orderInfo.selectTime"
         label="预约时间"
-        placeholder="2020-01-01 08:00"
+        placeholder="2020-01-01 上午"
         readonly
         @click="showTimePicker"
       />
@@ -155,18 +155,14 @@
     <!-- TODO:订单价格 -->
     <div class="order-price">
       <van-row>
-        <van-col offset="1" span="10">
+        <van-col offset="2" span="20">
           <span> 清运费：</span>
-          <span style="color: red"> {{ finalPrice }} </span>
+          <span style="color: red"> {{ finalPrice * 0.8 }} </span>
           <span>元</span>
-        </van-col>
-        <van-col offset="1" span="6">
-          <span
-            style="font-size: 12px; color: #4a90e2; text-decoration: underline"
-            @click="toPrice"
-          >
-            计价方式说明
-          </span>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span>代办费：</span>
+          <span style="color: red"> {{ finalPrice * 0.2 }} </span>
+          <span>元</span>
         </van-col>
       </van-row>
     </div>
@@ -195,13 +191,22 @@
           <button class="sub-btn" @click="submitOrder">立即下单</button>
         </van-col>
       </van-row>
-      <div style="height: 20px"></div>
+      <div style="height: 10px"></div>
       <van-row>
-        <van-col offset="10" span="4">
+        <van-col offset="4" span="6">
           <!-- TOOD：点击后弹出客服联系电话 -->
           <span style="color: #4a90e2; font-size: 13px" @click="contactService"
             >电话客服</span
           >
+        </van-col>
+
+        <van-col offset="4" span="6">
+          <span
+            style="font-size: 12px; color: #4a90e2; text-decoration: underline"
+            @click="toPrice"
+          >
+            计价方式说明
+          </span>
         </van-col>
       </van-row>
       <div style="height: 20px"></div>

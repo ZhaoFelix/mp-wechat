@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-01-05 09:27:24
+ * @LastEditTime: 2021-04-15 14:36:30
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -12,6 +12,7 @@
       <div
         class="business-card"
         v-for="(item, index) in staticInfo"
+        v-if="userType != null"
         :key="index"
         @click="toGenerateOrder(index)"
         :class="[index === 0 ? 'business-card-bg2' : 'business-card-bg1']"
@@ -25,9 +26,20 @@
           </p>
         </div>
       </div>
-      <div class="note-tip">
-        <span style="color: red"> 注意: </span>
-        下单时，请先明确处理的垃圾为建筑垃圾。若非建筑垃圾，将无法进行清运。
+      <!-- 只针对普通用户显示 -->
+      <div
+        v-if="userType == null"
+        class="business-card business-card-bg1"
+        @click="toGenerateOrder(2)"
+      >
+        <div class="title">
+          <span>{{ staticInfo[2].title }}</span>
+        </div>
+        <div class="info">
+          <p>
+            {{ staticInfo[2].info }}
+          </p>
+        </div>
       </div>
     </div>
     <!-- 遮罩层 -->
@@ -37,7 +49,7 @@
           <div class="textSize">
             <h3>提示</h3>
           </div>
-          <!-- <div>
+          <div>
             <button
               open-type="getUserInfo"
               class="van-button--user"
@@ -46,7 +58,7 @@
             >
               我是用户
             </button>
-          </div> -->
+          </div>
           <div>
             <button
               open-type="getUserInfo"
@@ -58,7 +70,7 @@
           </div>
           <div class="tip">
             <span style="color: red">*</span>
-            服务仅对指定人群开放，若您是物业人员请使用手机号进行认证。
+            若您是物业人员请使用手机号进行认证。
           </div>
         </div>
       </div>
