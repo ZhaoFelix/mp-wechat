@@ -7,6 +7,7 @@ import {
   processImage,
   previewImage,
   bucket,
+  boxPrice,
 } from "../../../config/options.js";
 import { mapState } from "vuex";
 var orderInfo = {
@@ -14,7 +15,7 @@ var orderInfo = {
   phoneNumber: "",
   address: "上海市",
   subAddress: "",
-  buildArea: "",
+  buildArea: "0",
   isFirst: "1",
   selectTime: "",
   orderNote: "",
@@ -22,6 +23,7 @@ var orderInfo = {
   imagesList: [],
   estate_id: "0",
   estate_plot: "",
+  boxNumber: 0,
 };
 // 时间选择器相关配置
 var datePickerOptions = {
@@ -57,10 +59,11 @@ export default {
       policy: "",
       signature: "",
       dialogShow: false,
-      //   text: "继续支付(5)s",
+      text: "继续支付(3)s",
       totalTime: 3,
-      //   color: "red",
+      color: "red",
       clock: null,
+
       filter(type, options) {
         if (type === "hour") {
           return options.filter((option) =>
@@ -112,6 +115,9 @@ export default {
   },
   computed: {
     ...mapState(["userID", "userType", "openID"]),
+    finalPrice: function () {
+      return boxPrice * this.orderInfo.boxNumber;
+    },
   },
   methods: {
     showTimePicker() {
@@ -119,6 +125,13 @@ export default {
     },
     onClose() {
       this.show = false;
+    },
+    onDialogClose() {
+      clearInterval(this.clock);
+      this.dialogShow = false;
+      this.totalTime = 3;
+      this.color = "red";
+      this.text = "继续支付(3)s";
     },
     // 选择器确认按钮事件
     onConfirm(event) {
@@ -181,7 +194,7 @@ export default {
     },
     // 装修面积
     onblurArea(event) {
-      this.orderInfo.buildArea = event.mp.detail.value;
+      this.orderInfo.boxNumber = event.mp.detail.value;
     },
     onchangeArea(event) {
       const area = event.mp.detail || event;
@@ -260,8 +273,8 @@ export default {
         this.orderInfo.name == "" ||
         this.orderInfo.phoneNumber == "" ||
         this.orderInfo.subAddress == "" ||
-        this.orderInfo.buildArea == "" ||
-        this.orderInfo.selectTime == ""
+        this.orderInfo.selectTime == "" ||
+        this.orderInfo.boxNumber == 0
       ) {
         Toast.fail("信息不完整");
         return;
@@ -273,48 +286,96 @@ export default {
         return;
       }
       this.dialogShow = true;
+      // 倒计时5秒
+      this.clock = setInterval(() => {
+        this.totalTime--;
+        this.text = "继续支付(" + this.totalTime + ")s";
+        if (this.totalTime < 0) {
+          clearInterval(this.clock);
+          this.text = "继续支付";
+          this.color = "#1989fa";
+        }
+      }, 1000);
     },
     // 调用微信支付
     wechatPay() {
-      this.orderInfo.openId = this.openID;
-      this.orderInfo.userId = this.userID;
-      this.orderInfo.userType = this.userType;
-      this.onClose();
-      this.$wxRequest
-        .post({
-          url: "/public/order/business",
-          data: this.orderInfo,
-        })
-        .then((res) => {
-          if (res.data.code == 20000) {
-            let re = res.data;
-            wx.showToast({
-              title: re.message,
-              icon: "none",
-            });
-            // 重置表单信息
-            this.orderInfo = {
-              name: "",
-              phoneNumber: "",
-              address: "上海市",
-              subAddress: "",
-              buildArea: "",
-              isFirst: "1",
-              selectTime: "",
-              orderNote: "",
-              userProtocl: "1",
-              imagesList: [],
-              estate_id: "0",
-              estate_plot: "",
-            };
-          } else if (res.data.code == 20001) {
-            console.log(res.data.data);
-            wx.showToast({
-              title: error,
-              icon: "none",
-            });
-          }
-        });
+      if (this.totalTime <= 0) {
+        this.orderInfo.openId = this.openID;
+        this.orderInfo.userId = this.userID;
+        this.orderInfo.userType = this.userType;
+        this.onClose();
+        this.$wxRequest
+          .post({
+            url: "/public/order/box/wxpay",
+            data: this.orderInfo,
+          })
+          .then((res) => {
+            if (res.data.code == 20000) {
+              let re = res.data.data;
+              var _this = this;
+              wx.requestPayment({
+                timeStamp: re.timeStamp,
+                nonceStr: re.nonceStr,
+                package: re.package,
+                signType: re.signType,
+                paySign: re.paySign,
+                tradeNo: re.trade_no,
+                success: function (res) {
+                  if (res.errMsg == "requestPayment:ok") {
+                    Dialog.alert({
+                      message: "下单成功",
+                      confirmButtonText: "查看订单",
+                    }).then(() => {
+                      // on close
+                      const url = "../order/main";
+                      mpvue.switchTab({ url });
+                      // 支付成功后重置表单数据
+                      _this.resetForm();
+                    });
+                  }
+                },
+                fail: function (res) {
+                  if (res.errMsg == "requestPayment:fail cancel") {
+                    wx.showToast({
+                      title: "支付取消",
+                      icon: "none",
+                    });
+                    // 支付取消后重置表单数据
+                    _this.resetForm();
+                  } else {
+                    wx.showToast({
+                      title: res.errmsg,
+                      icon: "none",
+                    });
+                  }
+                },
+              });
+            } else if (res.data.code == 20001) {
+              console.log(res.data.data);
+            }
+          });
+      } else {
+        this.dialogShow = true;
+        this.onDialogClose();
+      }
+    },
+    // 重置表单
+    resetForm() {
+      this.orderInfo = {
+        name: "",
+        phoneNumber: "",
+        address: "上海市",
+        subAddress: "",
+        buildArea: "0",
+        isFirst: "1",
+        selectTime: "",
+        orderNote: "",
+        userProtocl: "1",
+        imagesList: [],
+        estate_id: "0",
+        estate_plot: "",
+        boxNumber: 0,
+      };
     },
     contactService() {
       wx.makePhoneCall({
@@ -326,6 +387,7 @@ export default {
       mpvue.navigateTo({ url });
     },
   },
+
   mounted() {
     let params = this.$root.$mp.query;
     this.orderInfo.orderType = params.orderType;

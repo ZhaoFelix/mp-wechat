@@ -2,33 +2,47 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-04-15 14:36:30
+ * @LastEditTime: 2021-04-20 13:30:00
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
 <template>
   <div>
     <div class="container">
+      <!-- 普通 -->
       <div
-        class="business-card"
-        v-for="(item, index) in staticInfo"
+        class="business-card business-card-bg2"
         v-if="userType != null"
-        :key="index"
-        @click="toGenerateOrder(index)"
-        :class="[index === 0 ? 'business-card-bg2' : 'business-card-bg1']"
+        @click="toGenerateOrder(0)"
       >
         <div class="title">
-          <span>{{ item.title }}</span>
+          <span>{{ staticInfo[0].title }}</span>
         </div>
         <div class="info">
           <p>
-            {{ item.info }}
+            {{ staticInfo[0].info }}
           </p>
         </div>
       </div>
+      <!-- 商业 -->
+      <div
+        class="business-card business-card-bg1"
+        v-if="userType == null"
+        @click="toGenerateOrder(1)"
+      >
+        <div class="title">
+          <span>{{ staticInfo[1].title }}</span>
+        </div>
+        <div class="info">
+          <p>
+            {{ staticInfo[1].info }}
+          </p>
+        </div>
+      </div>
+
       <!-- 只针对普通用户显示 -->
       <div
-        v-if="userType == null"
+        v-if="userType != null"
         class="business-card business-card-bg1"
         @click="toGenerateOrder(2)"
       >

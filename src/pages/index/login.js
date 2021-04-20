@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2021-04-15 14:21:17
+ * @LastEditTime: 2021-04-20 13:34:44
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -34,7 +34,7 @@ export default {
       staticInfo,
       showBorder: true,
       count: "0",
-      userType: "",
+      userType: null,
     };
   },
   computed: {
@@ -48,11 +48,19 @@ export default {
       this.$store.commit("setShow", false);
     },
     toGenerateOrder(type) {
+      // 普通
       if (type == 0) {
         let url = "../usual/main?orderType=" + type;
         mpvue.navigateTo({ url });
-      } else if (type == 1) {
+      }
+      // 商业
+      else if (type == 1) {
         let url = "../business/main?orderType=" + type;
+        mpvue.navigateTo({ url });
+      }
+      // 按箱
+      else if (type == 2) {
+        let url = "../box/main?orderType=" + type;
         mpvue.navigateTo({ url });
       }
     },
@@ -130,6 +138,7 @@ export default {
               this.$store.commit("setNickname", dataArr[0].wechat_nickname);
               this.$store.commit("setAvatar", dataArr[0].wechat_avatar);
               this.userType = this.$store.state.userType;
+              console.log(this.userType);
               console.log("已选择过角色");
             }
           } else {

@@ -17,14 +17,14 @@
         @change="onchangePhoneNumber"
         :error-message="errorMessage.phoneMessage"
       />
-      <!-- <van-field
+      <van-field
         :value="orderInfo.estate_plot"
         label="物业小区"
         readonly
         placeholder="请选择小区"
         @click="onfocusPlotPicker"
         :error-message="errorMessage.plotPickerMessage"
-      /> -->
+      />
       <van-field
         :value="orderInfo.address"
         label="地址"
@@ -41,10 +41,10 @@
     </div>
     <div class="order-info">
       <van-field
-        :value="orderInfo.buildArea"
+        :value="orderInfo.boxNumber"
         type="number"
-        label="议定价格"
-        placeholder="单位为元"
+        label="垃圾箱数"
+        placeholder="单位为箱"
         @blur="onblurArea"
         @change="onchangeArea"
         :error-message="errorMessage.areaMessage"
@@ -130,7 +130,7 @@
         <van-col offset="1" span="16">
           <span> 清运费：</span>
           <span style="color: red; font-size: 13px">
-            订单提交后，由客服确定
+            {{ finalPrice + " 元" }}
           </span>
         </van-col>
       </van-row>
@@ -184,7 +184,8 @@
       title="订单信息确认"
       :show="dialogShow"
       show-cancel-button
-      confirmButtonText="下单"
+      :confirmButtonText="text"
+      :confirm-button-color="color"
       @confirm="wechatPay"
       @close="dialogShow = false"
     >
@@ -212,9 +213,9 @@
           :border="false"
         />
         <van-cell
-          title="装修面积："
+          title="垃圾箱数："
           title-width="70px"
-          :value="orderInfo.buildArea"
+          :value="orderInfo.boxNumber"
           value-class="info"
           :border="false"
         />

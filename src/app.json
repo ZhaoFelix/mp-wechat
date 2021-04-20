@@ -4,6 +4,7 @@
     "pages/order/main",
     "pages/usual/main",
     "pages/business/main",
+    "pages/box/main",
     "pages/verify/main",
     "pages/propInfo/main",
     "pages/price/main",

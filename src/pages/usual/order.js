@@ -355,7 +355,7 @@ export default {
         this.onClose();
         this.$wxRequest
           .post({
-            url: "/public/order/wxpay",
+            url: "/public/order/usual/wxpay",
             data: this.orderInfo,
           })
           .then((res) => {
