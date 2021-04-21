@@ -2,11 +2,12 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2021-04-21 11:10:17
+ * @LastEditTime: 2021-04-21 15:39:07
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
 
+import Toast from "@vant/weapp/dist/toast/toast";
 import { mapState } from "vuex";
 
 const staticInfo = [
@@ -35,6 +36,7 @@ export default {
       showBorder: true,
       count: "0",
       userType: null,
+      canUseGetUserProfile: false,
     };
   },
   computed: {
@@ -69,7 +71,6 @@ export default {
       mpvue.navigateTo({ url });
     },
     bindGetUserInfo(e, id) {
-      console.log(this.$store.state.isLogin);
       this.openID = this.$store.state.openID;
       if (this.$store.state.isLogin) {
         return;
@@ -85,30 +86,7 @@ export default {
           province: userInfo.province,
           country: userInfo.country,
         };
-        this.$wxRequest
-          .post({
-            url: "/mobile/wxauth/wechat",
-            data: data,
-          })
-          .then((res) => {
-            if (res.data.code == 20000) {
-              console.log(res.data);
-              this.$store.commit("setUserID", res.data.data[0].user_id);
-              this.$store.commit("changeLogin");
-              this.$store.commit("setNickname", userInfo.nickName);
-              this.$store.commit("setAvatar", userInfo.avatarUrl);
-              if (id == 0) {
-                this.show = false;
-                this.getUserInfo();
-              } else {
-                const url = "../verify/main";
-                mpvue.navigateTo({ url });
-                this.getUserInfo();
-              }
-            } else {
-              console.log("获取失败");
-            }
-          });
+        this.addUserInfoToDB(data, id);
       } else {
         console.log("用户点击了拒绝按钮");
       }
@@ -146,11 +124,61 @@ export default {
           }
         });
     },
+    // 高版本获取用户信息
+    getUserProfile(e, id) {
+      wx.getUserProfile({
+        desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+        success: (res) => {
+          let { userInfo } = res;
+          let data = {
+            user_type: id,
+            openId: this.openID,
+            avatarUrl: userInfo.avatarUrl,
+            gender: userInfo.gender,
+            nickName: userInfo.nickName,
+            province: userInfo.province,
+            country: userInfo.country,
+          };
+          this.addUserInfoToDB(data, id);
+        },
+        fail: (error) => {},
+      });
+    },
     // 普通更新角色类型
     updateUserType() {},
+    // 将用户信息写入数据库
+    addUserInfoToDB(data, id) {
+      this.$wxRequest
+        .post({
+          url: "/mobile/wxauth/wechat",
+          data: data,
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            console.log(res.data);
+            this.$store.commit("setUserID", res.data.data[0].user_id);
+            this.$store.commit("changeLogin");
+            this.$store.commit("setNickname", userInfo.nickName);
+            this.$store.commit("setAvatar", userInfo.avatarUrl);
+            if (id == 0) {
+              this.show = false;
+              this.getUserInfo();
+            } else {
+              const url = "../verify/main";
+              mpvue.navigateTo({ url });
+              this.getUserInfo();
+            }
+          } else {
+            console.log("获取失败");
+          }
+        });
+    },
   },
   mounted() {
     var _this = this;
+    if (wx.getUserProfile) {
+      this.canUseGetUserProfile = true;
+    }
     // 登录获取openID
     wx.login({
       success(res) {

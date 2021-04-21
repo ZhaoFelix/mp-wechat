@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-01-11 08:45:39
+ * @LastEditTime: 2021-04-21 15:20:12
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -44,15 +44,12 @@
               司机运输中
             </div>
             <div
-              v-if="item.order_status == 0 && item.order_type == 1"
+              v-if="item.order_status == 0 && item.left_pay_time > 0"
               class="order-status common"
             >
               未支付
             </div>
-            <div
-              v-if="item.order_status == 0 && item.order_type == 0"
-              class="order-status common"
-            >
+            <div v-if="item.order_status == 0" class="order-status common">
               <span v-if="item.left_pay_time <= 0"> 已过期 </span>
               <span v-else> 待支付 </span>
             </div>
@@ -168,7 +165,7 @@
                 </van-col>
               </van-row>
               <!-- 2.立即支付+客服 -->
-              <van-row
+              <!-- <van-row
                 v-else-if="item.order_status == 0 && item.order_type == 1"
               >
                 <van-col v-if="item.order_price != null" offset="12" span="5"
@@ -181,7 +178,7 @@
                     联系客服
                   </button>
                 </van-col>
-              </van-row>
+              </van-row> -->
               <!-- 3.限时支付 -->
               <van-row
                 v-else-if="item.order_status == 0 && item.order_type == 0"

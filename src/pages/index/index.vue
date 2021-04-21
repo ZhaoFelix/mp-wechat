@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-04-21 11:10:44
+ * @LastEditTime: 2021-04-21 15:33:11
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -58,7 +58,8 @@
     </div>
     <!-- 遮罩层 -->
     <van-overlay :show="show">
-      <div class="wrapper">
+      <!-- 低版本库 -->
+      <div class="wrapper" v-if="!canUseGetUserProfile">
         <div class="block">
           <div class="textSize">
             <h3>选择身份</h3>
@@ -77,7 +78,37 @@
             <button
               open-type="getUserInfo"
               class="van-button--prop"
-              @getuserinfo="bindGetUserInfo($event)"
+              @getuserinfo="bindGetUserInfo($event, 1)"
+            >
+              物业经理
+            </button>
+          </div>
+          <div class="tip">
+            <span style="color: red">*</span>
+            若您是物业人员请使用手机号进行认证。
+          </div>
+        </div>
+      </div>
+      <!-- 高版本适配 -->
+      <div class="wrapper" v-else>
+        <div class="block">
+          <div class="textSize">
+            <h3>选择身份</h3>
+          </div>
+          <div>
+            <button
+              open-type="getUserInfo"
+              class="van-button--user"
+              @click="getUserProfile($event, 0)"
+            >
+              普通用户
+            </button>
+          </div>
+          <div>
+            <button
+              open-type="getUserInfo"
+              class="van-button--prop"
+              @click="getUserProfile($event, 1)"
             >
               物业经理
             </button>
