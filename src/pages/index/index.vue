@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-04-20 16:41:48
+ * @LastEditTime: 2021-04-21 11:10:44
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -13,7 +13,7 @@
       <div
         class="business-card business-card-bg2"
         v-if="userType == 1"
-        @click="toGenerateOrder(0)"
+        @click="toGenerateOrder(1)"
       >
         <div class="title">
           <span>{{ staticInfo[0].title }}</span>
@@ -28,7 +28,7 @@
       <div
         class="business-card business-card-bg1"
         v-if="userType == 0 || userType == null"
-        @click="toGenerateOrder(1)"
+        @click="toGenerateOrder(2)"
       >
         <div class="title">
           <span>{{ staticInfo[1].title }}</span>
@@ -44,7 +44,7 @@
       <div
         v-if="userType == 1"
         class="business-card business-card-bg1"
-        @click="toGenerateOrder(2)"
+        @click="toGenerateOrder(3)"
       >
         <div class="title">
           <span>{{ staticInfo[2].title }}</span>

@@ -14,7 +14,7 @@ var orderInfo = {
   phoneNumber: "",
   address: "上海市",
   subAddress: "",
-  buildArea: "",
+  buildArea: "0",
   orderPrice: "",
   isFirst: "1",
   selectTime: "",
@@ -53,6 +53,7 @@ export default {
       plotPicker: false,
       columns: [],
       orderInfo,
+      code: "",
       datePickerOptions,
       OSS,
       errorMessage,
@@ -60,9 +61,9 @@ export default {
       policy: "",
       signature: "",
       dialogShow: false,
-      //   text: "继续支付(5)s",
+      text: "继续支付(3)s",
       totalTime: 3,
-      //   color: "red",
+      color: "red",
       clock: null,
       filter(type, options) {
         if (type === "hour") {
@@ -122,6 +123,13 @@ export default {
     },
     onClose() {
       this.show = false;
+    },
+    onDialogClose() {
+      clearInterval(this.clock);
+      this.dialogShow = false;
+      this.totalTime = 3;
+      this.color = "red";
+      this.text = "继续支付(3)s";
     },
     // 选择器确认按钮事件
     onConfirm(event) {
@@ -205,7 +213,20 @@ export default {
     },
     // 收费员验证码
     onblurVerifyCode(event) {
-      this.orderInfo.verifyCode = event.mp.detail.fail;
+      this.orderInfo.verifyCode = event.mp.detail.value;
+    },
+    onfocusVerifyCode() {
+      // 获取焦点后请求验证码
+      this.$wxRequest
+        .get({
+          url: "/pc/cashier/code/query/latest",
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.code = res.data.data.cashier_code;
+            console.log(this.code);
+          }
+        });
     },
     onchangeVerifyCode(event) {
       const verifyCode = event.mp.detail || event;
@@ -213,7 +234,8 @@ export default {
       if (event.mp.detail.value != undefined) {
         return;
       }
-      if (verifyCode == "1234") {
+      console.log(verifyCode, this.code);
+      if (this.code != "" && verifyCode == this.code) {
         this.errorMessage.verifyCodeMessage = "";
       } else {
         this.errorMessage.verifyCodeMessage = "收费员验证码不正确";
@@ -275,6 +297,10 @@ export default {
     },
     // 提交订单
     submitOrder() {
+      if (this.orderInfo.verifyCode != this.code) {
+        Toast.fail("验证码不不正确, 无法下单");
+        return;
+      }
       if (
         this.orderInfo.name == "" ||
         this.orderInfo.phoneNumber == "" ||
@@ -292,35 +318,78 @@ export default {
         return;
       }
       this.dialogShow = true;
+      // 倒计时5秒
+      this.clock = setInterval(() => {
+        this.totalTime--;
+        this.text = "继续支付(" + this.totalTime + ")s";
+        if (this.totalTime < 0) {
+          clearInterval(this.clock);
+          this.text = "继续支付";
+          this.color = "#1989fa";
+        }
+      }, 1000);
     },
     // 调用微信支付
     wechatPay() {
-      this.orderInfo.openId = this.openID;
-      this.orderInfo.userId = this.userID;
-      this.orderInfo.userType = this.userType;
-      this.onClose();
-      this.$wxRequest
-        .post({
-          url: "/public/order/business",
-          data: this.orderInfo,
-        })
-        .then((res) => {
-          if (res.data.code == 20000) {
-            let re = res.data;
-            wx.showToast({
-              title: re.message,
-              icon: "none",
-            });
-            // 重置表单信息
-            this.resetForm();
-          } else if (res.data.code == 20001) {
-            console.log(res.data.data);
-            wx.showToast({
-              title: error,
-              icon: "none",
-            });
-          }
-        });
+      if (this.totalTime <= 0) {
+        this.orderInfo.openId = this.openID;
+        this.orderInfo.userId = this.userID;
+        this.orderInfo.userType = this.userType;
+        this.onClose();
+        this.$wxRequest
+          .post({
+            url: "/public/order/business/wxpay",
+            data: this.orderInfo,
+          })
+          .then((res) => {
+            if (res.data.code == 20000) {
+              let re = res.data.data;
+              var _this = this;
+              wx.requestPayment({
+                timeStamp: re.timeStamp,
+                nonceStr: re.nonceStr,
+                package: re.package,
+                signType: re.signType,
+                paySign: re.paySign,
+                tradeNo: re.trade_no,
+                success: function (res) {
+                  if (res.errMsg == "requestPayment:ok") {
+                    Dialog.alert({
+                      message: "下单成功",
+                      confirmButtonText: "查看订单",
+                    }).then(() => {
+                      // on close
+                      const url = "../order/main";
+                      mpvue.switchTab({ url });
+                      // 支付成功后重置表单数据
+                      _this.resetForm();
+                    });
+                  }
+                },
+                fail: function (res) {
+                  if (res.errMsg == "requestPayment:fail cancel") {
+                    wx.showToast({
+                      title: "支付取消",
+                      icon: "none",
+                    });
+                    // 支付取消后重置表单数据
+                    _this.resetForm();
+                  } else {
+                    wx.showToast({
+                      title: res.errmsg,
+                      icon: "none",
+                    });
+                  }
+                },
+              });
+            } else if (res.data.code == 20001) {
+              console.log(res.data.data);
+            }
+          });
+      } else {
+        this.dialogShow = true;
+        this.onDialogClose();
+      }
     },
     resetForm() {
       this.orderInfo = {

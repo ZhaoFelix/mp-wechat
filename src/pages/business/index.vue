@@ -56,6 +56,7 @@
         placeholder="请输入收费员的验证码"
         @blur="onblurVerifyCode"
         @change="onchangeVerifyCode"
+        @focus="onfocusVerifyCode"
         :error-message="errorMessage.verifyCodeMessage"
       />
       <van-field
@@ -193,7 +194,8 @@
       title="订单信息确认"
       :show="dialogShow"
       show-cancel-button
-      confirmButtonText="下单"
+      :confirmButtonText="text"
+      :confirm-button-color="color"
       @confirm="wechatPay"
       @close="dialogShow = false"
     >

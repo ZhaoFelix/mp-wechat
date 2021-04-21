@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2021-04-20 13:34:44
+ * @LastEditTime: 2021-04-21 11:10:17
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -49,17 +49,17 @@ export default {
     },
     toGenerateOrder(type) {
       // 普通
-      if (type == 0) {
+      if (type == 1) {
         let url = "../usual/main?orderType=" + type;
         mpvue.navigateTo({ url });
       }
       // 商业
-      else if (type == 1) {
+      else if (type == 2) {
         let url = "../business/main?orderType=" + type;
         mpvue.navigateTo({ url });
       }
       // 按箱
-      else if (type == 2) {
+      else if (type == 3) {
         let url = "../box/main?orderType=" + type;
         mpvue.navigateTo({ url });
       }
