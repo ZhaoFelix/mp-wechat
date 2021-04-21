@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-04-20 13:30:00
+ * @LastEditTime: 2021-04-20 16:41:48
  * @FilePath: /mp-wechat/src/pages/index/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -12,7 +12,7 @@
       <!-- 普通 -->
       <div
         class="business-card business-card-bg2"
-        v-if="userType != null"
+        v-if="userType == 1"
         @click="toGenerateOrder(0)"
       >
         <div class="title">
@@ -27,7 +27,7 @@
       <!-- 商业 -->
       <div
         class="business-card business-card-bg1"
-        v-if="userType == null"
+        v-if="userType == 0 || userType == null"
         @click="toGenerateOrder(1)"
       >
         <div class="title">
@@ -42,7 +42,7 @@
 
       <!-- 只针对普通用户显示 -->
       <div
-        v-if="userType != null"
+        v-if="userType == 1"
         class="business-card business-card-bg1"
         @click="toGenerateOrder(2)"
       >
@@ -61,7 +61,7 @@
       <div class="wrapper">
         <div class="block">
           <div class="textSize">
-            <h3>提示</h3>
+            <h3>选择身份</h3>
           </div>
           <div>
             <button
@@ -70,7 +70,7 @@
               @click="onClickHide"
               @getuserinfo="bindGetUserInfo($event, 0)"
             >
-              我是用户
+              普通用户
             </button>
           </div>
           <div>
@@ -79,7 +79,7 @@
               class="van-button--prop"
               @getuserinfo="bindGetUserInfo($event)"
             >
-              我是物业
+              物业经理
             </button>
           </div>
           <div class="tip">

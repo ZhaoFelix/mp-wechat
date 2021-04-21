@@ -41,13 +41,22 @@
     </div>
     <div class="order-info">
       <van-field
-        :value="orderInfo.buildArea"
+        :value="orderInfo.orderPrice"
         type="number"
         label="议定价格"
         placeholder="单位为元"
-        @blur="onblurArea"
-        @change="onchangeArea"
-        :error-message="errorMessage.areaMessage"
+        @blur="onblurOrderPrice"
+        @change="onchangeOrderPrice"
+        :error-message="errorMessage.orderPriceMessage"
+      />
+      <van-field
+        :value="orderInfo.verifyCode"
+        type="text"
+        label="收费员验证码"
+        placeholder="请输入收费员的验证码"
+        @blur="onblurVerifyCode"
+        @change="onchangeVerifyCode"
+        :error-message="errorMessage.verifyCodeMessage"
       />
       <van-field
         :value="orderInfo.selectTime"
@@ -86,7 +95,7 @@
       />
     </van-popup>
     <!-- 小区选择 -->
-    <van-popup :show="plotPicker" round position="bottom" @close="show = false">
+    <!-- <van-popup :show="plotPicker" round position="bottom" @close="show = false">
       <van-picker
         show-toolbar
         title="选择小区"
@@ -94,7 +103,7 @@
         @cancel="onCancelPlotPicker"
         @confirm="onConfirmPlotPicker"
       />
-    </van-popup>
+    </van-popup> -->
     <!-- 图片上传相关 -->
     <div class="trash-images">
       <van-row>
@@ -130,7 +139,7 @@
         <van-col offset="1" span="16">
           <span> 清运费：</span>
           <span style="color: red; font-size: 13px">
-            订单提交后，由客服确定
+            {{ orderInfo.orderPrice + " 元" }}
           </span>
         </van-col>
       </van-row>
@@ -212,9 +221,9 @@
           :border="false"
         />
         <van-cell
-          title="装修面积："
+          title="议定价格："
           title-width="70px"
-          :value="orderInfo.buildArea"
+          :value="orderInfo.orderPrice"
           value-class="info"
           :border="false"
         />

@@ -15,6 +15,7 @@ var orderInfo = {
   address: "上海市",
   subAddress: "",
   buildArea: "",
+  orderPrice: "",
   isFirst: "1",
   selectTime: "",
   orderNote: "",
@@ -22,6 +23,7 @@ var orderInfo = {
   imagesList: [],
   estate_id: "0",
   estate_plot: "",
+  verifyCode: "",
 };
 // 时间选择器相关配置
 var datePickerOptions = {
@@ -37,7 +39,8 @@ var datePickerOptions = {
 // 错误信息对象
 var errorMessage = {
   phoneMessage: "",
-  areaMessage: "",
+  orderPriceMessage: "",
+  verifyCodeMessage: "",
 };
 // oss对象信息
 var OSS = {};
@@ -179,25 +182,41 @@ export default {
     onblurAddress(event) {
       this.orderInfo.subAddress = event.mp.detail.value;
     },
-    // 装修面积
-    onblurArea(event) {
-      this.orderInfo.buildArea = event.mp.detail.value;
+    // 议定价格
+    onblurOrderPrice(event) {
+      this.orderInfo.orderPrice = event.mp.detail.value;
     },
-    onchangeArea(event) {
-      const area = event.mp.detail || event;
+    onchangeOrderPrice(event) {
+      const orderPrice = event.mp.detail || event;
       // TODO:升级判断方式
       if (event.mp.detail.value != undefined) {
         return;
       }
-      if (area) {
-        console.log(Number(area));
-        if (isNaN(Number(area))) {
-          this.errorMessage.areaMessage = "面积只能是数字";
+      if (orderPrice) {
+        console.log(Number(orderPrice));
+        if (isNaN(Number(orderPrice)) || Number(orderPrice) <= 0) {
+          this.errorMessage.orderPriceMessage = "价格只能是数字，且要大于0";
         } else {
-          this.errorMessage.areaMessage = "";
+          this.errorMessage.orderPriceMessage = "";
         }
       } else {
-        this.errorMessage.areaMessage = "面积不能为空";
+        this.errorMessage.orderPriceMessage = "价格不能为空";
+      }
+    },
+    // 收费员验证码
+    onblurVerifyCode(event) {
+      this.orderInfo.verifyCode = event.mp.detail.fail;
+    },
+    onchangeVerifyCode(event) {
+      const verifyCode = event.mp.detail || event;
+      // TODO:升级判断方式
+      if (event.mp.detail.value != undefined) {
+        return;
+      }
+      if (verifyCode == "1234") {
+        this.errorMessage.verifyCodeMessage = "";
+      } else {
+        this.errorMessage.verifyCodeMessage = "收费员验证码不正确";
       }
     },
     afterRead(event) {
@@ -293,20 +312,7 @@ export default {
               icon: "none",
             });
             // 重置表单信息
-            this.orderInfo = {
-              name: "",
-              phoneNumber: "",
-              address: "上海市",
-              subAddress: "",
-              buildArea: "",
-              isFirst: "1",
-              selectTime: "",
-              orderNote: "",
-              userProtocl: "1",
-              imagesList: [],
-              estate_id: "0",
-              estate_plot: "",
-            };
+            this.resetForm();
           } else if (res.data.code == 20001) {
             console.log(res.data.data);
             wx.showToast({
@@ -315,6 +321,23 @@ export default {
             });
           }
         });
+    },
+    resetForm() {
+      this.orderInfo = {
+        name: "",
+        phoneNumber: "",
+        address: "上海市",
+        subAddress: "",
+        buildArea: "",
+        isFirst: "1",
+        selectTime: "",
+        orderNote: "",
+        userProtocl: "1",
+        imagesList: [],
+        estate_id: "0",
+        estate_plot: "",
+        verifyCode: "",
+      };
     },
     contactService() {
       wx.makePhoneCall({
