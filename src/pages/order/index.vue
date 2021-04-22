@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-04-21 15:20:12
+ * @LastEditTime: 2021-04-22 15:04:43
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -43,12 +43,12 @@
             >
               司机运输中
             </div>
-            <div
+            <!-- <div
               v-if="item.order_status == 0 && item.left_pay_time > 0"
               class="order-status common"
             >
               未支付
-            </div>
+            </div> -->
             <div v-if="item.order_status == 0" class="order-status common">
               <span v-if="item.left_pay_time <= 0"> 已过期 </span>
               <span v-else> 待支付 </span>
@@ -128,7 +128,24 @@
             </div>
           </van-col>
         </van-row>
-        <van-row v-else-if="item.order_status == 0 && item.order_type == 0">
+        <!-- 普通装修未支付 -->
+        <van-row v-else-if="item.order_status == 0 && item.order_type == 1">
+          <van-col offset="1">
+            <div class="driver-info" v-if="item.left_pay_time >= 0">
+              {{
+                "&nbsp;&nbsp;剩余支付时间：" +
+                ~~(item.left_pay_time / 60) +
+                "分" +
+                (item.left_pay_time % 60) +
+                "秒&nbsp;&nbsp;"
+              }}
+            </div>
+            <!-- <div class="driver-info" v-else>
+              &nbsp;&nbsp;订单已过截止支付时间&nbsp;&nbsp;
+            </div> -->
+          </van-col>
+        </van-row>
+        <van-row v-else-if="item.order_status == 0 && item.order_type == 3">
           <van-col offset="1">
             <div class="driver-info" v-if="item.left_pay_time >= 0">
               {{
@@ -179,9 +196,24 @@
                   </button>
                 </van-col>
               </van-row> -->
-              <!-- 3.限时支付 -->
+              <!-- 3.普通限时支付 -->
               <van-row
-                v-else-if="item.order_status == 0 && item.order_type == 0"
+                v-else-if="item.order_status == 0 && item.order_type == 1"
+              >
+                <van-col v-if="item.left_pay_time >= 0" offset="12" span="5"
+                  ><button class="driver-btn" @click="payPrice(item, 0)">
+                    立即支付
+                  </button>
+                </van-col>
+                <van-col :offset="item.left_pay_time >= 0 ? 1 : 18" span="5">
+                  <button class="service-btn" @click="contactService">
+                    联系客服
+                  </button>
+                </van-col>
+              </van-row>
+              <!-- 商业 -->
+              <van-row
+                v-else-if="item.order_status == 0 && item.order_type == 3"
               >
                 <van-col v-if="item.left_pay_time >= 0" offset="12" span="5"
                   ><button class="driver-btn" @click="payPrice(item, 0)">

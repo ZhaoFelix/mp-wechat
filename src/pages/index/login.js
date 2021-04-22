@@ -2,12 +2,11 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2021-04-21 15:39:07
+ * @LastEditTime: 2021-04-22 13:40:28
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
 
-import Toast from "@vant/weapp/dist/toast/toast";
 import { mapState } from "vuex";
 
 const staticInfo = [
@@ -93,7 +92,6 @@ export default {
     },
     getUserInfo() {
       this.openID = this.$store.state.openID;
-      console.log(this.openID);
       this.$wxRequest
         .post({
           url: "/mobile/wxauth/getUserInfo",
@@ -102,7 +100,6 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             let dataArr = res.data.data;
-            console.log(dataArr);
             if (dataArr.length == 0) {
               this.$store.commit("setShow", true);
             }
@@ -116,7 +113,7 @@ export default {
               this.$store.commit("setNickname", dataArr[0].wechat_nickname);
               this.$store.commit("setAvatar", dataArr[0].wechat_avatar);
               this.userType = this.$store.state.userType;
-              console.log(this.userType);
+              this.$store.commit("setShow", false);
               console.log("已选择过角色");
             }
           } else {
@@ -155,11 +152,11 @@ export default {
         })
         .then((res) => {
           if (res.data.code == 20000) {
-            console.log(res.data);
+            console.log(res.data + "" + id);
             this.$store.commit("setUserID", res.data.data[0].user_id);
             this.$store.commit("changeLogin");
-            this.$store.commit("setNickname", userInfo.nickName);
-            this.$store.commit("setAvatar", userInfo.avatarUrl);
+            this.$store.commit("setNickname", data.nickName);
+            this.$store.commit("setAvatar", data.avatarUrl);
             if (id == 0) {
               this.show = false;
               this.getUserInfo();

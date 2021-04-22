@@ -23,7 +23,7 @@ var orderInfo = {
   imagesList: [],
   estate_id: "0",
   estate_plot: "",
-  boxNumber: 0,
+  boxNumber: "",
 };
 // 时间选择器相关配置
 var datePickerOptions = {

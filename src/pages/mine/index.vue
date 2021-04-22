@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:57:47
- * @LastEditTime: 2021-03-25 14:41:13
+ * @LastEditTime: 2021-04-22 14:10:55
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -10,7 +10,7 @@
   <div class="main-container">
     <div class="user-info">
       <van-row>
-        <van-col offset="1" span="6">
+        <van-col offset="1" span="5">
           <van-image
             :src="avatar"
             width="60"
@@ -22,6 +22,9 @@
         </van-col>
         <van-col span="16">
           <div class="user-nickname">{{ nickname }}</div>
+          <div class="user-type">
+            {{ userType == 0 ? "普通用户" : "物业经理人" }}
+          </div>
         </van-col>
       </van-row>
     </div>

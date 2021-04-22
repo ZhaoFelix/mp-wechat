@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-08 15:55:12
- * @LastEditTime: 2021-01-04 17:34:03
+ * @LastEditTime: 2021-04-22 14:58:43
  * @FilePath: /mp-wechat/src/pages/order/order.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -28,6 +28,12 @@ export default {
       wx.makePhoneCall({
         phoneNumber: servicePhone,
       });
+    },
+    timeFormatter(value) {
+      let timeStr =
+        value.split(" ")[0] +
+        (value.split(" ")[1] == "12:00:00" ? " 下午" : " 上午");
+      return timeStr;
     },
     payPrice(item, payType) {
       this.orderInfo = item;
