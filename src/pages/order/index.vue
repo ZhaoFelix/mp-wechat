@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-04-22 15:04:43
+ * @LastEditTime: 2021-04-23 13:44:32
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -111,7 +111,7 @@
         <van-row>
           <van-col offset="1">
             <span class="time-title">预约时间：</span>
-            <span class="time">{{ item.user_reserve_time }}</span>
+            <span class="time">{{ item.reserve_time }}</span>
           </van-col>
         </van-row>
         <!-- 底部 -->
