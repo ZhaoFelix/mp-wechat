@@ -93,6 +93,7 @@ export default {
           } else if (res.data.code == "20000") {
             this.$store.commit("setShow", false);
             Toast.success(res.data.message);
+            this.$store.commit("setUserType", 1);
             let url = "../propInfo/main?phone=" + this.phoneNumber;
             mpvue.navigateTo({ url });
           }

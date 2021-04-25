@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:57:47
- * @LastEditTime: 2021-04-22 14:10:55
+ * @LastEditTime: 2021-04-25 10:35:16
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -27,6 +27,14 @@
           </div>
         </van-col>
       </van-row>
+    </div>
+    <div v-if="userType != 1" class="verify-info">
+      <van-cell
+        is-link
+        title="物业认证"
+        link-type="navigateTo"
+        @click="onClick(-1)"
+      />
     </div>
     <div class="info-table">
       <van-cell
