@@ -17,7 +17,7 @@ var orderInfo = {
   subAddress: "",
   buildArea: "",
   isFirst: "0",
-  isAssign: "0",
+  isAssign: "1",
   selectTime: "",
   orderNote: "",
   orderPrice: "",

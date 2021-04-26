@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2020-12-19 17:27:25
+ * @LastEditTime: 2021-04-26 11:27:35
  * @FilePath: /mp-wechat/src/pages/propInfo/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -36,9 +36,9 @@
         />
         <van-cell
           value-class="info"
-          title="身份证号"
+          title="联系电话"
           title-width="90px"
-          :value="item.estate_card_id"
+          :value="item.estate_phone"
         />
         <van-cell
           title="性别"
@@ -101,7 +101,10 @@ export default {
         url: "/public/verify/estate?phone=" + this.phone,
       })
       .then((res) => {
-        this.list = res.data.data;
+        if (res.data.code == 20000) {
+          this.list = res.data.data;
+          this.$store.commit("setUserType", 1);
+        }
       });
   },
 };

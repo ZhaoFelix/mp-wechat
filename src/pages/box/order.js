@@ -1,4 +1,5 @@
 import Toast from "@vant/weapp/dist/toast/toast";
+import Dialog from "@vant/weapp/dist/dialog/dialog";
 import timeUtil from "../../utils/index.js";
 import { servicePhone } from "../../../config/options";
 import {
@@ -116,6 +117,7 @@ export default {
   computed: {
     ...mapState(["userID", "userType", "openID"]),
     finalPrice: function () {
+      console.log("计算价格");
       return boxPrice * this.orderInfo.boxNumber;
     },
   },

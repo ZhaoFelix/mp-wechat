@@ -35,7 +35,7 @@
         :value="orderInfo.subAddress"
         label="详细地址"
         type="text"
-        placeholder="请输入具体地址 如：街道名称"
+        placeholder="请输入具体地址 如："
         @blur="onblurAddress"
       />
     </div>
@@ -50,29 +50,39 @@
         :error-message="errorMessage.areaMessage"
       />
 
-      <!-- 是否是首次装修 -->
-      <!-- <van-radio-group :value="orderInfo.isFirst" @change="onChange">
-        <van-cell
-          center
-          title="是否是首次装修"
-          data-name="1"
-          label="* 是否首次装修详见计价方式说明"
-          @click="onFirstClick"
-        >
-          <van-radio slot="right-icon" name="1" checked-color="#07c160" />
-        </van-cell>
-      </van-radio-group> -->
-      <van-radio-group :value="orderInfo.isAssign" @change="onChange">
-        <van-cell
-          center
-          title="是否是指定垃圾清运点"
-          data-name="1"
-          label="* 非指定垃圾清运点将无法进行清运"
-          @click="onAssignClick"
-        >
-          <van-radio slot="right-icon" name="1" checked-color="#07c160" />
-        </van-cell>
-      </van-radio-group>
+      <van-cell
+        center
+        title="是否指定垃圾清运点"
+        data-name="1"
+        @click="onAssignClick"
+        use-label-slot
+      >
+        <v-row slot="label">
+          <van-radio-group :value="orderInfo.isAssign" @change="onChange">
+            <van-col offset="2" span="9">
+              <van-row>
+                <van-col offset="4" span="4">
+                  <van-radio name="1" checked-color="#07c160" />
+                </van-col>
+                <van-col offset="1">
+                  <span style="text-align: left; font-size: 14px">是</span>
+                </van-col>
+              </van-row>
+            </van-col>
+            <van-col offset="2" span="9">
+              <van-row>
+                <van-col offset="4" span="4">
+                  <van-radio name="0" checked-color="#07c160" />
+                </van-col>
+                <van-col offset="1">
+                  <span style="text-align: left; font-size: 14px">否</span>
+                </van-col>
+              </van-row>
+            </van-col>
+          </van-radio-group>
+        </v-row>
+      </van-cell>
+
       <van-field
         :value="orderInfo.selectTime"
         label="预约时间"
@@ -129,7 +139,12 @@
         <van-col offset="1" span="6">
           <span style="font-size: 16px; color: #646566">垃圾量拍照</span>
         </van-col>
-        <van-col offset="12" span="4">
+        <van-col offset="1" span="7">
+          <span style="font-size: 10px; color: red; text-align: left"
+            >*至少上传两张照片</span
+          >
+        </van-col>
+        <van-col offset="4" span="4">
           <div style="font-size: 16px; color: #646566; text-align: right">
             {{ orderInfo.imagesList.length + "/4" }}
           </div>

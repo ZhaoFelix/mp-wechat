@@ -49,7 +49,7 @@
         @change="onchangeOrderPrice"
         :error-message="errorMessage.orderPriceMessage"
       />
-      <van-field
+      <!-- <van-field
         :value="orderInfo.verifyCode"
         type="text"
         label="收费员验证码"
@@ -58,7 +58,7 @@
         @change="onchangeVerifyCode"
         @focus="onfocusVerifyCode"
         :error-message="errorMessage.verifyCodeMessage"
-      />
+      /> -->
       <van-field
         :value="orderInfo.selectTime"
         label="预约时间"
@@ -111,7 +111,12 @@
         <van-col offset="1" span="6">
           <span style="font-size: 16px; color: #646566">垃圾量拍照</span>
         </van-col>
-        <van-col offset="12" span="4">
+        <van-col offset="1" span="7">
+          <span style="font-size: 10px; color: red; text-align: left"
+            >*至少上传两张照片</span
+          >
+        </van-col>
+        <van-col offset="4" span="4">
           <div style="font-size: 16px; color: #646566; text-align: right">
             {{ orderInfo.imagesList.length + "/4" }}
           </div>

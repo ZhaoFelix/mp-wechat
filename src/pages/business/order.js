@@ -1,4 +1,5 @@
 import Toast from "@vant/weapp/dist/toast/toast";
+import Dialog from "@vant/weapp/dist/dialog/dialog";
 import timeUtil from "../../utils/index.js";
 import { servicePhone } from "../../../config/options";
 import {
@@ -297,10 +298,10 @@ export default {
     },
     // 提交订单
     submitOrder() {
-      if (this.orderInfo.verifyCode != this.code) {
-        Toast.fail("验证码不不正确, 无法下单");
-        return;
-      }
+      // if (this.orderInfo.verifyCode != this.code) {
+      //   Toast.fail("验证码不不正确, 无法下单");
+      //   return;
+      // }
       if (
         this.orderInfo.name == "" ||
         this.orderInfo.phoneNumber == "" ||

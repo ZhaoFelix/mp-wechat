@@ -101,7 +101,12 @@
         <van-col offset="1" span="6">
           <span style="font-size: 16px; color: #646566">垃圾量拍照</span>
         </van-col>
-        <van-col offset="12" span="4">
+        <van-col offset="1" span="7">
+          <span style="font-size: 10px; color: red; text-align: left"
+            >*至少上传两张照片</span
+          >
+        </van-col>
+        <van-col offset="4" span="4">
           <div style="font-size: 16px; color: #646566; text-align: right">
             {{ orderInfo.imagesList.length + "/4" }}
           </div>
@@ -127,11 +132,14 @@
     <!-- TODO:订单价格 -->
     <div class="order-price">
       <van-row>
-        <van-col offset="1" span="16">
+        <van-col offset="2" span="20">
           <span> 清运费：</span>
-          <span style="color: red; font-size: 13px">
-            {{ finalPrice + " 元" }}
-          </span>
+          <span style="color: red"> {{ finalPrice * 0.8 }} </span>
+          <span>元</span>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span>代办费：</span>
+          <span style="color: red"> {{ finalPrice * 0.2 }} </span>
+          <span>元</span>
         </van-col>
       </van-row>
     </div>
