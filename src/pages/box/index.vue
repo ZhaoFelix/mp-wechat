@@ -35,7 +35,7 @@
         :value="orderInfo.subAddress"
         label="详细地址"
         type="text"
-        placeholder="请输入具体地址 如：街道名称"
+        placeholder="请输入具体地址 如：**路**小区"
         @blur="onblurAddress"
       />
     </div>

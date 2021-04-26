@@ -35,7 +35,7 @@
         :value="orderInfo.subAddress"
         label="详细地址"
         type="text"
-        placeholder="请输入具体地址 如："
+        placeholder="请输入具体地址 如：**号**室"
         @blur="onblurAddress"
       />
     </div>
@@ -50,15 +50,9 @@
         :error-message="errorMessage.areaMessage"
       />
 
-      <van-cell
-        center
-        title="是否指定垃圾清运点"
-        data-name="1"
-        @click="onAssignClick"
-        use-label-slot
-      >
+      <van-cell center title="是否指定垃圾清运点" data-name="1" use-label-slot>
         <v-row slot="label">
-          <van-radio-group :value="orderInfo.isAssign" @change="onChange">
+          <van-radio-group :value="orderInfo.isAssign" @change="onChangeRadio">
             <van-col offset="2" span="9">
               <van-row>
                 <van-col offset="4" span="4">

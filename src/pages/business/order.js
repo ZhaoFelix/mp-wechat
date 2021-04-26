@@ -139,7 +139,22 @@ export default {
       if (this.datePickerOptions.isChange) {
         let newStr = time.split(" ");
         this.orderInfo.selectTime =
-          newStr[0] + (newStr[1] == "8:00" ? " 上午" : " 下午");
+          newStr[0] + (newStr[1] == "08:00" ? " 上午" : " 下午");
+      } else {
+        let date = new Date().getDate() + 1;
+        let year = new Date().getFullYear();
+        let month = new Date().getMonth() + 1;
+        let hour = new Date().getHours();
+        let newStr =
+          year +
+          "-" +
+          (month < 10 ? "0" + month : month) +
+          "-" +
+          (date < 10 ? "0" + date : date) +
+          " " +
+          (hour < 12 ? "上午" : "下午");
+
+        this.orderInfo.selectTime = newStr;
       }
       this.show = false;
     },

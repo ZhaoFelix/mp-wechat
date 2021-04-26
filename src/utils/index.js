@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-10-20 09:49:55
- * @LastEditTime: 2020-12-24 10:06:15
+ * @LastEditTime: 2021-04-26 14:43:42
  * @FilePath: /mp-wechat/src/utils/index.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -42,9 +42,8 @@ function formatDateStr(date) {
   } else {
     DD = "0" + date.getDate().toString();
   }
-  HH = date.getHours().toString();
-  mm =
-    date.getMinutes().toString() == "0" ? "00" : date.getMinutes().toString();
+  HH = date.getHours() > 9 ? date.getHours().toString() : "0" + date.getHours();
+  mm = "00";
   return date.getFullYear() + "-" + MM + "-" + DD + " " + HH + ":" + mm;
 }
 

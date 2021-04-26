@@ -17,7 +17,7 @@ var orderInfo = {
   subAddress: "",
   buildArea: "",
   isFirst: "0",
-  isAssign: "1",
+  isAssign: "",
   selectTime: "",
   orderNote: "",
   orderPrice: "",
@@ -100,12 +100,12 @@ export default {
             url: "/mobile/order/query/plot?wechat_id=" + this.userID,
           })
           .then((res) => {
-            let other = {
-              text: "其他",
-              id: 0,
-            };
+            // let other = {
+            //   text: "其他",
+            //   id: 0,
+            // };
             let temArr = res.data.data;
-            this.columns = [temArr[0], other];
+            this.columns = [temArr[0]];
             this.columns = [...this.columns];
             console.log(this.columns);
           })
@@ -171,7 +171,22 @@ export default {
       if (this.datePickerOptions.isChange) {
         let newStr = time.split(" ");
         this.orderInfo.selectTime =
-          newStr[0] + (newStr[1] == "8:00" ? " 上午" : " 下午");
+          newStr[0] + (newStr[1] == "08:00" ? " 上午" : " 下午");
+      } else {
+        let date = new Date().getDate() + 1;
+        let year = new Date().getFullYear();
+        let month = new Date().getMonth() + 1;
+        let hour = new Date().getHours();
+        let newStr =
+          year +
+          "-" +
+          (month < 10 ? "0" + month : month) +
+          "-" +
+          (date < 10 ? "0" + date : date) +
+          " " +
+          (hour < 12 ? "上午" : "下午");
+
+        this.orderInfo.selectTime = newStr;
       }
       this.show = false;
     },
@@ -309,10 +324,23 @@ export default {
     },
     onAssignClick(event) {
       let { name } = event.currentTarget.dataset;
+      // TODO:非指定点弹框提示
+      console.log(event.currentTarget);
+
       if (this.orderInfo.isAssign == name) {
         this.orderInfo.isAssign = "0";
       } else {
         this.orderInfo.isAssign = name;
+      }
+    },
+    onChangeRadio(event) {
+      console.log(event.target["0"]);
+      this.orderInfo.isAssign = event.target["0"];
+      if (event.target["0"] == "0") {
+        Toast({
+          message: "非指定清运点费用请与运输人员进行协商",
+          duration: 2200,
+        });
       }
     },
     // 提交订单
@@ -325,7 +353,10 @@ export default {
         this.orderInfo.buildArea == "" ||
         this.orderInfo.selectTime == ""
       ) {
-        Toast.fail("请填写基本信息");
+        Toast.fail("基本信息不能为空");
+        return;
+      } else if (this.orderInfo.isAssign == "") {
+        Toast.fail("请选择是否指定清运点");
         return;
       } else if (this.orderInfo.userProtocl == 0) {
         Toast.fail("请勾选用户协议");
