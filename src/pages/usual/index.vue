@@ -53,12 +53,12 @@
       <van-cell center title="是否指定垃圾清运点" data-name="1" use-label-slot>
         <v-row slot="label">
           <van-radio-group :value="orderInfo.isAssign" @change="onChangeRadio">
-            <van-col offset="2" span="9">
+            <van-col offset="3" span="9">
               <van-row>
                 <van-col offset="4" span="4">
-                  <van-radio name="1" checked-color="#07c160" />
+                  <van-radio icon-size="14" name="1" checked-color="#07c160" />
                 </van-col>
-                <van-col offset="1">
+                <van-col>
                   <span style="text-align: left; font-size: 14px">是</span>
                 </van-col>
               </van-row>
@@ -66,9 +66,9 @@
             <van-col offset="2" span="9">
               <van-row>
                 <van-col offset="4" span="4">
-                  <van-radio name="0" checked-color="#07c160" />
+                  <van-radio icon-size="14" name="0" checked-color="#07c160" />
                 </van-col>
-                <van-col offset="1">
+                <van-col>
                   <span style="text-align: left; font-size: 14px">否</span>
                 </van-col>
               </van-row>
