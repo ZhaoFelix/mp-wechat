@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-04-23 13:44:32
+ * @LastEditTime: 2021-04-27 10:54:40
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -98,7 +98,7 @@
               v-if="item.order_status == 0 && item.order_price != null"
             >
               <span class="price-title">待付款：</span>
-              <span class="price">{{ item.order_price }}</span>
+              <span class="price">{{ item.order_price * 0.8 }}</span>
               <span class="price-end"> 元</span>
             </van-col>
           </van-row>

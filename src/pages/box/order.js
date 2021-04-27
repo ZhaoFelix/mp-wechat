@@ -128,9 +128,9 @@ export default {
     onClose() {
       this.show = false;
     },
-    onDialogClose() {
+    onDialogClose(isShow) {
       clearInterval(this.clock);
-      this.dialogShow = false;
+      this.dialogShow = isShow;
       this.totalTime = 3;
       this.color = "red";
       this.text = "继续支付(3)s";
@@ -367,13 +367,13 @@ export default {
                   }
                 },
               });
+              this.onDialogClose(false);
             } else if (res.data.code == 20001) {
               console.log(res.data.data);
             }
           });
       } else {
-        this.dialogShow = true;
-        this.onDialogClose();
+        this.onDialogClose(true);
       }
     },
     // 重置表单
@@ -391,7 +391,7 @@ export default {
         imagesList: [],
         estate_id: "0",
         estate_plot: "",
-        boxNumber: 0,
+        boxNumber: "",
       };
     },
     contactService() {
