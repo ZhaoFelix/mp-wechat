@@ -411,6 +411,7 @@ export default {
       this.orderInfo = {
         name: "",
         phoneNumber: "",
+        orderPrice: "",
         address: "上海市",
         subAddress: "",
         buildArea: "",

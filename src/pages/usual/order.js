@@ -146,7 +146,13 @@ export default {
         }
       }
       this.orderInfo.orderPrice = finalPrice;
-      return finalPrice.toFixed(2);
+      return finalPrice;
+    },
+    qingyunPrice: function () {
+      return (this.finalPrice * 0.8).toFixed(2);
+    },
+    daibanPrice: function () {
+      return (this.finalPrice * 0.2).toFixed(2);
     },
   },
   methods: {

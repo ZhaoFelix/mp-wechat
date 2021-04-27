@@ -166,11 +166,11 @@
       <van-row>
         <van-col offset="2" span="20">
           <span> 清运费：</span>
-          <span style="color: red"> {{ finalPrice * 0.8 }} </span>
+          <span style="color: red"> {{ qingyunPrice }} </span>
           <span>元</span>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <span>代办费：</span>
-          <span style="color: red"> {{ finalPrice * 0.2 }} </span>
+          <span style="color: red"> {{ daibanPrice }} </span>
           <span>元</span>
         </van-col>
       </van-row>

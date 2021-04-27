@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-04-27 10:54:40
+ * @LastEditTime: 2021-04-27 15:57:49
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -51,7 +51,8 @@
             </div> -->
             <div v-if="item.order_status == 0" class="order-status common">
               <span v-if="item.left_pay_time <= 0"> 已过期 </span>
-              <span v-else> 待支付 </span>
+              <span v-else-if="item.order_type == 2"> 未支付 </span>
+              <span v-else>待支付</span>
             </div>
             <div v-if="item.order_status == 7" class="order-status common">
               待补差价
@@ -98,7 +99,10 @@
               v-if="item.order_status == 0 && item.order_price != null"
             >
               <span class="price-title">待付款：</span>
-              <span class="price">{{ item.order_price * 0.8 }}</span>
+              <span class="price" v-if="item.order_type == 2">{{
+                item.order_price
+              }}</span>
+              <span class="price" v-else>{{ item.discount_price }}</span>
               <span class="price-end"> 元</span>
             </van-col>
           </van-row>
