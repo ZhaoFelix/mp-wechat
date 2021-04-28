@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:57:47
- * @LastEditTime: 2021-04-25 10:35:16
+ * @LastEditTime: 2021-04-28 08:44:59
  * @FilePath: /mp-wechat/src/pages/mine/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -37,12 +37,12 @@
       />
     </div>
     <div class="info-table">
-      <van-cell
+      <!-- <van-cell
         is-link
         title="服务协议"
         link-type="navigateTo"
         @click="onClick(0)"
-      />
+      /> -->
       <van-cell
         is-link
         title="意见反馈"
