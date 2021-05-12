@@ -353,7 +353,7 @@ export default {
     submitOrder() {
       if (
         this.orderInfo.name == "" ||
-        this.orderInfo.estate_id == "" ||
+        this.orderInfo.estate_id == "0" ||
         this.orderInfo.phoneNumber == "" ||
         this.orderInfo.subAddress == "" ||
         this.orderInfo.buildArea == "" ||
