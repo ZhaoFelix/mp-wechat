@@ -98,6 +98,7 @@ export default {
         this.$wxRequest
           .get({
             url: "/mobile/order/query/plot?wechat_id=" + this.userID,
+            // url: "/mobile/order/query/plot?wechat_id=261",
           })
           .then((res) => {
             // let other = {
@@ -105,7 +106,7 @@ export default {
             //   id: 0,
             // };
             let temArr = res.data.data;
-            this.columns = [temArr[0]];
+            this.columns = temArr;
             this.columns = [...this.columns];
             console.log(this.columns);
           })

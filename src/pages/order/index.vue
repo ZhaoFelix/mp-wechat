@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-04-27 15:57:49
+ * @LastEditTime: 2021-05-15 21:39:46
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -245,7 +245,22 @@
                   </button>
                 </van-col>
               </van-row>
-              <!-- 5. 联系客服 -->
+              <!-- 二次清运 -->
+              <van-row
+                v-else-if="item.order_status == 6 && item.order_type != 3"
+              >
+                <van-col offset="12" span="5"
+                  ><button class="driver-btn" @click="secondOrder(item)">
+                    二次清运
+                  </button>
+                </van-col>
+                <van-col offset="1" span="5">
+                  <button class="service-btn" @click="contactService">
+                    联系客服
+                  </button>
+                </van-col>
+              </van-row>
+              <!-- 6. 联系客服 -->
               <van-row v-else>
                 <van-col offset="18" span="5">
                   <button class="service-btn" @click="contactService">

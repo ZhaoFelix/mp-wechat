@@ -275,13 +275,13 @@
           value-class="info"
           :border="false"
         />
-        <van-cell
+        <!-- <van-cell
           title="是否首次："
           title-width="70px"
           :value="orderInfo.isFirst == 1 ? '首次装修' : '非首次装修'"
           value-class="info"
           :border="false"
-        />
+        /> -->
       </van-cell-group>
     </van-dialog>
     <!-- 提示节点 -->

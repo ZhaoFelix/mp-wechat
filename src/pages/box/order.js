@@ -104,7 +104,7 @@ export default {
             //   id: 0,
             // };
             let temArr = res.data.data;
-            this.columns = [temArr[0]];
+            this.columns = temArr;
             this.columns = [...this.columns];
             console.log(this.columns);
           })

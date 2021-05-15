@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-08 15:55:12
- * @LastEditTime: 2021-04-22 14:58:43
+ * @LastEditTime: 2021-05-15 21:42:33
  * @FilePath: /mp-wechat/src/pages/order/order.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -109,6 +109,10 @@ export default {
         .catch((error) => {
           console.log("获取订单列表失败");
         });
+    },
+    secondOrder(item) {
+      let url = "../second/main?orderId=" + item.orderId;
+      mpvue.navigateTo({ url });
     },
   },
   mounted() {

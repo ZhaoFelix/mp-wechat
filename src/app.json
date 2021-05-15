@@ -9,7 +9,8 @@
     "pages/propInfo/main",
     "pages/price/main",
     "pages/protocol/main",
-    "pages/mine/main"
+    "pages/mine/main",
+    "pages/second/main"
   ],
   "usingComponents": {
     "van-button": "vant-weapp/dist/button/index",
