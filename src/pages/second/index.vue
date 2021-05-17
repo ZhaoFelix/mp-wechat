@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2021-05-15 21:34:46
- * @LastEditTime: 2021-05-17 10:35:34
+ * @LastEditTime: 2021-05-17 10:59:49
  * @FilePath: /mp-wechat/src/pages/second/index.vue
  * Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -270,7 +270,16 @@ export default {
           })
           .then((res) => {
             if (res.data.code == 20000) {
-              this.OSS = res.data.data;
+              Dialog.alert({
+                message: "预约成功",
+                confirmButtonText: "查看订单",
+              }).then(() => {
+                // on close
+                const url = "../order/main";
+                mpvue.switchTab({ url });
+                // 支付成功后重置表单数据
+                _this.resetForm();
+              });
             }
           });
         console.log(this.orderInfo);
