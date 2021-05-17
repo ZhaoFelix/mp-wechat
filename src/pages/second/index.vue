@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2021-05-15 21:34:46
- * @LastEditTime: 2021-05-17 09:08:45
+ * @LastEditTime: 2021-05-17 09:15:47
  * @FilePath: /mp-wechat/src/pages/second/index.vue
  * Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -156,7 +156,8 @@ export default {
   },
   mounted() {
     let params = this.$root.$mp.query;
-    this.orderInfo.orderType = params.orderType;
+    console.log(params);
+    this.orderInfo.orderId = params.orderID;
     // FIX: 获取对象存储的Token,
     this.$wxRequest
       .get({
@@ -261,6 +262,7 @@ export default {
         Toast.fail("至少上传两张照片");
         return;
       } else {
+        console.log(this.orderInfo);
       }
     },
   },
