@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-08 15:55:12
- * @LastEditTime: 2021-05-17 09:17:12
+ * @LastEditTime: 2021-05-17 12:33:30
  * @FilePath: /mp-wechat/src/pages/order/order.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */

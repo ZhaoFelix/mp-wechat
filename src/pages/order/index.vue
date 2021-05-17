@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-05-17 11:22:33
+ * @LastEditTime: 2021-05-17 11:56:33
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -107,18 +107,18 @@
             </van-col>
           </van-row>
           <van-row>
-            <van-col offset="1" span="17">
+            <van-col offset="1" span="16">
               <span class="common">{{ item.user_address }}</span>
             </van-col>
-            <van-col offset="1" span="4">
+            <van-col offset="1" span="5">
               <span class="common" v-if="item.order_type == 1">
                 <van-tag type="success">居民装修</van-tag>
               </span>
               <span class="common" v-if="item.order_type == 2">
-                <van-tag type="success">垃圾箱清运</van-tag>
+                <van-tag type="success">商业装修</van-tag>
               </span>
               <span class="common" v-if="item.order_type == 3">
-                <van-tag type="success">商业装修</van-tag>
+                <van-tag type="success">垃圾箱清运</van-tag>
               </span>
               <span class="common" v-if="item.order_type == 11">
                 <van-tag type="success">二次清运</van-tag>
