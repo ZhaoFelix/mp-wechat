@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2021-05-15 21:34:46
- * @LastEditTime: 2021-05-17 09:15:47
+ * @LastEditTime: 2021-05-17 10:35:34
  * @FilePath: /mp-wechat/src/pages/second/index.vue
  * Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -101,6 +101,7 @@ import {
   previewImage,
   bucket,
 } from "../../../config/options.js";
+import order from "../order/order.js";
 var orderInfo = {
   selectTime: "",
   orderNote: "",
@@ -157,7 +158,7 @@ export default {
   mounted() {
     let params = this.$root.$mp.query;
     console.log(params);
-    this.orderInfo.orderId = params.orderID;
+    this.orderInfo.orderId = params.orderId;
     // FIX: 获取对象存储的Token,
     this.$wxRequest
       .get({
@@ -262,6 +263,16 @@ export default {
         Toast.fail("至少上传两张照片");
         return;
       } else {
+        this.$wxRequest
+          .post({
+            url: "/mobile/order/second",
+            data: this.orderInfo,
+          })
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.OSS = res.data.data;
+            }
+          });
         console.log(this.orderInfo);
       }
     },
