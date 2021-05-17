@@ -182,7 +182,7 @@ export default {
     onblurPhoneNumber(event) {
       this.orderInfo.phoneNumber = event.mp.detail.value;
     },
-    // 姓名
+    // 备注
     onblurNote(event) {
       this.orderInfo.orderNote = event.mp.detail.value;
     },
