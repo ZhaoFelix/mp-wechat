@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2021-05-15 21:34:46
- * @LastEditTime: 2021-05-17 10:59:49
+ * @LastEditTime: 2021-05-17 14:15:10
  * @FilePath: /mp-wechat/src/pages/second/index.vue
  * Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -277,8 +277,12 @@ export default {
                 // on close
                 const url = "../order/main";
                 mpvue.switchTab({ url });
-                // 支付成功后重置表单数据
-                _this.resetForm();
+                // 重置表单数据
+                _this.orderInfo = {
+                  selectTime: "",
+                  orderNote: "",
+                  imagesList: [],
+                };
               });
             }
           });
