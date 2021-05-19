@@ -60,11 +60,10 @@ export default {
       policy: "",
       signature: "",
       dialogShow: false,
-      text: "继续支付(3)s",
+      text: "继续支付",
       totalTime: 3,
-      color: "red",
+      color: "#1989fa",
       clock: null,
-
       filter(type, options) {
         if (type === "hour") {
           return options.filter((option) =>
@@ -132,8 +131,8 @@ export default {
       clearInterval(this.clock);
       this.dialogShow = isShow;
       this.totalTime = 3;
-      this.color = "red";
-      this.text = "继续支付(3)s";
+      this.color = "#1989fa";
+      this.text = "继续支付";
     },
     // 选择器确认按钮事件
     onConfirm(event) {
@@ -196,7 +195,7 @@ export default {
         return;
       }
       if (phone) {
-        if (/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
+        if (/^1(3|4|5|6|7|8)\d{9}$/.test(phone)) {
           this.errorMessage.phoneMessage = "";
         } else {
           this.errorMessage.phoneMessage = "您输入的手机号码有误";
@@ -303,78 +302,74 @@ export default {
         return;
       }
       this.dialogShow = true;
-      // 倒计时5秒
-      this.clock = setInterval(() => {
-        this.totalTime--;
-        this.text = "继续支付(" + this.totalTime + ")s";
-        if (this.totalTime < 0) {
-          clearInterval(this.clock);
-          this.text = "继续支付";
-          this.color = "#1989fa";
-        }
-      }, 1000);
+      // // 倒计时5秒
+      // this.clock = setInterval(() => {
+      //   this.totalTime--;
+      //   this.text = "继续支付(" + this.totalTime + ")s";
+      //   if (this.totalTime < 0) {
+      //     clearInterval(this.clock);
+      //     this.text = "继续支付";
+      //     this.color = "#1989fa";
+      //   }
+      // }, 1000);
     },
     // 调用微信支付
     wechatPay() {
-      if (this.totalTime <= 0) {
-        this.orderInfo.openId = this.openID;
-        this.orderInfo.userId = this.userID;
-        this.orderInfo.userType = this.userType;
-        this.onClose();
-        this.$wxRequest
-          .post({
-            url: "/public/order/box/wxpay",
-            data: this.orderInfo,
-          })
-          .then((res) => {
-            if (res.data.code == 20000) {
-              let re = res.data.data;
-              var _this = this;
-              wx.requestPayment({
-                timeStamp: re.timeStamp,
-                nonceStr: re.nonceStr,
-                package: re.package,
-                signType: re.signType,
-                paySign: re.paySign,
-                tradeNo: re.trade_no,
-                success: function (res) {
-                  if (res.errMsg == "requestPayment:ok") {
-                    Dialog.alert({
-                      message: "下单成功",
-                      confirmButtonText: "查看订单",
-                    }).then(() => {
-                      // on close
-                      const url = "../order/main";
-                      mpvue.switchTab({ url });
-                      // 支付成功后重置表单数据
-                      _this.resetForm();
-                    });
-                  }
-                },
-                fail: function (res) {
-                  if (res.errMsg == "requestPayment:fail cancel") {
-                    wx.showToast({
-                      title: "支付取消",
-                      icon: "none",
-                    });
-                    // 支付取消后重置表单数据
+      this.orderInfo.openId = this.openID;
+      this.orderInfo.userId = this.userID;
+      this.orderInfo.userType = this.userType;
+      this.onClose();
+      this.$wxRequest
+        .post({
+          url: "/public/order/box/wxpay",
+          data: this.orderInfo,
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            let re = res.data.data;
+            var _this = this;
+            wx.requestPayment({
+              timeStamp: re.timeStamp,
+              nonceStr: re.nonceStr,
+              package: re.package,
+              signType: re.signType,
+              paySign: re.paySign,
+              tradeNo: re.trade_no,
+              success: function (res) {
+                if (res.errMsg == "requestPayment:ok") {
+                  Dialog.alert({
+                    message: "下单成功",
+                    confirmButtonText: "查看订单",
+                  }).then(() => {
+                    // on close
+                    const url = "../order/main";
+                    mpvue.switchTab({ url });
+                    // 支付成功后重置表单数据
                     _this.resetForm();
-                  } else {
-                    wx.showToast({
-                      title: res.errmsg,
-                      icon: "none",
-                    });
-                  }
-                },
-              });
-              this.onDialogClose(false);
-            } else if (res.data.code == 20001) {
-              console.log(res.data.data);
-            }
-          });
-      } else {
-        this.onDialogClose(true);
-      }
+                  });
+                }
+              },
+              fail: function (res) {
+                if (res.errMsg == "requestPayment:fail cancel") {
+                  wx.showToast({
+                    title: "支付取消",
+                    icon: "none",
+                  });
+                  // 支付取消后重置表单数据
+                  _this.resetForm();
+                } else {
+                  wx.showToast({
+                    title: res.errmsg,
+                    icon: "none",
+                  });
+                }
+              },
+            });
+            this.onDialogClose(false);
+          } else if (res.data.code == 20001) {
+            console.log(res.data.data);
+          }
+        });
     },
     // 重置表单
     resetForm() {

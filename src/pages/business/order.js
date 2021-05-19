@@ -193,7 +193,7 @@ export default {
         return;
       }
       if (phone) {
-        if (/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
+        if (/^1(3|4|5|6|7|8)\d{9}$/.test(phone)) {
           this.errorMessage.phoneMessage = "";
         } else {
           this.errorMessage.phoneMessage = "您输入的手机号码有误";
