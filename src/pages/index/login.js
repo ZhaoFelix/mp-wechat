@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-07 10:42:32
- * @LastEditTime: 2021-04-25 10:39:47
+ * @LastEditTime: 2021-05-19 10:43:46
  * @FilePath: /mp-wechat/src/pages/index/login.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -171,6 +171,7 @@ export default {
     },
   },
   mounted() {
+    // console.log(wx.getAccountInfoSync());
     var _this = this;
     if (wx.getUserProfile) {
       this.canUseGetUserProfile = true;
