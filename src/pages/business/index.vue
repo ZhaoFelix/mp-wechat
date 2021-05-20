@@ -207,7 +207,7 @@
       <van-cell-group title="请确保下列信息无误" :border="false">
         <van-cell
           center
-          title="姓名："
+          title="下单姓名："
           title-width="70px"
           :value="orderInfo.name"
           value-class="info"
@@ -221,7 +221,7 @@
           :border="false"
         />
         <van-cell
-          title="地址："
+          title="订单地址："
           title-width="70px"
           :value="orderInfo.address + orderInfo.subAddress"
           value-class="info"
