@@ -40,6 +40,7 @@
   position: absolute;
   line-height: 180%;
   color: rgba(1, 1, 1, 0.7);
+  font-weight: bold;
 }
 .wrapper {
   display: flex;

@@ -31,13 +31,56 @@
         placeholder="省 市 区"
         readonly="true"
       />
-      <van-field
+      <div style="background-color: white">
+        <van-row style="line-height: 44px">
+          <van-col
+            :span="6"
+            :offset="1"
+            style="color: #646566; font-size: 14px"
+          >
+            详细地址
+          </van-col>
+          <van-col :span="7" :offset="1">
+            <van-row>
+              <van-col :span="20">
+                <van-field
+                  type="number"
+                  :value="orderInfo.addressNumber"
+                  :border="false"
+                  placeholder="**号"
+                  @blur="onblurAddressNumber"
+                />
+              </van-col>
+              <van-col :span="2">
+                <span style="line-height: 44px; font-size: 14px">号</span>
+              </van-col>
+            </van-row>
+          </van-col>
+          <van-col :span="7" :offset="1">
+            <van-row class="customCell">
+              <van-col :span="20">
+                <van-field
+                  type="number"
+                  :value="orderInfo.addressRoom"
+                  :border="false"
+                  placeholder="**室"
+                  @blur="onblurAddressRoom"
+                />
+              </van-col>
+              <van-col :span="2">
+                <span style="line-height: 44px; font-size: 14px">室</span>
+              </van-col>
+            </van-row>
+          </van-col>
+        </van-row>
+      </div>
+      <!-- <van-field
         :value="orderInfo.subAddress"
         label="详细地址"
         type="text"
         placeholder="请输入具体地址 如：**号**室"
         @blur="onblurAddress"
-      />
+      /> -->
     </div>
     <div class="order-info">
       <van-field

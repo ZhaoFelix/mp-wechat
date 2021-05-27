@@ -13,7 +13,9 @@ import { mapState } from "vuex";
 var orderInfo = {
   name: "",
   phoneNumber: "",
-  address: "上海市",
+  address: "南桥镇",
+  addressNumber: "",
+  addressRoom: "",
   subAddress: "",
   buildArea: "",
   isFirst: "0",
@@ -204,6 +206,8 @@ export default {
       console.log(event.mp.detail.value.text);
       this.orderInfo.estate_id = event.mp.detail.value.id;
       this.orderInfo.estate_plot = event.mp.detail.value.text;
+      this.orderInfo.address =
+        this.orderInfo.address + event.mp.detail.value.text;
       this.plotPicker = false;
     },
     onClickButton() {
@@ -244,6 +248,14 @@ export default {
     // 地址
     onblurAddress(event) {
       this.orderInfo.subAddress = event.mp.detail.value;
+    },
+    // 地址
+    onblurAddressNumber(event) {
+      this.orderInfo.addressNumber = event.mp.detail.value;
+    },
+    // 地址
+    onblurAddressRoom(event) {
+      this.orderInfo.addressRoom = event.mp.detail.value;
     },
     // 装修面积
     onblurArea(event) {
@@ -356,7 +368,8 @@ export default {
         this.orderInfo.name == "" ||
         this.orderInfo.estate_id == "0" ||
         this.orderInfo.phoneNumber == "" ||
-        this.orderInfo.subAddress == "" ||
+        this.orderInfo.addressNumber == "" ||
+        this.orderInfo.addressRoom == "" ||
         this.orderInfo.buildArea == "" ||
         this.orderInfo.selectTime == ""
       ) {
@@ -389,6 +402,8 @@ export default {
       this.orderInfo.openId = this.openID;
       this.orderInfo.userId = this.userID;
       this.orderInfo.userType = this.userType;
+      this.orderInfo.subAddress =
+        this.orderInfo.addressNumber + "号" + this.orderInfo.addressRoom + "室";
       this.onClose();
       this.$wxRequest
         .post({
