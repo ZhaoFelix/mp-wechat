@@ -14,7 +14,7 @@ import { mapState } from "vuex";
 var orderInfo = {
   name: "",
   phoneNumber: "",
-  address: "上海市",
+  address: "南桥镇",
   subAddress: "",
   buildArea: "0",
   isFirst: "1",
@@ -64,6 +64,7 @@ export default {
       totalTime: 3,
       color: "#1989fa",
       clock: null,
+      detailAddress: "",
       filter(type, options) {
         if (type === "hour") {
           return options.filter((option) =>
@@ -110,6 +111,19 @@ export default {
           .catch((error) => {
             console.log("获取物业列表失败" + error);
           });
+      }
+    },
+    dialogShow: function (newVal, oldVal) {
+      console.log("测试" + newVal);
+      if (newVal) {
+        this.detailAddress =
+          this.orderInfo.address +
+          this.orderInfo.subAddress +
+          this.orderInfo.addressNumber +
+          "号" +
+          this.orderInfo.addressRoom +
+          "室";
+        console.log(this.detailAddress);
       }
     },
   },
@@ -167,6 +181,7 @@ export default {
       console.log(event.mp.detail.value.text);
       this.orderInfo.estate_id = event.mp.detail.value.id;
       this.orderInfo.estate_plot = event.mp.detail.value.text;
+      this.orderInfo.address = "南桥镇" + event.mp.detail.value.text;
       this.plotPicker = false;
     },
     onClickButton() {
@@ -288,7 +303,6 @@ export default {
       if (
         this.orderInfo.name == "" ||
         this.orderInfo.phoneNumber == "" ||
-        this.orderInfo.subAddress == "" ||
         this.orderInfo.selectTime == "" ||
         this.orderInfo.boxNumber == 0
       ) {

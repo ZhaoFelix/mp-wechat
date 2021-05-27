@@ -31,13 +31,13 @@
         placeholder="省 市 区"
         readonly="true"
       />
-      <van-field
+      <!-- <van-field
         :value="orderInfo.subAddress"
         label="详细地址"
         type="text"
         placeholder="请输入具体地址 如：**路**小区"
         @blur="onblurAddress"
-      />
+      /> -->
     </div>
     <div class="order-info">
       <van-field

@@ -304,7 +304,7 @@
         <van-cell
           title="订单地址："
           title-width="70px"
-          :value="orderInfo.address + orderInfo.subAddress"
+          :value="detailAddress"
           value-class="info"
           :border="false"
         />

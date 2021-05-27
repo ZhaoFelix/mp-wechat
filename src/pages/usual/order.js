@@ -67,6 +67,7 @@ export default {
       totalTime: 3,
       color: "#1989fa",
       clock: null,
+      detailAddress: "",
       filter(type, options) {
         if (type === "hour") {
           // 可预约的时间设置为8:00~16:00
@@ -115,6 +116,17 @@ export default {
           .catch((error) => {
             console.log("获取物业列表失败" + error);
           });
+      }
+    },
+    dialogShow: function (newVal, oldVal) {
+      if (newVal) {
+        this.detailAddress =
+          this.orderInfo.address +
+          this.orderInfo.subAddress +
+          this.orderInfo.addressNumber +
+          "号" +
+          this.orderInfo.addressRoom +
+          "室";
       }
     },
   },
@@ -203,11 +215,9 @@ export default {
       this.plotPicker = false;
     },
     onConfirmPlotPicker(event) {
-      console.log(event.mp.detail.value.text);
       this.orderInfo.estate_id = event.mp.detail.value.id;
       this.orderInfo.estate_plot = event.mp.detail.value.text;
-      this.orderInfo.address =
-        this.orderInfo.address + event.mp.detail.value.text;
+      this.orderInfo.address = "南桥镇" + event.mp.detail.value.text;
       this.plotPicker = false;
     },
     onClickButton() {
@@ -249,11 +259,11 @@ export default {
     onblurAddress(event) {
       this.orderInfo.subAddress = event.mp.detail.value;
     },
-    // 地址
+    // 号
     onblurAddressNumber(event) {
       this.orderInfo.addressNumber = event.mp.detail.value;
     },
-    // 地址
+    // 室
     onblurAddressRoom(event) {
       this.orderInfo.addressRoom = event.mp.detail.value;
     },
@@ -461,6 +471,8 @@ export default {
                     phoneNumber: "",
                     address: "上海市",
                     subAddress: "",
+                    addressNumber: "",
+                    addressRoom: "",
                     buildArea: "",
                     isFirst: "1",
                     selectTime: "",
