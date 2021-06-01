@@ -33,7 +33,7 @@ var datePickerOptions = {
   minHour: 8,
   maxHour: 20,
   // 最小时间必须提前一个小时
-  minDate: new Date().getTime() + 12 * 60 * 60 * 1000,
+  minDate: new Date().getTime() + 16 * 60 * 60 * 1000,
   //  最多可提前2天进行预约
   maxDate: new Date().setDate(new Date().getDate() + 3),
   currentDate: null,
