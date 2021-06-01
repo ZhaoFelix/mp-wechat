@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-08 15:55:12
- * @LastEditTime: 2021-05-17 12:33:30
+ * @LastEditTime: 2021-06-01 21:56:35
  * @FilePath: /mp-wechat/src/pages/order/order.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -13,6 +13,7 @@ export default {
     return {
       list: [],
       orderInfo: null,
+      active: "1",
     };
   },
   computed: {
@@ -94,7 +95,11 @@ export default {
       var _this = this;
       this.$wxRequest
         .get({
-          url: "/mobile/order/query?userId=" + this.userID,
+          url:
+            "/mobile/order/query?userId=" +
+            this.userID +
+            "&type=" +
+            this.active,
         })
         .then((res) => {
           if (res.data.code == 20000) {
@@ -113,6 +118,11 @@ export default {
     secondOrder(item) {
       let url = "../second/main?orderId=" + item.order_id;
       mpvue.navigateTo({ url });
+    },
+    onChangeTab(event) {
+      console.log(event.mp.detail);
+      this.active = event.mp.detail.name;
+      this.fetchData();
     },
   },
   mounted() {
