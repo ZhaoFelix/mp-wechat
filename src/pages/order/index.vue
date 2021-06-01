@@ -2,16 +2,26 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-01 07:58:34
- * @LastEditTime: 2021-06-01 21:55:43
+ * @LastEditTime: 2021-06-01 22:41:44
  * @FilePath: /mp-wechat/src/pages/order/index.vue
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
 
 <template>
   <div class="main-container">
-    <van-tabs :active="active" swipeable sticky animated @change="onChangeTab">
+    <van-tabs
+      :active="active"
+      swipeable
+      sticky
+      animated
+      color="#4A90E2"
+      @change="onChangeTab"
+    >
       <van-tab name="1" title="进行中">
-        <van-row>
+        <div v-if="list.length == 0" class="noOrder">
+          <span>暂无订单</span>
+        </div>
+        <van-row v-else>
           <div class="custom-style" v-for="(item, index) in list" :key="index">
             <div class="top-divider"></div>
             <!-- 顶部 -->
@@ -281,7 +291,10 @@
       </van-tab>
       <!-- 已完成 -->
       <van-tab name="2" title="已完成">
-        <van-row>
+        <div v-if="list.length == 0" class="noOrder">
+          <span>暂无订单</span>
+        </div>
+        <van-row v-else>
           <div class="custom-style" v-for="(item, index) in list" :key="index">
             <div class="top-divider"></div>
             <!-- 顶部 -->
@@ -551,7 +564,10 @@
       </van-tab>
       <!-- 全部 -->
       <van-tab name="3" title="全部">
-        <van-row>
+        <div v-if="list.length == 0" class="noOrder">
+          <span>暂无订单</span>
+        </div>
+        <van-row v-else>
           <div class="custom-style" v-for="(item, index) in list" :key="index">
             <div class="top-divider"></div>
             <!-- 顶部 -->
