@@ -24,7 +24,7 @@ var orderInfo = {
   imagesList: [],
   estate_id: "0",
   estate_plot: "",
-  boxNumber: "",
+  boxNumber: "1",
 };
 // 时间选择器相关配置
 var datePickerOptions = {
@@ -411,6 +411,11 @@ export default {
     toProtocol() {
       const url = "../protocol/main";
       mpvue.navigateTo({ url });
+    },
+    onChange(event) {
+      // console.log(this.orderInfo.boxNumber);
+      // console.log(event);
+      this.orderInfo.boxNumber = event.mp.detail;
     },
   },
 

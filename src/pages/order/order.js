@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2020-12-08 15:55:12
- * @LastEditTime: 2021-06-01 21:56:35
+ * @LastEditTime: 2021-06-02 11:16:36
  * @FilePath: /mp-wechat/src/pages/order/order.js
  * @Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
  */
@@ -100,6 +100,7 @@ export default {
             this.userID +
             "&type=" +
             this.active,
+          // url: "/mobile/order/query?userId=261" + "&type=" + this.active,
         })
         .then((res) => {
           if (res.data.code == 20000) {

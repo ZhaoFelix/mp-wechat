@@ -40,7 +40,7 @@
       /> -->
     </div>
     <div class="order-info">
-      <van-field
+      <!-- <van-field
         :value="orderInfo.boxNumber"
         type="number"
         label="垃圾箱数"
@@ -48,7 +48,25 @@
         @blur="onblurArea"
         @change="onchangeArea"
         :error-message="errorMessage.areaMessage"
-      />
+      /> -->
+      <div style="background-color: white">
+        <van-row style="line-height: 44px">
+          <van-col
+            :span="6"
+            :offset="1"
+            style="color: #646566; font-size: 14px"
+          >
+            垃圾箱数：
+          </van-col>
+          <van-col :span="7" :offset="1">
+            <van-row>
+              <van-col :span="24">
+                <van-stepper :value="orderInfo.boxNumber" @change="onChange" />
+              </van-col>
+            </van-row>
+          </van-col>
+        </van-row>
+      </div>
       <van-field
         :value="orderInfo.selectTime"
         label="预约时间"

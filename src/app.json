@@ -31,7 +31,8 @@
     "van-radio-group": "vant-weapp/dist/radio-group/index",
     "van-dialog": "vant-weapp/dist/dialog/index",
     "van-toast": "vant-weapp/dist/toast/index",
-    "van-tag": "vant-weapp/dist/tag/index"
+    "van-tag": "vant-weapp/dist/tag/index",
+    "van-stepper": "vant-weapp/dist/stepper/index"
   },
   "window": {
     "backgroundTextStyle": "light",
