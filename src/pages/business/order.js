@@ -13,7 +13,7 @@ import { mapState } from "vuex";
 var orderInfo = {
   name: "",
   phoneNumber: "",
-  address: "上海市",
+  address: "南桥镇",
   subAddress: "",
   buildArea: "0",
   orderPrice: "",
@@ -408,7 +408,7 @@ export default {
         name: "",
         phoneNumber: "",
         orderPrice: "",
-        address: "上海市",
+        address: "南桥镇",
         subAddress: "",
         buildArea: "",
         isFirst: "1",

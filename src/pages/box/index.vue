@@ -58,12 +58,19 @@
           >
             垃圾箱数：
           </van-col>
-          <van-col :span="7" :offset="1">
+          <van-col :span="8" :offset="1">
             <van-row>
               <van-col :span="24">
                 <van-stepper :value="orderInfo.boxNumber" @change="onChange" />
               </van-col>
             </van-row>
+          </van-col>
+        </van-row>
+      </div>
+      <div style="background: white">
+        <van-row>
+          <van-col :span="22" :offset="1">
+            <div style="height: 1px; background: rgba(0, 0, 0, 0.05)"></div>
           </van-col>
         </van-row>
       </div>
