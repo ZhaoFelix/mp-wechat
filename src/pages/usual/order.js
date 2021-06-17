@@ -27,6 +27,7 @@ var orderInfo = {
   imagesList: [],
   estate_id: "0",
   estate_plot: "",
+  orderType: "1",
 };
 // 时间选择器相关配置
 var datePickerOptions = {
@@ -101,7 +102,7 @@ export default {
         this.$wxRequest
           .get({
             url: "/mobile/order/query/plot?wechat_id=" + this.userID,
-            // url: "/mobile/order/query/plot?wechat_id=261",
+            // url: "/mobile/order/query/plot?wechat_id=332",
           })
           .then((res) => {
             // let other = {
@@ -455,6 +456,7 @@ export default {
                       imagesList: [],
                       estate_id: "0",
                       estate_plot: "",
+                      orderType: "1",
                     };
                   });
                 }
@@ -482,6 +484,7 @@ export default {
                     imagesList: [],
                     estate_id: "0",
                     estate_plot: "",
+                    orderType: "1",
                   };
                 } else {
                   wx.showToast({

@@ -25,6 +25,7 @@ var orderInfo = {
   estate_id: "0",
   estate_plot: "",
   boxNumber: "1",
+  orderType: "3",
 };
 // 时间选择器相关配置
 var datePickerOptions = {
@@ -401,6 +402,7 @@ export default {
         estate_id: "0",
         estate_plot: "",
         boxNumber: "",
+        orderType: "3",
       };
     },
     contactService() {
