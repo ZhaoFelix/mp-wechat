@@ -304,10 +304,15 @@ export default {
       if (
         this.orderInfo.name == "" ||
         this.orderInfo.phoneNumber == "" ||
-        this.orderInfo.selectTime == "" ||
         this.orderInfo.boxNumber == 0
       ) {
         Toast.fail("信息不完整");
+        return;
+      } else if (this.orderInfo.selectTime == "") {
+        Toast.fail("请重新选择预约时间");
+        return;
+      } else if (this.orderInfo.estate_id == "0") {
+        Toast.fail("请重新选择选择小区");
         return;
       } else if (this.orderInfo.userProtocl == 0) {
         Toast.fail("请勾选用户协议");

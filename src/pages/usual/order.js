@@ -377,14 +377,18 @@ export default {
     submitOrder() {
       if (
         this.orderInfo.name == "" ||
-        this.orderInfo.estate_id == "0" ||
         this.orderInfo.phoneNumber == "" ||
         this.orderInfo.addressNumber == "" ||
         this.orderInfo.addressRoom == "" ||
-        this.orderInfo.buildArea == "" ||
-        this.orderInfo.selectTime == ""
+        this.orderInfo.buildArea == ""
       ) {
         Toast.fail("基本信息不能为空");
+        return;
+      } else if (this.orderInfo.selectTime == "") {
+        Toast.fail("请重新选择预约时间");
+        return;
+      } else if (this.orderInfo.estate_id == "0") {
+        Toast.fail("请重新选择选择小区");
         return;
       } else if (this.orderInfo.isAssign == "") {
         Toast.fail("请选择是否指定清运点");
