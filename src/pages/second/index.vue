@@ -2,7 +2,7 @@
  * @Author: Felix
  * @Email: felix@qingmaoedu.com
  * @Date: 2021-05-15 21:34:46
- * @LastEditTime: 2021-05-17 14:15:10
+ * @LastEditTime: 2021-06-30 11:00:24
  * @FilePath: /mp-wechat/src/pages/second/index.vue
  * Copyright © 2019 Shanghai Qingmao Network Technology Co.,Ltd All rights reserved.
 -->
@@ -203,10 +203,37 @@ export default {
         this.orderInfo.selectTime =
           newStr[0] + (newStr[1] == "08:00" ? " 上午" : " 下午");
       } else {
-        let date = new Date().getDate() + 1;
+        let thirtyOnArr = [1, 3, 5, 7, 8, 10, 12];
+        let thirty = [4, 6, 9, 11];
+        let date = new Date().getDate();
         let year = new Date().getFullYear();
         let month = new Date().getMonth() + 1;
         let hour = new Date().getHours();
+        if (thirty.indexOf(month) != -1) {
+          // 30天
+          if (date == 30) {
+            date = 1;
+            month == 12 ? (month = 1) : (month += 1);
+          } else {
+            date += 1;
+          }
+        } else if (thirtyOnArr.indexOf(month) != -1) {
+          // 31天
+          if (date == 31) {
+            date = 1;
+            month == 12 ? (month = 1) : (month += 1);
+          } else {
+            date += 1;
+          }
+        } else {
+          //  2月
+          if (date >= 28) {
+            date = 1;
+            month += 1;
+          } else {
+            date += 1;
+          }
+        }
         let newStr =
           year +
           "-" +
